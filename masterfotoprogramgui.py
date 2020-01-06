@@ -18,81 +18,38 @@ things to do:
 """
 
 import os
-import pprint
+#import pprint
 import wx 
 #import sys
 import shutil
+import json
+import artmanagementcfg as cfg
+import BlockWindow
 
-basicPathDir = "/home/christopher/Pictures/myPaintings"
-workingDir = "" # this is the path to the active directory
-
-subDirList = []
-paintingList = []
-subDirPaths = []
-paintingPaths= []
-paintingDic = {}
-
-myworkingFolder ="" #the name of the active painting directory
-answer = "2"  # 1 is the terminal version 2 is the gui version
-
-dirlist = {"displate","mainphoto","society6","xcftype","pngtype","jpgtype","cr2type","info","oldcanon","oldCameraPics"}
-
-##################################################################################
-
-##################################################################################
-
-##################################################################################
-    
-def addNewSubfolder(newSubFolder = "test"):
-    os.chdir(workingDir)
-    for each in os.getcwd():
-        os.chdir(workingDir + "/" + each)
-        for each1 in os.getcwd():
-            os.chdir(workingDir + "/" + each + "/" + each1)
-            os.mkdir(newSubFolder)  
-        ### need reflective code here to add to basic dir list. 
-    print("Task Completed\n")
-     
+   
 ##################################################################################
      
 def makeList():
-    global workingDir
+    #this function makes a list of all paintings in the file of works
+    os.chdir(cfg.basicPathDir)
     os.chdir("./info") #enter info dir, where we keep all info files
-    if "./finishedPaintings.txt" == None:
+    
+    if "./finishedPaintings.txt" != None:
         os.remove("./finishedPaintings.txt")
     fh = open("./finishedPaintings.txt", "w+")
     
     mylist ={}
-    print("in the make list function")
-    print(workingDir)
-    print("did the working dir print?")
-    mylist["all"] = searchLevel(workingDir)
+    mylist["all"] = searchLevel(cfg.workingDir)
     for k, v in mylist.items():
-        #dicname = str(k)
         fh.write(str(k) + ' >>>\n')
-        print(k)
-        #pp.pprint("....." + str(v))
+        #print(k)
         for k1, v1 in v.items():
-            #dic1name = str(k1)
             fh.write("..." + str(k1) + ' >>>\n')
             try:
                 for k2, v2 in v1.items():
                     fh.write("......" + str(k2) +'>>>\n')
-#                    try:
-#                        for k3, v3 in v2.items():
-#                            #fh.write("...**--" + str(k3) + ' >>> '+ str(v3) + ' >>>\n ')
-#                            fh.write("...**--" + str(k3) + ' >>> \n')
-#                    except:
-#                        fh.write("\n")
-##                        try:
-##                            for k4, v4 in v3.items():
-##                                fh.write("...**-->" + str(k4) + ' >>> '+ str(v4) + ' >>>\n ')
-##                        except:
-##                            fh.write("\n")
             except:
                 fh.write("\n")
-    #pp = pprint.PrettyPrinter(indent=4)
-    #pp.pprint(mylist)
     fh.close()
     os.chdir("..")
         
@@ -101,15 +58,12 @@ def makeList():
 def createAllSubfolders():
     ##homedir = "/home/christopher/Pictures/myPaintings/finishedWorks _forSale"
     #dirlist = {"displate","mainphoto","society6","xcftype","pngtype","jpgtype","cr2type","info","oldcanon","oldCameraPics"}
-    os.chdir(workingDir)
-    
-    print(os.getcwd())
-    
+    os.chdir(cfg.workingDir)
+   # print(os.getcwd()) 
     mylist= os.listdir()
-    
     for each in mylist:
-        chkdir = workingDir + "/" + str(each)
-        print(str(each))
+        chkdir = cfg.workingDir + "/" + str(each)
+        #print(str(each))
         if os.path.isdir(each) is True:
             os.chdir(chkdir)
             mylist1= os.listdir()
@@ -117,25 +71,23 @@ def createAllSubfolders():
                 chkdir1 = chkdir + "/" + str(each1)
                 if os.path.isdir(each1) is True:
                     os.chdir(chkdir1)
-                    print(str(os.getcwd()+"\n"))
-                    
-                    for every in dirlist:   
+                    #print(str(os.getcwd()+"\n"))
+                    for every in cfg.dirlist:   
                         newdir = chkdir + "/" + str(each1) + "/" + str(every)
-                        print(newdir)
+                        #print(newdir)
                         #q = input("does it look right")
                         if os.path.isdir(newdir) is False:
                             os.mkdir(newdir)
-                        
-                        print(str(os.getcwd()+ "\n"))
+                        #print(str(os.getcwd()+ "\n"))
                     os.chdir("..")
-                    print(str(os.getcwd()+ "\n"))
+                    #print(str(os.getcwd()+ "\n"))
             os.chdir("..")
-            print(str(os.getcwd()+ "\n"))
+            #print(str(os.getcwd()+ "\n"))
     
 ##################################################################################
     
 def moveAllPhotos():
-   for each in paintingPaths:
+   for each in cfg.paintingPaths:
        os.chdir(each)
        listOfFilesToMove = os.listdir(".")
        for each in listOfFilesToMove:
@@ -148,11 +100,6 @@ def moveAllPhotos():
            else:
                pass
     
-#######################################################
-    
-def collateAll():
-    pass
-
 ##################################################################################
 def renameFotos():
     pass
@@ -166,10 +113,10 @@ def renameFotos():
 #### recursion search function #####
 def searchLevel(myLevel):
     tableofitems ={}
-    print(str(os.getcwd()))
-    print(myLevel)
+    #print(str(os.getcwd()))
+    #print(myLevel)
     thisdirlist = os.listdir(myLevel)
-    print(thisdirlist)
+    #print(thisdirlist)
     countoffiles = 1
     for each in thisdirlist:
         if os.path.isdir(myLevel +"/" + each) is True:
@@ -185,10 +132,38 @@ def searchLevel(myLevel):
 #GUI APP 
    
 class mainMenu(wx.Frame):
-    global workingDir
-
+ 
+    
+    
     def __init__(self, parent, id):
-        wx.Frame.__init__(self, parent, id, 'Menus', size=(800, 400))
+
+        wx.Frame.__init__(self, parent, id, 'Menus', size=(1200, 800))
+        
+        # Add a panel so it looks correct on all platforms
+        #self.panel = wx.Panel(self, wx.ID_ANY)
+        #self.panel.SetBackgroundColour("blue")
+        panel = wx.Panel(self, wx.ID_ANY)
+        panel.SetBackgroundColour("blue")
+        hboxMain =wx.BoxSizer(wx.HORIZONTAL)
+        vbox1 = wx.BoxSizer(wx.VERTICAL)
+        vbox2 = wx.BoxSizer(wx.VERTICAL)
+        hbox1 = wx.BoxSizer(wx.HORIZONTAL)
+        hbox2 = wx.BoxSizer(wx.HORIZONTAL)
+        hbox3 = wx.BoxSizer(wx.HORIZONTAL)
+        hbox4 = wx.BoxSizer(wx.HORIZONTAL)
+        hbox5 = wx.BoxSizer(wx.HORIZONTAL)
+        hbox6 = wx.BoxSizer(wx.HORIZONTAL)
+        hbox7 = wx.BoxSizer(wx.HORIZONTAL)
+        
+#        sizer = wx.GridSizer(rows=4, cols=4, hgap=5, vgap=5)
+#        
+#        for i in range(1,len(cfg.subDirList)): 
+#            btn = "Btn_"+str(i) 
+#            sizer.Add(wx.Button(self.panel,label = btn), 0, wx.EXPAND) 
+#            self.btn.Bind(wx.EVT_BUTTON, self.OnClicked) 
+#        self.panel.SetSizer(sizer)  
+        
+        
         menuBar = wx.MenuBar()
         menu1 = wx.Menu()
         menu2 = wx.Menu()
@@ -219,14 +194,18 @@ class mainMenu(wx.Frame):
         menuBar.Append(menu3, "&Display")
         menuBar.Append(menu4, "&Info")
         
-        panel = wx.Panel(self)
-        button = wx.Button(panel, label="End Program", pos=(100, 320),size=(400,50))
+        #self.panel = wx.Panel(self)
+        #self.panel.SetBackgroundColour("blue")
+        #sizer = wx.GridSizer(rows=4, cols=6, hgap=5, vgap=5)
+        #button = wx.Button(self.panel, -1, label="End Program")
+        #button = wx.Button(self.panel, -1, label="does nothing")
+        #sizer.Add(button, 0, 0)
         
         self.SetMenuBar(menuBar)
         self.CreateStatusBar()
         self.SetStatusText("Welcome to art business management")
         
-        self.Bind(wx.EVT_BUTTON, self.OnCloseMe, button)
+        #self.Bind(wx.EVT_BUTTON, self.OnCloseMe, button)
         
         self.Bind(wx.EVT_MENU, self.OpenFile, menuItemLoad)
         self.Bind(wx.EVT_MENU, self.CloseFile, menuItemClose)
@@ -246,57 +225,124 @@ class mainMenu(wx.Frame):
         self.Bind(wx.EVT_MENU, self.GetHelp, menuItemHelp)
         self.Bind(wx.EVT_MENU, self.SetPreferences, menuItemPref)
         self.Bind(wx.EVT_MENU, self.OnAbout, menuItemAbout)
+        
+        #self.SetSizer(sizer)
+        #self.Fit()
+        
+        label1 = wx.StaticText(panel, -1, "Name of work")
+        hbox1.Add(label1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        label2 = wx.StaticText(panel, -1, "Date painted")
+        hbox2.Add(label2, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        label3 = wx.StaticText(panel, -1, "Where painted")
+        hbox3.Add(label3, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        label4 = wx.StaticText(panel, -1, "Vertical dimension")
+        hbox4.Add(label4, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        label5 = wx.StaticText(panel, -1, "Horizontal dimension")
+        hbox5.Add(label5, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        label6 = wx.StaticText(panel, -1, "Materials used")
+        hbox6.Add(label6, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        
+        label7 = wx.StaticText(panel, -1, "Description")
+        hbox7.Add(label7, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+         
+        
+        self.t1 = wx.TextCtrl(panel,-1,size=(400,50))
+        hbox1.Add(self.t1,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        self.t2 = wx.TextCtrl(panel,-1,size=(400,50))
+        hbox2.Add(self.t2,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        self.t3 = wx.TextCtrl(panel,-1,size=(400,50))
+        hbox3.Add(self.t3,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        self.t4 = wx.TextCtrl(panel,-1,size=(400,50))
+        hbox4.Add(self.t4,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        self.t5 = wx.TextCtrl(panel,-1,size=(400,50))
+        hbox5.Add(self.t5,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        self.t6 = wx.TextCtrl(panel,-1,size=(400,50))
+        hbox6.Add(self.t6,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        self.t7 = wx.TextCtrl(panel,-1,size=(400,50))
+        hbox7.Add(self.t7,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        
+        vbox1.Add(hbox1)
+        vbox1.Add(hbox2) 
+        vbox1.Add(hbox3)
+        vbox1.Add(hbox4)
+        vbox1.Add(hbox5)
+        vbox1.Add(hbox6)
+        vbox1.Add(hbox7)
+        hboxMain.Add(vbox1)
+        hboxMain.Add(vbox2)
+        
+        panel.SetSizer(hboxMain)
+        panel.Center()
+        panel.Show()
+        panel.Fit()
     
     #here are the actions for above code from menu
     
     #SHOULD BE WORKING
     def OpenFile(self,event):
-        
-        global workingDir
-        global subDirList
-        global paintingList
-        global subDirPaths
-        global paintingPaths
-        global paintingDic
-        
+       
         listOfPaintings = []
         self.SetStatusText("Opens the database")
         dialog = wx.DirDialog(None, "Choose a directory to work with: ", style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         if dialog.ShowModal() == wx.ID_OK:
             #print(dialog.GetPath())
-            workingDir = str(dialog.GetPath())
+            cfg.workingDir = str(dialog.GetPath())
             os.chdir(str(dialog.GetPath()))
         dialog.Destroy()
-        subDirList = os.listdir(workingDir)
-        subDirList.remove("info")
-        #print(subDirList)
-        for each in subDirList:
+        cfg.subDirList = os.listdir(cfg.workingDir)
+        cfg.subDirList.remove("info")
+        for each in cfg.subDirList:
             listOfPaintings =[]
-            #print(each)
-            #print(workingDir + "/" + each)
-            if True == os.path.isdir(workingDir + "/" + each):
-                subDirPaths.append(workingDir + "/" + each)
-                os.chdir(workingDir + "/" + each)
+            if True == os.path.isdir(cfg.workingDir + "/" + each):
+                cfg.subDirPaths.append(cfg.workingDir + "/" + each)
+                os.chdir(cfg.workingDir + "/" + each)
                 listOfPaintings = os.listdir(os.getcwd())
                 for eachone in listOfPaintings:
-                    paintingList.append(eachone)
-                    paintingPaths.append(workingDir + "/" + each + "/" + eachone)
-                    paintingDic[eachone] = workingDir + "/" + each + "/" + eachone
-#        pp = pprint.PrettyPrinter(width=41, compact=True)        
-#        pp.pprint(subDirList)
-#        print("\n")
-#        pp.pprint(subDirPaths)
-#        print("\n")
-#        pp.pprint(paintingList)
-#        print("\n")
-#        pp.pprint(paintingPaths)
-#        pp.pprint(paintingDic)
+                    cfg.paintingList.append(eachone)
+                    cfg.paintingPaths.append(cfg.workingDir + "/" + each + "/" + eachone)
+                    cfg.paintingDic[eachone] = cfg.workingDir + "/" + each + "/" + eachone
+        mylibListOfPaintings = {"list_of_paintings" : cfg.paintingList }
+        mylibOfSubdirectories = {"list_of_subdirectories" : cfg.subDirList}
+        
+        cfg.myData = {"paintings": mylibListOfPaintings, "subdir" : mylibOfSubdirectories}
+        jsonData = json.dumps(cfg.myData, indent=4, separators=(". ", " = "))
+        print(jsonData)
+        print("\n")
+        print(os.getcwd())
+        filename = "myfisrtjsonfile"
+        with open(filename, 'w+') as f:
+            json.dump(cfg.myData, f)
+            
+        sizer = wx.GridSizer(rows=4, cols=4, hgap=5, vgap=5)  
+        print(cfg.subDirList)
+        sizernumber = 0
+        for i in cfg.subDirList: 
+            btn = "Btn_"+ str(i) 
+            sizer.Add(wx.Button(self.panel,label = btn), sizernumber, wx.EXPAND) 
+            sizernumber +=1
+            #self.btn.Bind(wx.EVT_BUTTON, self.OnClicked) 
+        self.panel.SetSizer(sizer)  
         
         
     def CloseFile(self,event):
         self.SetStatusText("Closes the database")
         wx.MessageBox("This closes the file ",
                       "fileloader", wx.OK | wx.ICON_INFORMATION, self)
+        
         
     def OnAbout(self, event):
         self.SetStatusText("About me")
@@ -324,7 +370,7 @@ class mainMenu(wx.Frame):
             response = dlg.GetValue()
             os.mkdir("./" + response)
             os.chdir("./" + response)
-            for each in dirlist:
+            for each in cfg.dirlist:
                 os.mkdir("./" + each)   
                 
     #SHOULD BE WORKING
@@ -333,8 +379,13 @@ class mainMenu(wx.Frame):
         dlg = wx.TextEntryDialog(None, "What is the new folder named",'Name of new folder', 'new folder')
         if dlg.ShowModal() == wx.ID_OK:
             response = dlg.GetValue()
-            addNewSubfolder(response)
-            
+            os.chdir(cfg.workingDir)
+            for each in os.getcwd():
+                os.chdir(cfg.workingDir + "/" + each)
+                for each1 in os.getcwd():
+                    os.chdir(cfg.workingDir + "/" + each + "/" + each1)
+                    os.mkdir(response)  
+
     #SHOULD BE WORKING        
     def MakeListAllWorks(self, event):
         self.SetStatusText("Make a list of all works")
@@ -350,18 +401,18 @@ class mainMenu(wx.Frame):
         self.SetStatusText("Move fotos to correct picture folders")
         moveAllPhotos()
         
-    #these should be the next functions to work on. 
+    #works
     def ColateAllInfoSheets(self,event):
         self.SetStatusText("Collate all info sheets in one folder")
-        for each in paintingPaths:
+        for each in cfg.paintingPaths:
             os.chdir(each + "/info")
             for eachone in os.listdir():
                 if eachone.endswith(".odt"):
-                    shutil.copy(eachone, workingDir + "/info/odtfiles")
+                    shutil.copy(eachone, cfg.workingDir + "/info/odtFiles/")
                 elif eachone.endswith("lr.pdf"):
-                    shutil.copy(eachone, workingDir + "/info/lrpdffiles")
+                    shutil.copy(eachone, cfg.workingDir + "/info/lrpdfFiles/")
                 else:
-                    shutil.copy(eachone,workingDir + "/info/pdffiles")
+                    shutil.copy(eachone, cfg.workingDir + "/info/pdfFiles/")
     
     def RenameAllFotosPicDateNum(self, event):
         self.SetStatusText("Rename all fotos to name date index")
@@ -394,13 +445,18 @@ class App(wx.App):
     
     def OnInit(self):
          self.frame = mainMenu(parent=None, id = -1)
+         self.frame.Center()
          self.frame.Show()
+         self.frame.Fit()
          self.SetTopWindow(self.frame)
          #self.frame.OpenFile()
          return True
 ##################################################################################
 ##################################################################################
 
+#if __name__ == __main__
+#    main()
+	
 answer = 2
 app = App()
 app.MainLoop()
