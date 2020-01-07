@@ -24,7 +24,7 @@ import wx
 import shutil
 import json
 import artmanagementcfg as cfg
-import BlockWindow
+
 
    
 ##################################################################################
@@ -131,39 +131,30 @@ def searchLevel(myLevel):
 ##################################################################################
 #GUI APP 
    
-class mainMenu(wx.Frame):
- 
-    
+class mainMenu(wx.Frame):   
     
     def __init__(self, parent, id):
 
         wx.Frame.__init__(self, parent, id, 'Menus', size=(1200, 800))
         
         # Add a panel so it looks correct on all platforms
-        #self.panel = wx.Panel(self, wx.ID_ANY)
-        #self.panel.SetBackgroundColour("blue")
+
         panel = wx.Panel(self, wx.ID_ANY)
         panel.SetBackgroundColour("blue")
         hboxMain =wx.BoxSizer(wx.HORIZONTAL)
         vbox1 = wx.BoxSizer(wx.VERTICAL)
         vbox2 = wx.BoxSizer(wx.VERTICAL)
+        hbox0 = wx.BoxSizer(wx.HORIZONTAL)
         hbox1 = wx.BoxSizer(wx.HORIZONTAL)
+        hbox1a = wx.BoxSizer(wx.HORIZONTAL)
         hbox2 = wx.BoxSizer(wx.HORIZONTAL)
         hbox3 = wx.BoxSizer(wx.HORIZONTAL)
         hbox4 = wx.BoxSizer(wx.HORIZONTAL)
         hbox5 = wx.BoxSizer(wx.HORIZONTAL)
         hbox6 = wx.BoxSizer(wx.HORIZONTAL)
         hbox7 = wx.BoxSizer(wx.HORIZONTAL)
-        
-#        sizer = wx.GridSizer(rows=4, cols=4, hgap=5, vgap=5)
-#        
-#        for i in range(1,len(cfg.subDirList)): 
-#            btn = "Btn_"+str(i) 
-#            sizer.Add(wx.Button(self.panel,label = btn), 0, wx.EXPAND) 
-#            self.btn.Bind(wx.EVT_BUTTON, self.OnClicked) 
-#        self.panel.SetSizer(sizer)  
-        
-        
+        vboxBig = wx.BoxSizer(wx.VERTICAL)
+ 
         menuBar = wx.MenuBar()
         menu1 = wx.Menu()
         menu2 = wx.Menu()
@@ -194,13 +185,6 @@ class mainMenu(wx.Frame):
         menuBar.Append(menu3, "&Display")
         menuBar.Append(menu4, "&Info")
         
-        #self.panel = wx.Panel(self)
-        #self.panel.SetBackgroundColour("blue")
-        #sizer = wx.GridSizer(rows=4, cols=6, hgap=5, vgap=5)
-        #button = wx.Button(self.panel, -1, label="End Program")
-        #button = wx.Button(self.panel, -1, label="does nothing")
-        #sizer.Add(button, 0, 0)
-        
         self.SetMenuBar(menuBar)
         self.CreateStatusBar()
         self.SetStatusText("Welcome to art business management")
@@ -226,11 +210,43 @@ class mainMenu(wx.Frame):
         self.Bind(wx.EVT_MENU, self.SetPreferences, menuItemPref)
         self.Bind(wx.EVT_MENU, self.OnAbout, menuItemAbout)
         
-        #self.SetSizer(sizer)
-        #self.Fit()
+        workName ="Name of work"
+        catName = "Current Catagory"
+        
+        
+        b1 = wx.Button(panel, label = 'previous work') 
+        hbox0.Add(b1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        labelA = wx.StaticText(panel, -1, workName , style = wx.TE_CENTER)
+        hbox0.Add(labelA, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
+        
+        b2 = wx.Button(panel, label = 'next work') 
+        hbox0.Add(b2, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        b3 = wx.Button(panel, label = 'previous catagory') 
+        hbox0.Add(b3, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        labelb = wx.StaticText(panel, -1, catName ,style = wx.TE_CENTER)
+        hbox0.Add(labelb, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
+        
+        b4 = wx.Button(panel, label = 'next catagory') 
+        hbox0.Add(b4, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        b5 = wx.Button(panel, label = 'EXIT PROGRAM') 
+        hbox0.Add(b5, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        b5.Bind(wx.EVT_BUTTON, self.OnQuit)  
+        b1.Bind(wx.EVT_BUTTON, self.PrevPainting)
+        b2.Bind(wx.EVT_BUTTON, self.NextPainting)
+        b3.Bind(wx.EVT_BUTTON, self.PrevCat)
+        b4.Bind(wx.EVT_BUTTON, self.NextCat)
+        
         
         label1 = wx.StaticText(panel, -1, "Name of work")
         hbox1.Add(label1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        label1a =wx.StaticText(panel, -1, "Catagory")
+        hbox1a.Add(label1a, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
         label2 = wx.StaticText(panel, -1, "Date painted")
         hbox2.Add(label2, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
@@ -247,14 +263,15 @@ class mainMenu(wx.Frame):
         label6 = wx.StaticText(panel, -1, "Materials used")
         hbox6.Add(label6, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        
         label7 = wx.StaticText(panel, -1, "Description")
         hbox7.Add(label7, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
          
-        
         self.t1 = wx.TextCtrl(panel,-1,size=(400,50))
         hbox1.Add(self.t1,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        self.t1a = wx.TextCtrl(panel,-1,size=(400,50))
+        hbox1a.Add(self.t1a,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
         self.t2 = wx.TextCtrl(panel,-1,size=(400,50))
         hbox2.Add(self.t2,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
@@ -268,34 +285,36 @@ class mainMenu(wx.Frame):
         self.t5 = wx.TextCtrl(panel,-1,size=(400,50))
         hbox5.Add(self.t5,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t6 = wx.TextCtrl(panel,-1,size=(400,50))
+        self.t6 = wx.TextCtrl(panel,-1,size=(400,100),style = wx.TE_MULTILINE)
         hbox6.Add(self.t6,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t7 = wx.TextCtrl(panel,-1,size=(400,50))
+        self.t7 = wx.TextCtrl(panel,-1,size=(400,200),style = wx.TE_MULTILINE)
         hbox7.Add(self.t7,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        
         vbox1.Add(hbox1)
+        vbox1.Add(hbox1a)
         vbox1.Add(hbox2) 
         vbox1.Add(hbox3)
         vbox1.Add(hbox4)
         vbox1.Add(hbox5)
         vbox1.Add(hbox6)
         vbox1.Add(hbox7)
+
         hboxMain.Add(vbox1)
         hboxMain.Add(vbox2)
+        vboxBig.Add(hbox0)
+        vboxBig.Add(hboxMain)
         
-        panel.SetSizer(hboxMain)
+        panel.SetSizer(vboxBig)
         panel.Center()
         panel.Show()
         panel.Fit()
     
-    #here are the actions for above code from menu
+    #here are the actions for above code for the menu
     
     #SHOULD BE WORKING
     def OpenFile(self,event):
-       
-        listOfPaintings = []
+        catDir={}
         self.SetStatusText("Opens the database")
         dialog = wx.DirDialog(None, "Choose a directory to work with: ", style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         if dialog.ShowModal() == wx.ID_OK:
@@ -306,43 +325,41 @@ class mainMenu(wx.Frame):
         cfg.subDirList = os.listdir(cfg.workingDir)
         cfg.subDirList.remove("info")
         for each in cfg.subDirList:
-            listOfPaintings =[]
+            listOfPaintings = []
             if True == os.path.isdir(cfg.workingDir + "/" + each):
                 cfg.subDirPaths.append(cfg.workingDir + "/" + each)
                 os.chdir(cfg.workingDir + "/" + each)
                 listOfPaintings = os.listdir(os.getcwd())
+                #catList = {each:listOfPaintings}
+                catDir[each] =listOfPaintings
+                ###############################################
                 for eachone in listOfPaintings:
                     cfg.paintingList.append(eachone)
                     cfg.paintingPaths.append(cfg.workingDir + "/" + each + "/" + eachone)
                     cfg.paintingDic[eachone] = cfg.workingDir + "/" + each + "/" + eachone
+                ###############################################
         mylibListOfPaintings = {"list_of_paintings" : cfg.paintingList }
         mylibOfSubdirectories = {"list_of_subdirectories" : cfg.subDirList}
         
-        cfg.myData = {"paintings": mylibListOfPaintings, "subdir" : mylibOfSubdirectories}
-        jsonData = json.dumps(cfg.myData, indent=4, separators=(". ", " = "))
+        
+        #cfg.myData = {"paintings": mylibListOfPaintings, "subdir": mylibOfSubdirectories}
+        cfg.myData = [mylibListOfPaintings,  mylibOfSubdirectories, catDir]
+        jsonData = json.dumps(cfg.myData, sort_keys=True,  indent=4, separators=(". ", " = "))
         print(jsonData)
         print("\n")
         print(os.getcwd())
-        filename = "myfisrtjsonfile"
-        with open(filename, 'w+') as f:
-            json.dump(cfg.myData, f)
-            
-        sizer = wx.GridSizer(rows=4, cols=4, hgap=5, vgap=5)  
-        print(cfg.subDirList)
-        sizernumber = 0
-        for i in cfg.subDirList: 
-            btn = "Btn_"+ str(i) 
-            sizer.Add(wx.Button(self.panel,label = btn), sizernumber, wx.EXPAND) 
-            sizernumber +=1
-            #self.btn.Bind(wx.EVT_BUTTON, self.OnClicked) 
-        self.panel.SetSizer(sizer)  
+        os.chdir(cfg.workingDir + "/" + "info")
+        filename = "myfirstjsonfile"
+        with open(filename, 'w') as f:
+             f.write(jsonData)
+             
+        #now load correct stuff to screen.
         
         
     def CloseFile(self,event):
         self.SetStatusText("Closes the database")
         wx.MessageBox("This closes the file ",
                       "fileloader", wx.OK | wx.ICON_INFORMATION, self)
-        
         
     def OnAbout(self, event):
         self.SetStatusText("About me")
@@ -425,11 +442,6 @@ class mainMenu(wx.Frame):
     def DisplayAll(self, event):
         mybuttons = []
         self.SetStatusText("Display all works")
-#        for each in paintingDic:
-#            mybutton(each) = wx.Button(panel, label=each, pos=(100, 320),size=(400,50))
-#            
-#        
-#        pass
         
     def GetHelp(self, event):
         self.SetStatusText("Help")
@@ -438,6 +450,19 @@ class mainMenu(wx.Frame):
     def SetPreferences(self, event):
         self.SetStatusText("Set up preferences")
         pass
+    
+    def PrevPainting(self,event):
+        pass
+        
+    def NextPainting(self,event):
+        pass
+        
+    def PrevCat(self,event):
+        pass
+        
+    def NextCat(self, event):
+        pass
+            
         
 ##################################################################################
     
