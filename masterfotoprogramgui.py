@@ -16,16 +16,18 @@ things to do:
 4. organize all the info sheets in one folder so that you can collate them easily
 
 """
-
-import os
-#import pprint
-import wx 
 #import sys
+import os
+import wx 
 import shutil
 import json
 import artmanagementcfg as cfg
 
-
+catDir={}
+#cfg.subDirList = []
+mylibListOfPaintings = {}
+mylibOfSubdirectories = {}
+jsonData = {} 
    
 ##################################################################################
      
@@ -131,7 +133,9 @@ def searchLevel(myLevel):
 ##################################################################################
 #GUI APP 
    
-class mainMenu(wx.Frame):   
+class mainMenu(wx.Frame):  
+
+    
     
     def __init__(self, parent, id):
 
@@ -267,29 +271,29 @@ class mainMenu(wx.Frame):
         hbox7.Add(label7, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
          
-        self.t1 = wx.TextCtrl(panel,-1,size=(400,50))
-        hbox1.Add(self.t1,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        t1 = wx.TextCtrl(panel,-1,size=(400,50))
+        hbox1.Add(t1,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t1a = wx.TextCtrl(panel,-1,size=(400,50))
-        hbox1a.Add(self.t1a,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        t1a = wx.TextCtrl(panel,-1,size=(400,50))
+        hbox1a.Add(t1a,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t2 = wx.TextCtrl(panel,-1,size=(400,50))
-        hbox2.Add(self.t2,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        t2 = wx.TextCtrl(panel,-1,size=(400,50))
+        hbox2.Add(t2,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t3 = wx.TextCtrl(panel,-1,size=(400,50))
-        hbox3.Add(self.t3,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        t3 = wx.TextCtrl(panel,-1,size=(400,50))
+        hbox3.Add(t3,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t4 = wx.TextCtrl(panel,-1,size=(400,50))
-        hbox4.Add(self.t4,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        t4 = wx.TextCtrl(panel,-1,size=(400,50))
+        hbox4.Add(t4,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t5 = wx.TextCtrl(panel,-1,size=(400,50))
-        hbox5.Add(self.t5,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        t5 = wx.TextCtrl(panel,-1,size=(400,50))
+        hbox5.Add(t5,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t6 = wx.TextCtrl(panel,-1,size=(400,100),style = wx.TE_MULTILINE)
-        hbox6.Add(self.t6,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        t6 = wx.TextCtrl(panel,-1,size=(400,100),style = wx.TE_MULTILINE)
+        hbox6.Add(t6,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t7 = wx.TextCtrl(panel,-1,size=(400,200),style = wx.TE_MULTILINE)
-        hbox7.Add(self.t7,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        t7 = wx.TextCtrl(panel,-1,size=(400,200),style = wx.TE_MULTILINE)
+        hbox7.Add(t7,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
         vbox1.Add(hbox1)
         vbox1.Add(hbox1a)
@@ -312,9 +316,17 @@ class mainMenu(wx.Frame):
     
     #here are the actions for above code for the menu
     
+    
+    
+    
     #SHOULD BE WORKING
     def OpenFile(self,event):
-        catDir={}
+        global catDir
+        #global cfg.subDirList 
+        global mylibListOfPaintings
+        global mylibOfSubdirectories 
+        global jsonData 
+        
         self.SetStatusText("Opens the database")
         dialog = wx.DirDialog(None, "Choose a directory to work with: ", style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         if dialog.ShowModal() == wx.ID_OK:
@@ -354,6 +366,7 @@ class mainMenu(wx.Frame):
              f.write(jsonData)
              
         #now load correct stuff to screen.
+        
         
         
     def CloseFile(self,event):
@@ -452,9 +465,15 @@ class mainMenu(wx.Frame):
         pass
     
     def PrevPainting(self,event):
+        global jsonData
+        print(jsonData)
+        print("\n")
+        print(os.getcwd())
+        self.SetStatusText("back one painting")
         pass
         
     def NextPainting(self,event):
+        self.SetStatusText("forward one painting")
         pass
         
     def PrevCat(self,event):
