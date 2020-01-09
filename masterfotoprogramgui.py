@@ -21,13 +21,14 @@ import os
 import wx 
 import shutil
 import json
+import glob
 import artmanagementcfg as cfg
 
 catDir={}
 #cfg.subDirList = []
 mylibListOfPaintings = {}
 mylibOfSubdirectories = {}
-jsonData = {} 
+jsonData = {}
    
 ##################################################################################
      
@@ -337,11 +338,31 @@ class mainMenu(wx.Frame):
         cfg.subDirList = os.listdir(cfg.workingDir)
         cfg.subDirList.remove("info")
         for each in cfg.subDirList:
-            listOfPaintings = []
+            listOfPaintings = {}
             if True == os.path.isdir(cfg.workingDir + "/" + each):
                 cfg.subDirPaths.append(cfg.workingDir + "/" + each)
                 os.chdir(cfg.workingDir + "/" + each)
-                listOfPaintings = os.listdir(os.getcwd())
+                thePaintings = os.listdir(os.getcwd())
+                #listOfPaintings = os.listdir(os.getcwd())
+                for eacheins in thePaintings:
+                    os.chdir(cfg.workingDir + "/" + each + "/" + eacheins + "/info")
+                    print(os.getcwd())
+                    print(os.listdir())
+                    for theFile in os.listdir("."):
+                        if theFile.endswith(".json"):
+                            with open(theFile, "r") as content:
+                    #with open(glob.glob('*.txt'),"r") as content:  
+                                datastuff = json.load(content)
+                                print(datastuff)
+                                listOfPaintings[eacheins]= datastuff
+                    os.chdir("..")
+                    os.chdir("..")
+                
+                
+                
+                
+                
+                
                 #catList = {each:listOfPaintings}
                 catDir[each] =listOfPaintings
                 ###############################################
@@ -356,6 +377,7 @@ class mainMenu(wx.Frame):
         
         #cfg.myData = {"paintings": mylibListOfPaintings, "subdir": mylibOfSubdirectories}
         cfg.myData = [mylibListOfPaintings,  mylibOfSubdirectories, catDir]
+        
         jsonData = json.dumps(cfg.myData, sort_keys=True,  indent=4, separators=(". ", " = "))
         print(jsonData)
         print("\n")
