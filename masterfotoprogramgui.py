@@ -355,6 +355,7 @@ class mainMenu(wx.Frame):
         with open(file2name, 'w') as f:
              f.write(json1Data)
              
+             
         #now load correct stuff to screen.
         
     def CloseFile(self,event):
