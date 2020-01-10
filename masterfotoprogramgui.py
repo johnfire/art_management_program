@@ -22,7 +22,6 @@ import json
 import artmanagementcfg as cfg
 
 catDir={}
-#cfg.subDirList = []
 mylibListOfPaintings = {}
 mylibOfSubdirectories = {}
 jsonData = {}
@@ -306,58 +305,55 @@ class mainMenu(wx.Frame):
         global mylibListOfPaintings
         global mylibOfSubdirectories 
         global jsonData 
+        dirOfCatandPaintings = {}
         
         self.SetStatusText("Opens the database")
         dialog = wx.DirDialog(None, "Choose a directory to work with: ", style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         if dialog.ShowModal() == wx.ID_OK:
-            #print(dialog.GetPath())
             cfg.workingDir = str(dialog.GetPath())
             os.chdir(str(dialog.GetPath()))
         dialog.Destroy()
         cfg.subDirList = os.listdir(cfg.workingDir)
         cfg.subDirList.remove("info")
+        
         for each in cfg.subDirList:
             listOfPaintings = {}
             if True == os.path.isdir(cfg.workingDir + "/" + each):
                 cfg.subDirPaths.append(cfg.workingDir + "/" + each)
                 os.chdir(cfg.workingDir + "/" + each)
                 thePaintings = os.listdir(os.getcwd())
-                #listOfPaintings = os.listdir(os.getcwd())
+                print(thePaintings)
+                dirOfCatandPaintings[each] = thePaintings
                 for eacheins in thePaintings:
                     os.chdir(cfg.workingDir + "/" + each + "/" + eacheins + "/info")
-                    #print(os.getcwd())
-                    #print(os.listdir())
                     for theFile in os.listdir("."):
                         if theFile.endswith(".json"):
                             with open(theFile, "r") as content:
                                 datastuff = json.load(content)
-                                print(datastuff)
                                 listOfPaintings[eacheins]= datastuff
                     os.chdir("..")
                     os.chdir("..")
-                
-                #catList = {each:listOfPaintings}
+
                 catDir[each] =listOfPaintings
-                ###############################################
-                for eachone in listOfPaintings:
-                    cfg.paintingList.append(eachone)
-                    cfg.paintingPaths.append(cfg.workingDir + "/" + each + "/" + eachone)
-                    cfg.paintingDic[eachone] = cfg.workingDir + "/" + each + "/" + eachone
-                ###############################################
+
         mylibListOfPaintings = {"list_of_paintings" : cfg.paintingList }
         mylibOfSubdirectories = {"list_of_subdirectories" : cfg.subDirList}
+        mylibOfSubPaintings = {"list_of_cat_and_paintings": dirOfCatandPaintings}
         
-        #cfg.myData = {"paintings": mylibListOfPaintings, "subdir": mylibOfSubdirectories}
-        cfg.myData = [mylibListOfPaintings,  mylibOfSubdirectories, catDir]
-        
+        cfg.myData = [cfg.workingDir, mylibOfSubdirectories,mylibOfSubPaintings]
+        cfg.myDataBase =[ mylibOfSubdirectories, mylibOfSubPaintings, catDir]
         jsonData = json.dumps(cfg.myData, sort_keys=True,  indent=4, separators=(". ", " = "))
-        print(jsonData)
+        json1Data = json.dumps(cfg.myDataBase, sort_keys=True,  indent=4, separators=(". ", " = "))
+
         print("\n")
         print(os.getcwd())
         os.chdir(cfg.workingDir + "/" + "info")
-        filename = "myfirstjsonfile"
+        filename = "myDatajsonfile"
         with open(filename, 'w') as f:
              f.write(jsonData)
+        file2name = "myDataBasejsonfile"
+        with open(file2name, 'w') as f:
+             f.write(json1Data)
              
         #now load correct stuff to screen.
         
@@ -495,7 +491,6 @@ class App(wx.App):
 #if __name__ == __main__
 #    main()
 	
-answer = 2
 app = App()
 app.MainLoop()
 print("Ending program.")       
