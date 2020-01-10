@@ -155,23 +155,24 @@ class mainMenu(wx.Frame):
         
         menuItemNewPainting = menu2.Append(-1,"&New Painting")
         menuItemNewSubfolder = menu2.Append(-1,"Create New Subfolder")
-        menuItemMakeListAll = menu2.Append(-1, "List all works")
-        menuItemCreateAllSubfolders = menu2.Append(-1,"Make All Subfolders")
-        menuItemMoveFotosToFolders = menu2.Append(-1, "Move Fotos to Subfolders")
-        menuItemColate = menu2.Append(-1, "Collate all Info Sheets")
-        menuItemRenameAll = menu2.Append(-1, "Rename All Fotos")
+        
+        menuItemMakeListAll = menu3.Append(-1, "List all works")
+        menuItemCreateAllSubfolders = menu3.Append(-1,"Make All Subfolders")
+        menuItemMoveFotosToFolders = menu3.Append(-1, "Move Fotos to Subfolders")
+        menuItemColate = menu3.Append(-1, "Collate all Info Sheets")
+        menuItemRenameAll = menu3.Append(-1, "Rename All Fotos")
         #menuItemBlank = menu2.Append(-1, "Blank, future use")
         
-        menuItemDisplayWork = menu3.Append(-1, "Display a Work")
-        menuItemDisplayAll = menu3.Append(-1, "Display All Works")
+        #menuItemDisplayWork = menu3.Append(-1, "Display a Work")
+        #menuItemDisplayAll = menu3.Append(-1, "Display All Works")
         
         menuItemHelp = menu4.Append(-1,"Help")
         menuItemPref = menu4.Append(-1, "Preferences")
         menuItemAbout = menu4.Append(-1, "&About me")
         
         menuBar.Append(menu1, "&File")
-        menuBar.Append(menu2, "&Actions")
-        menuBar.Append(menu3, "&Display")
+        menuBar.Append(menu2, "&Common Actions")
+        menuBar.Append(menu3, "&Other Actions")
         menuBar.Append(menu4, "&Info")
         
         self.SetMenuBar(menuBar)
@@ -192,8 +193,8 @@ class mainMenu(wx.Frame):
         self.Bind(wx.EVT_MENU, self.ColateAllInfoSheets, menuItemColate)
         self.Bind(wx.EVT_MENU, self.RenameAllFotosPicDateNum, menuItemRenameAll)
         
-        self.Bind(wx.EVT_MENU, self.DisplayWork, menuItemDisplayWork)
-        self.Bind(wx.EVT_MENU, self.DisplayAll, menuItemDisplayAll)
+        #self.Bind(wx.EVT_MENU, self.DisplayWork, menuItemDisplayWork)
+        #self.Bind(wx.EVT_MENU, self.DisplayAll, menuItemDisplayAll)
         
         self.Bind(wx.EVT_MENU, self.GetHelp, menuItemHelp)
         self.Bind(wx.EVT_MENU, self.SetPreferences, menuItemPref)
@@ -202,32 +203,32 @@ class mainMenu(wx.Frame):
         workName ="Name of work"
         catName = "Current Catagory"
         
-        b1 = wx.Button(panel, label = 'previous work') 
-        hbox0.Add(b1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.b1 = wx.Button(panel, label = 'previous work') 
+        hbox0.Add(self.b1, 1, wx.ALIGN_LEFT|wx.ALL,5)
         
-        labelA = wx.StaticText(panel, -1, workName , style = wx.TE_CENTER)
-        hbox0.Add(labelA, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
+        self.labelA = wx.StaticText(panel, -1, workName , style = wx.TE_CENTER)
+        hbox0.Add(self.labelA, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
         
-        b2 = wx.Button(panel, label = 'next work') 
-        hbox0.Add(b2, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.b2 = wx.Button(panel, label = 'next work') 
+        hbox0.Add(self.b2, 1, wx.ALIGN_LEFT|wx.ALL,5)
         
-        b3 = wx.Button(panel, label = 'previous catagory') 
-        hbox0.Add(b3, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.b3 = wx.Button(panel, label = 'previous catagory') 
+        hbox0.Add(self.b3, 1, wx.ALIGN_LEFT|wx.ALL,5)
         
-        labelb = wx.StaticText(panel, -1, catName ,style = wx.TE_CENTER)
-        hbox0.Add(labelb, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
+        self.labelB = wx.StaticText(panel, -1, catName ,style = wx.TE_CENTER)
+        hbox0.Add(self.labelB, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
         
-        b4 = wx.Button(panel, label = 'next catagory') 
-        hbox0.Add(b4, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.b4 = wx.Button(panel, label = 'next catagory') 
+        hbox0.Add(self.b4, 1, wx.ALIGN_LEFT|wx.ALL,5)
         
-        b5 = wx.Button(panel, label = 'EXIT PROGRAM') 
-        hbox0.Add(b5, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.b5 = wx.Button(panel, label = 'EXIT PROGRAM') 
+        hbox0.Add(self.b5, 1, wx.ALIGN_RIGHT|wx.ALL,5)
         
-        b5.Bind(wx.EVT_BUTTON, self.OnQuit)  
-        b1.Bind(wx.EVT_BUTTON, self.PrevPainting)
-        b2.Bind(wx.EVT_BUTTON, self.NextPainting)
-        b3.Bind(wx.EVT_BUTTON, self.PrevCat)
-        b4.Bind(wx.EVT_BUTTON, self.NextCat)
+        self.b5.Bind(wx.EVT_BUTTON, self.OnQuit)  
+        self.b1.Bind(wx.EVT_BUTTON, self.PrevPainting)
+        self.b2.Bind(wx.EVT_BUTTON, self.NextPainting)
+        self.b3.Bind(wx.EVT_BUTTON, self.PrevCat)
+        self.b4.Bind(wx.EVT_BUTTON, self.NextCat)
         
         label1 = wx.StaticText(panel, -1, "Name of work")
         hbox1.Add(label1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
@@ -253,29 +254,29 @@ class mainMenu(wx.Frame):
         label7 = wx.StaticText(panel, -1, "Description")
         hbox7.Add(label7, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
          
-        t1 = wx.TextCtrl(panel,-1,size=(400,50))
-        hbox1.Add(t1,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.t1 = wx.TextCtrl(panel,-1,size=(350,40))
+        hbox1.Add(self.t1,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        t1a = wx.TextCtrl(panel,-1,size=(400,50))
-        hbox1a.Add(t1a,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.t1a = wx.TextCtrl(panel,-1,size=(350,40))
+        hbox1a.Add(self.t1a,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        t2 = wx.TextCtrl(panel,-1,size=(400,50))
-        hbox2.Add(t2,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.t2 = wx.TextCtrl(panel,-1,size=(350,40))
+        hbox2.Add(self.t2,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        t3 = wx.TextCtrl(panel,-1,size=(400,50))
-        hbox3.Add(t3,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.t3 = wx.TextCtrl(panel,-1,size=(350,40))
+        hbox3.Add(self.t3,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        t4 = wx.TextCtrl(panel,-1,size=(400,50))
-        hbox4.Add(t4,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.t4 = wx.TextCtrl(panel,-1,size=(350,40))
+        hbox4.Add(self.t4,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        t5 = wx.TextCtrl(panel,-1,size=(400,50))
-        hbox5.Add(t5,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.t5 = wx.TextCtrl(panel,-1,size=(350,40))
+        hbox5.Add(self.t5,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        t6 = wx.TextCtrl(panel,-1,size=(400,100),style = wx.TE_MULTILINE)
-        hbox6.Add(t6,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.t6 = wx.TextCtrl(panel,-1,size=(350,80),style = wx.TE_MULTILINE)
+        hbox6.Add(self.t6,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        t7 = wx.TextCtrl(panel,-1,size=(400,200),style = wx.TE_MULTILINE)
-        hbox7.Add(t7,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.t7 = wx.TextCtrl(panel,-1,size=(350,160),style = wx.TE_MULTILINE)
+        hbox7.Add(self.t7,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
         vbox1.Add(hbox1)
         vbox1.Add(hbox1a)
@@ -301,10 +302,10 @@ class mainMenu(wx.Frame):
     #SHOULD BE WORKING
     def OpenFile(self,event):
         global catDir
-        #global cfg.subDirList 
         global mylibListOfPaintings
         global mylibOfSubdirectories 
         global jsonData 
+        
         dirOfCatandPaintings = {}
         
         self.SetStatusText("Opens the database")
@@ -347,6 +348,7 @@ class mainMenu(wx.Frame):
 
         print("\n")
         print(os.getcwd())
+        
         os.chdir(cfg.workingDir + "/" + "info")
         filename = "myDatajsonfile"
         with open(filename, 'w') as f:
@@ -357,6 +359,17 @@ class mainMenu(wx.Frame):
              
              
         #now load correct stuff to screen.
+        self.labelA.SetLabel("blah blah")
+        self.labelB.SetLabel("and more bah")
+        self.t1.SetValue("some text here")
+        self.t1a.SetValue("something here")
+        self.t2.SetValue("something here")
+        self.t3.SetValue("something here")
+        self.t4.SetValue("something here")
+        self.t5.SetValue("something here")
+        self.t6.SetValue("something here")
+        self.t7.SetValue("something here")
+        
         
     def CloseFile(self,event):
         self.SetStatusText("Closes the database")
@@ -489,10 +502,9 @@ class App(wx.App):
          self.SetTopWindow(self.frame)
          return True
 ##################################################################################
-#if __name__ == __main__
-#    main()
+if __name__ == '__main__':
 	
-app = App()
-app.MainLoop()
-print("Ending program.")       
+    app = App()
+    app.MainLoop()
+    print("Ending program.")       
 ##################################################################################
