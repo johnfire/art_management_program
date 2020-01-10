@@ -5,10 +5,8 @@ Created on Sun Aug 25 11:24:43 2019
 
 this is the main foto management proram.
 @author: christopher rehm
-
 note this program uses the wxPython and wxWidgets for GUI development,
 both must be installed for usage of the GUI
-
 things to do:
 
 2. creat new subfolders in all painting folders --NOT TESTED
@@ -21,7 +19,6 @@ import os
 import wx 
 import shutil
 import json
-import glob
 import artmanagementcfg as cfg
 
 catDir={}
@@ -29,7 +26,6 @@ catDir={}
 mylibListOfPaintings = {}
 mylibOfSubdirectories = {}
 jsonData = {}
-   
 ##################################################################################
      
 def makeList():
@@ -54,8 +50,7 @@ def makeList():
             except:
                 fh.write("\n")
     fh.close()
-    os.chdir("..")
-        
+    os.chdir("..")   
 ##################################################################################
 
 def createAllSubfolders():
@@ -85,8 +80,7 @@ def createAllSubfolders():
                     os.chdir("..")
                     #print(str(os.getcwd()+ "\n"))
             os.chdir("..")
-            #print(str(os.getcwd()+ "\n"))
-    
+            #print(str(os.getcwd()+ "\n"))  
 ##################################################################################
     
 def moveAllPhotos():
@@ -101,18 +95,14 @@ def moveAllPhotos():
            elif each.endswith(".jpg"):
                shutil.move("./"+each, "./oldCamerPics/"+ each)
            else:
-               pass
-    
+               pass  
 ##################################################################################
 def renameFotos():
     pass
     
     #if oldName.startswith("IMG") or oldName.startswith("DSC"):
-        
     #    newName = paintingName + todayDate + index 
-   
 ##################################################################################
-    
 #### recursion search function #####
 def searchLevel(myLevel):
     tableofitems ={}
@@ -129,20 +119,15 @@ def searchLevel(myLevel):
             tableofitems[countoffiles] = each
             countoffiles +=1
     return tableofitems
-
 ##################################################################################
 ##################################################################################
 #GUI APP 
    
 class mainMenu(wx.Frame):  
-
-    
     
     def __init__(self, parent, id):
 
         wx.Frame.__init__(self, parent, id, 'Menus', size=(1200, 800))
-        
-        # Add a panel so it looks correct on all platforms
 
         panel = wx.Panel(self, wx.ID_ANY)
         panel.SetBackgroundColour("blue")
@@ -218,7 +203,6 @@ class mainMenu(wx.Frame):
         workName ="Name of work"
         catName = "Current Catagory"
         
-        
         b1 = wx.Button(panel, label = 'previous work') 
         hbox0.Add(b1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
@@ -246,7 +230,6 @@ class mainMenu(wx.Frame):
         b3.Bind(wx.EVT_BUTTON, self.PrevCat)
         b4.Bind(wx.EVT_BUTTON, self.NextCat)
         
-        
         label1 = wx.StaticText(panel, -1, "Name of work")
         hbox1.Add(label1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
@@ -270,7 +253,6 @@ class mainMenu(wx.Frame):
         
         label7 = wx.StaticText(panel, -1, "Description")
         hbox7.Add(label7, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
-        
          
         t1 = wx.TextCtrl(panel,-1,size=(400,50))
         hbox1.Add(t1,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
@@ -317,9 +299,6 @@ class mainMenu(wx.Frame):
     
     #here are the actions for above code for the menu
     
-    
-    
-    
     #SHOULD BE WORKING
     def OpenFile(self,event):
         global catDir
@@ -346,22 +325,16 @@ class mainMenu(wx.Frame):
                 #listOfPaintings = os.listdir(os.getcwd())
                 for eacheins in thePaintings:
                     os.chdir(cfg.workingDir + "/" + each + "/" + eacheins + "/info")
-                    print(os.getcwd())
-                    print(os.listdir())
+                    #print(os.getcwd())
+                    #print(os.listdir())
                     for theFile in os.listdir("."):
                         if theFile.endswith(".json"):
                             with open(theFile, "r") as content:
-                    #with open(glob.glob('*.txt'),"r") as content:  
                                 datastuff = json.load(content)
                                 print(datastuff)
                                 listOfPaintings[eacheins]= datastuff
                     os.chdir("..")
                     os.chdir("..")
-                
-                
-                
-                
-                
                 
                 #catList = {each:listOfPaintings}
                 catDir[each] =listOfPaintings
@@ -373,7 +346,6 @@ class mainMenu(wx.Frame):
                 ###############################################
         mylibListOfPaintings = {"list_of_paintings" : cfg.paintingList }
         mylibOfSubdirectories = {"list_of_subdirectories" : cfg.subDirList}
-        
         
         #cfg.myData = {"paintings": mylibListOfPaintings, "subdir": mylibOfSubdirectories}
         cfg.myData = [mylibListOfPaintings,  mylibOfSubdirectories, catDir]
@@ -388,8 +360,6 @@ class mainMenu(wx.Frame):
              f.write(jsonData)
              
         #now load correct stuff to screen.
-        
-        
         
     def CloseFile(self,event):
         self.SetStatusText("Closes the database")
@@ -415,20 +385,29 @@ class mainMenu(wx.Frame):
         if dialog.ShowModal() == wx.ID_OK:
             print(dialog.GetPath())
             os.chdir(str(dialog.GetPath()))
+            mylocation=os.getcwd()
         dialog.Destroy()
-        
         dlg = wx.TextEntryDialog(None, "What is the new painting named",'Name of new painting', 'new painting')
         if dlg.ShowModal() == wx.ID_OK:
             response = dlg.GetValue()
             os.mkdir("./" + response)
             os.chdir("./" + response)
             for each in cfg.dirlist:
-                os.mkdir("./" + each)   
+                os.mkdir("./" + each) 
+            os.chdir("info")
+            print("\n")
+            print("\n")
+            print(os.getcwd())
+            print("\n")
+            print("\n")
+            print(cfg.workingDir)
+            print("\n")
+            shutil.copyfile(cfg.workingDir + "/info/placeholder.json","./"+response+".json" )
                 
     #SHOULD BE WORKING
     def AddNewSubFolder(self, event):
-        self.SetStatusText("Add a Subfolder to all Paintings")
-        dlg = wx.TextEntryDialog(None, "What is the new folder named",'Name of new folder', 'new folder')
+        self.SetStatusText("Add a new catagory to database")
+        dlg = wx.TextEntryDialog(None, "What is the new catagory named",'Name of new folder', 'new folder')
         if dlg.ShowModal() == wx.ID_OK:
             response = dlg.GetValue()
             os.chdir(cfg.workingDir)
@@ -442,7 +421,6 @@ class mainMenu(wx.Frame):
     def MakeListAllWorks(self, event):
         self.SetStatusText("Make a list of all works")
         makeList()
-        
         
     def CreateAllSubfolders(self, event):
         self.SetStatusText("Create all subfolders, not normally used")
@@ -475,7 +453,6 @@ class mainMenu(wx.Frame):
         pass
     
     def DisplayAll(self, event):
-        mybuttons = []
         self.SetStatusText("Display all works")
         
     def GetHelp(self, event):
@@ -503,8 +480,6 @@ class mainMenu(wx.Frame):
         
     def NextCat(self, event):
         pass
-            
-        
 ##################################################################################
     
 class App(wx.App):
@@ -515,17 +490,13 @@ class App(wx.App):
          self.frame.Show()
          self.frame.Fit()
          self.SetTopWindow(self.frame)
-         #self.frame.OpenFile()
          return True
 ##################################################################################
-##################################################################################
-
 #if __name__ == __main__
 #    main()
 	
 answer = 2
 app = App()
 app.MainLoop()
-print("Ending program.")
-        
+print("Ending program.")       
 ##################################################################################
