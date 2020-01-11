@@ -6,12 +6,8 @@ Created on Sun Aug 25 11:24:43 2019
 this is the main foto management proram.
 @author: christopher rehm
 note this program uses the wxPython and wxWidgets for GUI development,
-both must be installed for usage of the GUI
-things to do:
-
-2. creat new subfolders in all painting folders --NOT TESTED
-3. rename all cr2 and jpg files by the name of the painting and a number. a date?
-4. organize all the info sheets in one folder so that you can collate them easily
+both must be installed
+plase use wxPython 4.0 or higher 
 
 """
 #import sys
@@ -136,17 +132,12 @@ def moveAllPhotos():
 ##################################################################################
 def renameFotos():
     pass
-    
-    #if oldName.startswith("IMG") or oldName.startswith("DSC"):
-    #    newName = paintingName + todayDate + index 
+
 ##################################################################################
 #### recursion search function #####
 def searchLevel(myLevel):
     tableofitems ={}
-    #print(str(os.getcwd()))
-    #print(myLevel)
     thisdirlist = os.listdir(myLevel)
-    #print(thisdirlist)
     countoffiles = 1
     for each in thisdirlist:
         if os.path.isdir(myLevel +"/" + each) is True:
@@ -399,7 +390,7 @@ class mainMenu(wx.Frame):
         
     #here are the actions for above code for the menu
     
-    #SHOULD BE WORKING
+    # WORKING
     def OpenFile(self,event):
         
         global catDir
@@ -563,15 +554,15 @@ class mainMenu(wx.Frame):
         self.SetStatusText("About me")
         wx.MessageBox("This program manages all the art stuff inn the computer",
                       "About Art Biz Manager", wx.OK | wx.ICON_INFORMATION, self)
-        
+    #WORKING    
     def OnCloseMe(self, event):
         self.Close() 
-    
+    #WORKING
     def OnQuit(self, event):
         self.Close()  
     
-    #SHOULD BE WORKING
-    def NewPainting(self, event): #SHOULD BE WORKING
+    #WORKING
+    def NewPainting(self, event):
         
         self.SetStatusText("Create a New Painting")
         dialog = wx.DirDialog(None, "Choose a directory for your painting: ", style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
@@ -597,7 +588,7 @@ class mainMenu(wx.Frame):
             print("\n")
             shutil.copyfile(cfg.workingDir + "/info/placeholder.json","./"+response+".json" )
                 
-    #SHOULD BE WORKING
+    #WORKING
     def AddNewSubFolder(self, event):
         self.SetStatusText("Add a new catagory to database")
         dlg = wx.TextEntryDialog(None, "What is the new catagory named",'Name of new folder', 'new folder')
@@ -611,7 +602,6 @@ class mainMenu(wx.Frame):
                     os.mkdir(response)  
 
     def onSavePainting(self,event):
-        #global cfg.workingDir
         global currentCat
         global dispPainting
         
@@ -653,7 +643,7 @@ class mainMenu(wx.Frame):
         self.SetStatusText("Move fotos to correct picture folders")
         moveAllPhotos()
         
-    #works
+    #WORKING
     def ColateAllInfoSheets(self,event):
         self.SetStatusText("Collate all info sheets in one folder")
         for each in cfg.paintingPaths:
@@ -681,7 +671,8 @@ class mainMenu(wx.Frame):
     def SetPreferences(self, event):
         self.SetStatusText("Set up preferences")
         pass
-    
+        
+    #WORKING
     def PrevPainting(self,event):
         global listSubs
         global currentCat
@@ -753,7 +744,7 @@ class mainMenu(wx.Frame):
         self.t14.SetValue(str(mysite))
         
         self.SetStatusText("back one painting")
-        
+    #WORKING    
     def NextPainting(self,event):
         global listSubs
         global currentCat
@@ -825,7 +816,7 @@ class mainMenu(wx.Frame):
         self.t14.SetValue(str(mysite))
         
         self.SetStatusText("forward one painting")
-        
+    #WORKING    
     def PrevCat(self,event):
         global listSubs
         global currentCat
@@ -901,7 +892,7 @@ class mainMenu(wx.Frame):
         self.t12.SetValue(s6)
         self.t13.SetValue(buzz)
         self.t14.SetValue(str(mysite))
-        
+    #WORKING    
     def NextCat(self, event):
         global listSubs
         global currentCat
