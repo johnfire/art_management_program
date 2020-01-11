@@ -21,7 +21,7 @@ import shutil
 import json
 import artmanagementcfg as cfg
 
-catDir={}
+catDir = {}
 mylibListOfPaintings = {}
 mylibOfSubdirectories = {}
 dirOfCatandPaintings = {}
@@ -30,21 +30,29 @@ mylibOfSubPaintings = {}
 jsonData = {}
 json1Data = {}
 
-gallery1 = "saatchi"
-gallery2 = "deviant"
-gallery3 = "soc6"
-gallery4 = "buzzart"
-gallery5 = "mysite"
+gallery1 = "mysite"
+gallery2 = "buzzart"
+gallery3 = "deviant"
+gallery4 = "saatchi"
+gallery5 = "soc6"
 
 nameOfPaintingfile = "none"
 nameOfCatagory = "none"
+
 nameOfPainting = "none"
 datePainted = "none"
 wherePainted = "none"
-vertDim = "none"
-horizDim = "none"
+idnum = 0
+secid = 0
+Dims = "none"
+hDims = "none"
 materialsUsed = "none"
 description = "none"
+gallery1Val = 0 
+gallery2Val = 0
+gallery3Val = 0
+gallery4Val = 0
+gallery5Val = 0
 
 listSubs = []
 catIndex = 1
@@ -149,43 +157,11 @@ def searchLevel(myLevel):
             countoffiles +=1
     return tableofitems
 ##################################################################################
-def dispData(self, event):
-        global listSubs
-        global currentCat
-        global listPtngs
-        global dispPainting 
-        global catIndex
-        global ptngIndex
-        global totalSubs
-        global totalPtngs
-        
-        ptgName = catDir[currentCat][dispPainting][dispPainting]["pname"]
-        ptgDesc = catDir[currentCat][dispPainting][dispPainting]["desc"]
-        ptgDate = catDir[currentCat][dispPainting][dispPainting]["year"]
-        ptgNum = catDir[currentCat][dispPainting][dispPainting]["number"]
-        
-        self.labelA.SetLabel(dispPainting)
-        self.labelB.SetLabel(currentCat)
-        self.t1.SetValue(ptgName)
-        #self.t1a.SetValue("something here")
-        self.t2.SetValue(str(ptgDate))
-        self.t3.SetValue(wherePainted)
-        self.t4.SetValue(vertDim)
-        self.t5.SetValue(horizDim)
-        self.t6.SetValue(materialsUsed)
-        self.t7.SetValue(ptgDesc)  
+
 ##################################################################################
 #GUI APP 
    
-class mainMenu(wx.Frame):  
-    
-             
-    
-    
-    
-    
-    
-    
+class mainMenu(wx.Frame):   
     
     def __init__(self, parent, id):
 
@@ -232,11 +208,7 @@ class mainMenu(wx.Frame):
         menuItemMoveFotosToFolders = menu3.Append(-1, "Move Fotos to Subfolders")
         menuItemColate = menu3.Append(-1, "Collate all Info Sheets")
         menuItemRenameAll = menu3.Append(-1, "Rename All Fotos")
-        #menuItemBlank = menu2.Append(-1, "Blank, future use")
-    
-        #menuItemDisplayWork = menu3.Append(-1, "Display a Work")
-        #menuItemDisplayAll = menu3.Append(-1, "Display All Works")
-    
+
         menuItemHelp = menu4.Append(-1,"Help")
         menuItemPref = menu4.Append(-1, "Preferences")
         menuItemAbout = menu4.Append(-1, "&About me")
@@ -250,8 +222,6 @@ class mainMenu(wx.Frame):
         self.CreateStatusBar()
         self.SetStatusText("Welcome to art business management")
     
-        #self.Bind(wx.EVT_BUTTON, self.OnCloseMe, button)
-    
         self.Bind(wx.EVT_MENU, self.OpenFile, menuItemLoad)
         self.Bind(wx.EVT_MENU, self.CloseFile, menuItemClose)
         self.Bind(wx.EVT_MENU, self.OnCloseMe, menuItemExit)
@@ -263,9 +233,6 @@ class mainMenu(wx.Frame):
         self.Bind(wx.EVT_MENU, self.MoveFotosToFolders, menuItemMoveFotosToFolders)
         self.Bind(wx.EVT_MENU, self.ColateAllInfoSheets, menuItemColate)
         self.Bind(wx.EVT_MENU, self.RenameAllFotosPicDateNum, menuItemRenameAll)
-    
-        #self.Bind(wx.EVT_MENU, self.DisplayWork, menuItemDisplayWork)
-        #self.Bind(wx.EVT_MENU, self.DisplayAll, menuItemDisplayAll)
     
         self.Bind(wx.EVT_MENU, self.GetHelp, menuItemHelp)
         self.Bind(wx.EVT_MENU, self.SetPreferences, menuItemPref)
@@ -306,12 +273,6 @@ class mainMenu(wx.Frame):
         
         self.t1 = wx.TextCtrl(panel,-1,size=(350,40))
         hbox1.Add(self.t1,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
-    
-        #label1a =wx.StaticText(panel, -1, "Catagory")
-        #hbox1a.Add(label1a, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
-        
-        #self.t1a = wx.TextCtrl(panel,-1,size=(350,40))
-        #hbox1a.Add(self.t1a,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
     
         label2 = wx.StaticText(panel, -1, "Date painted")
         hbox2.Add(label2, 1, wx.ALIGN_LEFT|wx.ALL,5)
@@ -420,19 +381,24 @@ class mainMenu(wx.Frame):
         
         self.labelA.SetLabel(nameOfPaintingfile)
         self.labelB.SetLabel(nameOfCatagory)
+        
         self.t1.SetValue(nameOfPainting)
-        #self.t1a.SetValue("something here")
         self.t2.SetValue(datePainted)
+        self.t2a.SetValue(str(idnum))
+        self.t2b.SetValue(str(secid))
         self.t3.SetValue(wherePainted)
-        self.t4.SetValue(vertDim)
-        self.t5.SetValue(horizDim)
+        self.t4.SetValue(Dims)
+        self.t5.SetValue(hDims)
         self.t6.SetValue(materialsUsed)
         self.t7.SetValue(description)
-    
+        self.t10.SetValue(str(gallery1Val))
+        self.t11.SetValue(str(gallery2Val))
+        self.t12.SetValue(str(gallery3Val))
+        self.t13.SetValue(str(gallery4Val))
+        self.t14.SetValue(str(gallery5Val))
+        
     #here are the actions for above code for the menu
     
-    
-        
     #SHOULD BE WORKING
     def OpenFile(self,event):
         
@@ -504,13 +470,10 @@ class mainMenu(wx.Frame):
         mylibOfSubdirectories = {"list_of_subdirectories" : cfg.subDirList}
         mylibOfSubPaintings = {"list_of_cat_and_paintings": dirOfCatandPaintings}
         
-        #cfg.myData = [cfg.workingDir, mylibOfSubdirectories,mylibOfSubPaintings]
-        #cfg.myDataBase =[ mylibOfSubdirectories, mylibOfSubPaintings, catDir]
         jsonData = json.dumps(mylibOfSubdirectories, sort_keys=True,  indent=4, separators=(",", ": "))
         json1Data = json.dumps(mylibOfSubPaintings, sort_keys=True,  indent=4, separators=(",", ": "))
         json2Data = json.dumps(catDir, sort_keys=True,  indent=4, separators=(",", ": "))
         json3Data = json.dumps(cfg.workingDir, sort_keys=True,  indent=4, separators=(",", ": "))
-
 
         print("\n")
         print(os.getcwd())
@@ -531,8 +494,6 @@ class mainMenu(wx.Frame):
              
         #now load correct stuff to screen.
         
-        #load data from datagrams to variables for display
-        
         listSubs = mylibOfSubdirectories["list_of_subdirectories"]
         totalSubs = len(listSubs)
         
@@ -540,38 +501,58 @@ class mainMenu(wx.Frame):
         
         listPtngs = mylibOfSubPaintings["list_of_cat_and_paintings"][currentCat]
         totalPtngs = len(listPtngs)
-        
-        
+              
         dispPainting = listPtngs[0]
         
         ptgName = catDir[currentCat][dispPainting][dispPainting]["pname"]
         ptgDesc = catDir[currentCat][dispPainting][dispPainting]["desc"]
         ptgDate = catDir[currentCat][dispPainting][dispPainting]["year"]
         ptgNum = catDir[currentCat][dispPainting][dispPainting]["number"]
-        
-#        print("\n")
-#        
-#        print(listSubs)
-#        print(listPtngs)
-#        print(currentCat)
-#        #print(dispPainting)
-#        #print(ptgName)
-#        #print(ptgDesc)
-#        #print(ptgDate)
-#        #print(ptgNum)
-#        print(totalSubs)
-#        print(totalPtngs)
+        saatchi= catDir[currentCat][dispPainting][dispPainting]["saatchi"]
+        s6 = catDir[currentCat][dispPainting][dispPainting]["soc6"]
+        try : 
+            mysite = catDir[currentCat][dispPainting][dispPainting]["mysite"]
+        except:
+            mysite = 0
+            pass
+        try : 
+            secid = catDir[currentCat][dispPainting][dispPainting]["secid"]
+        except:
+            secid = 0
+            pass
+        displate = catDir[currentCat][dispPainting][dispPainting]["displate"]
+        dev = catDir[currentCat][dispPainting][dispPainting]["deviant"]
+        buzz= catDir[currentCat][dispPainting][dispPainting]["buzz"]
+        dims= catDir[currentCat][dispPainting][dispPainting]["dims"]
+        try:
+            hdims = catDir[currentCat][dispPainting][dispPainting]["hdims"]
+        except:
+            hdims = "none"
+            pass
+        try:
+            mat = catDir[currentCat][dispPainting][dispPainting]["materialsUsed"]
+        except:
+            mat = "none"
+            pass
         
         self.labelA.SetLabel(dispPainting)
         self.labelB.SetLabel(currentCat)
+        
         self.t1.SetValue(ptgName)
-        #self.t1a.SetValue("something here")
         self.t2.SetValue(str(ptgDate))
+        self.t2a.SetValue(str(ptgNum))
+        self.t2b.SetValue(str(secid))
         self.t3.SetValue(wherePainted)
-        self.t4.SetValue(vertDim)
-        self.t5.SetValue(horizDim)
+        self.t4.SetValue(dims)
+        self.t5.SetValue(hdims)
+        
         self.t6.SetValue(materialsUsed)
         self.t7.SetValue(ptgDesc)
+        self.t10.SetValue(saatchi)
+        self.t11.SetValue(dev)
+        self.t12.SetValue(s6)
+        self.t13.SetValue(buzz)
+        self.t14.SetValue(str(mysite))
             
     def CloseFile(self,event):
         self.SetStatusText("Closes the database")
@@ -630,9 +611,33 @@ class mainMenu(wx.Frame):
                     os.mkdir(response)  
 
     def onSavePainting(self,event):
+        #global cfg.workingDir
+        global currentCat
+        global dispPainting
+        
         self.SetStatusText("saving painting data to json file")
         
-        pass
+        ptgname =self.t1.GetValue()
+        ptgDate =self.t2.GetValue()
+        numb = self.t2a.GetValue()
+        secid =self.t2b.GetValue()
+        wherePainted = self.t3.GetValue()
+        vertDim = self.t4.GetValue()
+        horizDim = self.t5.GetValue()
+        materialsUsed = self.t6.GetValue()
+        ptgDesc = self.t7.GetValue()
+        gal1 = self.t10.GetValue()
+        gal2 =self.t11.GetValue()
+        gal3 =self.t12.GetValue()
+        gal4 =self.t13.GetValue()
+        gal5 =self.t14.GetValue()
+               
+        mydata = {dispPainting:{"pname": ptgname,"wherepainted":wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "hdims": horizDim, "desc" : ptgDesc, "materials": materialsUsed}}
+        jsonData = json.dumps(mydata, sort_keys=True,  indent=4, separators=(",", ": "))
+        os.chdir(cfg.workingDir + "/" + currentCat + "/"+ dispPainting +  "/info") 
+        filename = dispPainting + ".json"
+        with open(filename, 'w') as f:
+             f.write(jsonData)
 
     #SHOULD BE WORKING        
     def MakeListAllWorks(self, event):
@@ -669,9 +674,6 @@ class mainMenu(wx.Frame):
         self.SetStatusText("Display a work")
         pass
     
-    def DisplayAll(self, event):
-        self.SetStatusText("Display all works")
-        
     def GetHelp(self, event):
         self.SetStatusText("Help")
         pass
@@ -689,8 +691,68 @@ class mainMenu(wx.Frame):
         global ptngIndex
         global totalSubs
         global totalPtngs
+        
+        global mylibOfSubPaintings
+        global catDir
+        
+        ptngIndex -= 1
+        if ptngIndex < 0:
+            ptngIndex = (totalPtngs-1)
+        #load new painting
+        
+        dispPainting = listPtngs[ptngIndex]
+        
+        ptgName = catDir[currentCat][dispPainting][dispPainting]["pname"]
+        ptgDesc = catDir[currentCat][dispPainting][dispPainting]["desc"]
+        ptgDate = catDir[currentCat][dispPainting][dispPainting]["year"]
+        ptgNum = catDir[currentCat][dispPainting][dispPainting]["number"]
+        saatchi= catDir[currentCat][dispPainting][dispPainting]["saatchi"]
+        s6 = catDir[currentCat][dispPainting][dispPainting]["soc6"]
+        try : 
+            mysite = catDir[currentCat][dispPainting][dispPainting]["mysite"]
+        except:
+            mysite = 0
+            pass
+        try : 
+            secid = catDir[currentCat][dispPainting][dispPainting]["secid"]
+        except:
+            secid = 0
+            pass
+        displate = catDir[currentCat][dispPainting][dispPainting]["displate"]
+        dev = catDir[currentCat][dispPainting][dispPainting]["deviant"]
+        buzz= catDir[currentCat][dispPainting][dispPainting]["buzz"]
+        dims= catDir[currentCat][dispPainting][dispPainting]["dims"]
+        try:
+            hdims = catDir[currentCat][dispPainting][dispPainting]["hdims"]
+        except:
+            hdims = "none"
+            pass
+        try:
+            mat = catDir[currentCat][dispPainting][dispPainting]["materialsUsed"]
+        except:
+            mat = "none"
+            pass
+        
+        self.labelA.SetLabel(dispPainting)
+        self.labelB.SetLabel(currentCat)
+        
+        self.t1.SetValue(ptgName)
+        self.t2.SetValue(str(ptgDate))
+        self.t2a.SetValue(str(ptgNum))
+        self.t2b.SetValue(str(secid))
+        self.t3.SetValue(wherePainted)
+        self.t4.SetValue(dims)
+        self.t5.SetValue(hdims)
+        
+        self.t6.SetValue(materialsUsed)
+        self.t7.SetValue(ptgDesc)
+        self.t10.SetValue(saatchi)
+        self.t11.SetValue(dev)
+        self.t12.SetValue(s6)
+        self.t13.SetValue(buzz)
+        self.t14.SetValue(str(mysite))
+        
         self.SetStatusText("back one painting")
-        pass
         
     def NextPainting(self,event):
         global listSubs
@@ -703,9 +765,66 @@ class mainMenu(wx.Frame):
         global totalPtngs
         
         global mylibOfSubPaintings
+        global catDir
+        
+        ptngIndex += 1
+        if ptngIndex > (totalPtngs-1):
+            ptngIndex =0
+        #load new painting
+        
+        dispPainting = listPtngs[ptngIndex]
+        
+        ptgName = catDir[currentCat][dispPainting][dispPainting]["pname"]
+        ptgDesc = catDir[currentCat][dispPainting][dispPainting]["desc"]
+        ptgDate = catDir[currentCat][dispPainting][dispPainting]["year"]
+        ptgNum = catDir[currentCat][dispPainting][dispPainting]["number"]
+        saatchi= catDir[currentCat][dispPainting][dispPainting]["saatchi"]
+        s6 = catDir[currentCat][dispPainting][dispPainting]["soc6"]
+        try : 
+            mysite = catDir[currentCat][dispPainting][dispPainting]["mysite"]
+        except:
+            mysite = 0
+            pass
+        try : 
+            secid = catDir[currentCat][dispPainting][dispPainting]["secid"]
+        except:
+            secid = 0
+            pass
+        displate = catDir[currentCat][dispPainting][dispPainting]["displate"]
+        dev = catDir[currentCat][dispPainting][dispPainting]["deviant"]
+        buzz= catDir[currentCat][dispPainting][dispPainting]["buzz"]
+        dims= catDir[currentCat][dispPainting][dispPainting]["dims"]
+        try:
+            hdims = catDir[currentCat][dispPainting][dispPainting]["hdims"]
+        except:
+            hdims = "none"
+            pass
+        try:
+            mat = catDir[currentCat][dispPainting][dispPainting]["materialsUsed"]
+        except:
+            mat = "none"
+            pass
+        
+        self.labelA.SetLabel(dispPainting)
+        self.labelB.SetLabel(currentCat)
+        
+        self.t1.SetValue(ptgName)
+        self.t2.SetValue(str(ptgDate))
+        self.t2a.SetValue(str(ptgNum))
+        self.t2b.SetValue(str(secid))
+        self.t3.SetValue(wherePainted)
+        self.t4.SetValue(dims)
+        self.t5.SetValue(hdims)
+        
+        self.t6.SetValue(materialsUsed)
+        self.t7.SetValue(ptgDesc)
+        self.t10.SetValue(saatchi)
+        self.t11.SetValue(dev)
+        self.t12.SetValue(s6)
+        self.t13.SetValue(buzz)
+        self.t14.SetValue(str(mysite))
         
         self.SetStatusText("forward one painting")
-        pass
         
     def PrevCat(self,event):
         global listSubs
@@ -718,17 +837,13 @@ class mainMenu(wx.Frame):
         global totalPtngs
         
         global mylibOfSubPaintings
+        global catDir
+        
         catIndex -= 1
-        print("##----#")
-        print(catIndex)
-        print(totalSubs)
-        print("!!!!!")
+        
         if catIndex < 0:
             catIndex = totalSubs-1
-            
         currentCat = listSubs[catIndex]
-        print(listSubs)
-        print(currentCat)
         
         #reload data
        
@@ -741,18 +856,51 @@ class mainMenu(wx.Frame):
         ptgDesc = catDir[currentCat][dispPainting][dispPainting]["desc"]
         ptgDate = catDir[currentCat][dispPainting][dispPainting]["year"]
         ptgNum = catDir[currentCat][dispPainting][dispPainting]["number"]
-
+        saatchi= catDir[currentCat][dispPainting][dispPainting]["saatchi"]
+        s6 = catDir[currentCat][dispPainting][dispPainting]["soc6"]
+        try : 
+            mysite = catDir[currentCat][dispPainting][dispPainting]["mysite"]
+        except:
+            mysite = 0
+            pass
+        try : 
+            secid = catDir[currentCat][dispPainting][dispPainting]["secid"]
+        except:
+            secid = 0
+            pass
+        displate = catDir[currentCat][dispPainting][dispPainting]["displate"]
+        dev = catDir[currentCat][dispPainting][dispPainting]["deviant"]
+        buzz= catDir[currentCat][dispPainting][dispPainting]["buzz"]
+        dims= catDir[currentCat][dispPainting][dispPainting]["dims"]
+        try:
+            hdims = catDir[currentCat][dispPainting][dispPainting]["hdims"]
+        except:
+            hdims = "none"
+            pass
+        try:
+            mat = catDir[currentCat][dispPainting][dispPainting]["materialsUsed"]
+        except:
+            mat = "none"
+            pass
+        
         self.labelA.SetLabel(dispPainting)
         self.labelB.SetLabel(currentCat)
+        
         self.t1.SetValue(ptgName)
-        #self.t1a.SetValue("something here")
         self.t2.SetValue(str(ptgDate))
+        self.t2a.SetValue(str(ptgNum))
+        self.t2b.SetValue(str(secid))
         self.t3.SetValue(wherePainted)
-        self.t4.SetValue(vertDim)
-        self.t5.SetValue(horizDim)
+        self.t4.SetValue(dims)
+        self.t5.SetValue(hdims)
+        
         self.t6.SetValue(materialsUsed)
         self.t7.SetValue(ptgDesc)
-
+        self.t10.SetValue(saatchi)
+        self.t11.SetValue(dev)
+        self.t12.SetValue(s6)
+        self.t13.SetValue(buzz)
+        self.t14.SetValue(str(mysite))
         
     def NextCat(self, event):
         global listSubs
@@ -768,17 +916,12 @@ class mainMenu(wx.Frame):
         global catDir
         
         catIndex = catIndex + 1
-#        print("##++++#")
-#        print(catIndex)
-#        print(totalSubs)
-#        print("!!!!!")
+
         if catIndex > (totalSubs-1):
             catIndex = 0
             
         currentCat = listSubs[catIndex]
-#        print(listSubs)
-#        print(currentCat)
-        
+
         #reload data
         
         listPtngs = mylibOfSubPaintings["list_of_cat_and_paintings"][currentCat]
@@ -790,17 +933,51 @@ class mainMenu(wx.Frame):
         ptgDesc = catDir[currentCat][dispPainting][dispPainting]["desc"]
         ptgDate = catDir[currentCat][dispPainting][dispPainting]["year"]
         ptgNum = catDir[currentCat][dispPainting][dispPainting]["number"]
-
+        saatchi= catDir[currentCat][dispPainting][dispPainting]["saatchi"]
+        s6 = catDir[currentCat][dispPainting][dispPainting]["soc6"]
+        try : 
+            mysite = catDir[currentCat][dispPainting][dispPainting]["mysite"]
+        except:
+            mysite = 0
+            pass
+        try : 
+            secid = catDir[currentCat][dispPainting][dispPainting]["secid"]
+        except:
+            secid = 0
+            pass
+        displate = catDir[currentCat][dispPainting][dispPainting]["displate"]
+        dev = catDir[currentCat][dispPainting][dispPainting]["deviant"]
+        buzz= catDir[currentCat][dispPainting][dispPainting]["buzz"]
+        dims= catDir[currentCat][dispPainting][dispPainting]["dims"]
+        try:
+            hdims = catDir[currentCat][dispPainting][dispPainting]["hdims"]
+        except:
+            hdims = "none"
+            pass
+        try:
+            mat = catDir[currentCat][dispPainting][dispPainting]["materialsUsed"]
+        except:
+            mat = "none"
+            pass
+        
         self.labelA.SetLabel(dispPainting)
         self.labelB.SetLabel(currentCat)
+        
         self.t1.SetValue(ptgName)
-        #self.t1a.SetValue("something here")
         self.t2.SetValue(str(ptgDate))
+        self.t2a.SetValue(str(ptgNum))
+        self.t2b.SetValue(str(secid))
         self.t3.SetValue(wherePainted)
-        self.t4.SetValue(vertDim)
-        self.t5.SetValue(horizDim)
+        self.t4.SetValue(dims)
+        self.t5.SetValue(hdims)
+        
         self.t6.SetValue(materialsUsed)
         self.t7.SetValue(ptgDesc)
+        self.t10.SetValue(saatchi)
+        self.t11.SetValue(dev)
+        self.t12.SetValue(s6)
+        self.t13.SetValue(buzz)
+        self.t14.SetValue(str(mysite))
 ##################################################################################
     
 class App(wx.App):
