@@ -17,6 +17,5 @@ paintingDic = {}
 myData ={}
 
 myworkingFolder ="" #the name of the active painting directory
-answer = "2"  # 1 is the terminal version 2 is the gui version
 
 dirlist = {"displate","mainphoto","society6","xcftype","pngtype","jpgtype","cr2type","info","oldcanon","oldCameraPics"}

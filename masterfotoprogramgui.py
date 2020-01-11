@@ -24,7 +24,37 @@ import artmanagementcfg as cfg
 catDir={}
 mylibListOfPaintings = {}
 mylibOfSubdirectories = {}
+dirOfCatandPaintings = {}
+mylibOfSubPaintings = {}
+
 jsonData = {}
+json1Data = {}
+
+gallery1 = "saatchi"
+gallery2 = "deviant"
+gallery3 = "soc6"
+gallery4 = "buzzart"
+gallery5 = "mysite"
+
+nameOfPaintingfile = "none"
+nameOfCatagory = "none"
+nameOfPainting = "none"
+datePainted = "none"
+wherePainted = "none"
+vertDim = "none"
+horizDim = "none"
+materialsUsed = "none"
+description = "none"
+
+listSubs = []
+catIndex = 1
+currentCat = ""
+listPtngs = []
+ptngIndex = 0
+dispPainting = ""
+totalSubs = 0
+totalPtngs = 0
+
 ##################################################################################
      
 def makeList():
@@ -119,10 +149,43 @@ def searchLevel(myLevel):
             countoffiles +=1
     return tableofitems
 ##################################################################################
+def dispData(self, event):
+        global listSubs
+        global currentCat
+        global listPtngs
+        global dispPainting 
+        global catIndex
+        global ptngIndex
+        global totalSubs
+        global totalPtngs
+        
+        ptgName = catDir[currentCat][dispPainting][dispPainting]["pname"]
+        ptgDesc = catDir[currentCat][dispPainting][dispPainting]["desc"]
+        ptgDate = catDir[currentCat][dispPainting][dispPainting]["year"]
+        ptgNum = catDir[currentCat][dispPainting][dispPainting]["number"]
+        
+        self.labelA.SetLabel(dispPainting)
+        self.labelB.SetLabel(currentCat)
+        self.t1.SetValue(ptgName)
+        #self.t1a.SetValue("something here")
+        self.t2.SetValue(str(ptgDate))
+        self.t3.SetValue(wherePainted)
+        self.t4.SetValue(vertDim)
+        self.t5.SetValue(horizDim)
+        self.t6.SetValue(materialsUsed)
+        self.t7.SetValue(ptgDesc)  
 ##################################################################################
 #GUI APP 
    
 class mainMenu(wx.Frame):  
+    
+             
+    
+    
+    
+    
+    
+    
     
     def __init__(self, parent, id):
 
@@ -130,9 +193,13 @@ class mainMenu(wx.Frame):
 
         panel = wx.Panel(self, wx.ID_ANY)
         panel.SetBackgroundColour("blue")
+        
         hboxMain =wx.BoxSizer(wx.HORIZONTAL)
+        
+        vboxBig = wx.BoxSizer(wx.VERTICAL)
+        
         vbox1 = wx.BoxSizer(wx.VERTICAL)
-        vbox2 = wx.BoxSizer(wx.VERTICAL)
+       
         hbox0 = wx.BoxSizer(wx.HORIZONTAL)
         hbox1 = wx.BoxSizer(wx.HORIZONTAL)
         hbox1a = wx.BoxSizer(wx.HORIZONTAL)
@@ -142,7 +209,11 @@ class mainMenu(wx.Frame):
         hbox5 = wx.BoxSizer(wx.HORIZONTAL)
         hbox6 = wx.BoxSizer(wx.HORIZONTAL)
         hbox7 = wx.BoxSizer(wx.HORIZONTAL)
-        vboxBig = wx.BoxSizer(wx.VERTICAL)
+       
+        vbox2 = wx.BoxSizer(wx.VERTICAL)
+        
+        hboxr1 =wx.BoxSizer(wx.HORIZONTAL)
+        hboxr2 = wx.BoxSizer(wx.HORIZONTAL)
  
         menuBar = wx.MenuBar()
         menu1 = wx.Menu()
@@ -152,39 +223,39 @@ class mainMenu(wx.Frame):
         menuItemLoad = menu1.Append(-1, "&Load dir")
         menuItemClose = menu1.Append(-1, "&Close dir")
         menuItemExit = menu1.Append(-1, "&Exit...")
-        
+    
         menuItemNewPainting = menu2.Append(-1,"&New Painting")
         menuItemNewSubfolder = menu2.Append(-1,"Create New Subfolder")
-        
+    
         menuItemMakeListAll = menu3.Append(-1, "List all works")
         menuItemCreateAllSubfolders = menu3.Append(-1,"Make All Subfolders")
         menuItemMoveFotosToFolders = menu3.Append(-1, "Move Fotos to Subfolders")
         menuItemColate = menu3.Append(-1, "Collate all Info Sheets")
         menuItemRenameAll = menu3.Append(-1, "Rename All Fotos")
         #menuItemBlank = menu2.Append(-1, "Blank, future use")
-        
+    
         #menuItemDisplayWork = menu3.Append(-1, "Display a Work")
         #menuItemDisplayAll = menu3.Append(-1, "Display All Works")
-        
+    
         menuItemHelp = menu4.Append(-1,"Help")
         menuItemPref = menu4.Append(-1, "Preferences")
         menuItemAbout = menu4.Append(-1, "&About me")
-        
+    
         menuBar.Append(menu1, "&File")
         menuBar.Append(menu2, "&Common Actions")
         menuBar.Append(menu3, "&Other Actions")
         menuBar.Append(menu4, "&Info")
-        
+    
         self.SetMenuBar(menuBar)
         self.CreateStatusBar()
         self.SetStatusText("Welcome to art business management")
-        
+    
         #self.Bind(wx.EVT_BUTTON, self.OnCloseMe, button)
-        
+    
         self.Bind(wx.EVT_MENU, self.OpenFile, menuItemLoad)
         self.Bind(wx.EVT_MENU, self.CloseFile, menuItemClose)
         self.Bind(wx.EVT_MENU, self.OnCloseMe, menuItemExit)
-        
+    
         self.Bind(wx.EVT_MENU, self.NewPainting, menuItemNewPainting)
         self.Bind(wx.EVT_MENU, self.AddNewSubFolder, menuItemNewSubfolder)
         self.Bind(wx.EVT_MENU, self.MakeListAllWorks, menuItemMakeListAll)
@@ -192,92 +263,138 @@ class mainMenu(wx.Frame):
         self.Bind(wx.EVT_MENU, self.MoveFotosToFolders, menuItemMoveFotosToFolders)
         self.Bind(wx.EVT_MENU, self.ColateAllInfoSheets, menuItemColate)
         self.Bind(wx.EVT_MENU, self.RenameAllFotosPicDateNum, menuItemRenameAll)
-        
+    
         #self.Bind(wx.EVT_MENU, self.DisplayWork, menuItemDisplayWork)
         #self.Bind(wx.EVT_MENU, self.DisplayAll, menuItemDisplayAll)
-        
+    
         self.Bind(wx.EVT_MENU, self.GetHelp, menuItemHelp)
         self.Bind(wx.EVT_MENU, self.SetPreferences, menuItemPref)
         self.Bind(wx.EVT_MENU, self.OnAbout, menuItemAbout)
-        
+    
         workName ="Name of work"
         catName = "Current Catagory"
-        
+    
         self.b1 = wx.Button(panel, label = 'previous work') 
         hbox0.Add(self.b1, 1, wx.ALIGN_LEFT|wx.ALL,5)
-        
+    
         self.labelA = wx.StaticText(panel, -1, workName , style = wx.TE_CENTER)
         hbox0.Add(self.labelA, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
-        
+    
         self.b2 = wx.Button(panel, label = 'next work') 
         hbox0.Add(self.b2, 1, wx.ALIGN_LEFT|wx.ALL,5)
-        
+    
         self.b3 = wx.Button(panel, label = 'previous catagory') 
         hbox0.Add(self.b3, 1, wx.ALIGN_LEFT|wx.ALL,5)
-        
+    
         self.labelB = wx.StaticText(panel, -1, catName ,style = wx.TE_CENTER)
         hbox0.Add(self.labelB, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
-        
+    
         self.b4 = wx.Button(panel, label = 'next catagory') 
         hbox0.Add(self.b4, 1, wx.ALIGN_LEFT|wx.ALL,5)
-        
+    
         self.b5 = wx.Button(panel, label = 'EXIT PROGRAM') 
         hbox0.Add(self.b5, 1, wx.ALIGN_RIGHT|wx.ALL,5)
-        
+    
         self.b5.Bind(wx.EVT_BUTTON, self.OnQuit)  
         self.b1.Bind(wx.EVT_BUTTON, self.PrevPainting)
         self.b2.Bind(wx.EVT_BUTTON, self.NextPainting)
         self.b3.Bind(wx.EVT_BUTTON, self.PrevCat)
         self.b4.Bind(wx.EVT_BUTTON, self.NextCat)
-        
+    
         label1 = wx.StaticText(panel, -1, "Name of work")
         hbox1.Add(label1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        label1a =wx.StaticText(panel, -1, "Catagory")
-        hbox1a.Add(label1a, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.t1 = wx.TextCtrl(panel,-1,size=(350,40))
+        hbox1.Add(self.t1,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+    
+        #label1a =wx.StaticText(panel, -1, "Catagory")
+        #hbox1a.Add(label1a, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
+        #self.t1a = wx.TextCtrl(panel,-1,size=(350,40))
+        #hbox1a.Add(self.t1a,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+    
         label2 = wx.StaticText(panel, -1, "Date painted")
-        hbox2.Add(label2, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        hbox2.Add(label2, 1, wx.ALIGN_LEFT|wx.ALL,5)
+    
+        self.t2 = wx.TextCtrl(panel,-1,size=(100,40))
+        hbox2.Add(self.t2,1,wx.ALIGN_LEFT|wx.ALL,5)
         
+        label2a = wx.StaticText(panel, -1, "id number")
+        hbox2.Add(label2a, 1, wx.ALIGN_LEFT|wx.ALL,5)
+    
+        self.t2a = wx.TextCtrl(panel,-1,size=(50,40))
+        hbox2.Add(self.t2a,1,wx.ALIGN_LEFT|wx.ALL,5)
+        
+        label2b = wx.StaticText(panel, -1, "count/year")
+        hbox2.Add(label2b, 1, wx.ALIGN_LEFT|wx.ALL,5)
+    
+        self.t2b = wx.TextCtrl(panel,-1,size=(50,40))
+        hbox2.Add(self.t2b,1,wx.ALIGN_LEFT|wx.ALL,5)
+    
         label3 = wx.StaticText(panel, -1, "Where painted")
         hbox3.Add(label3, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        label4 = wx.StaticText(panel, -1, "Vertical dimension")
-        hbox4.Add(label4, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
-        
-        label5 = wx.StaticText(panel, -1, "Horizontal dimension")
-        hbox5.Add(label5, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
-        
-        label6 = wx.StaticText(panel, -1, "Materials used")
-        hbox6.Add(label6, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
-        
-        label7 = wx.StaticText(panel, -1, "Description")
-        hbox7.Add(label7, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
-         
-        self.t1 = wx.TextCtrl(panel,-1,size=(350,40))
-        hbox1.Add(self.t1,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
-        
-        self.t1a = wx.TextCtrl(panel,-1,size=(350,40))
-        hbox1a.Add(self.t1a,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
-        
-        self.t2 = wx.TextCtrl(panel,-1,size=(350,40))
-        hbox2.Add(self.t2,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
-        
         self.t3 = wx.TextCtrl(panel,-1,size=(350,40))
         hbox3.Add(self.t3,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+    
+        label4 = wx.StaticText(panel, -1, "Vertical dim")
+        hbox4.Add(label4, 1, wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t4 = wx.TextCtrl(panel,-1,size=(350,40))
-        hbox4.Add(self.t4,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.t4 = wx.TextCtrl(panel,-1,size=(50,40))
+        hbox4.Add(self.t4,1,wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t5 = wx.TextCtrl(panel,-1,size=(350,40))
-        hbox5.Add(self.t5,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        label5 = wx.StaticText(panel, -1, "Horizontal dim")
+        hbox4.Add(label5, 1, wx.ALIGN_LEFT|wx.ALL,5)
         
+        self.t5 = wx.TextCtrl(panel,-1,size=(50,40))
+        hbox4.Add(self.t5,1,wx.ALIGN_LEFT|wx.ALL,5)
+    
+        label10 = wx.StaticText(panel, -1, gallery1)
+        hbox5.Add(label10, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        self.t10 = wx.TextCtrl(panel,-1,size=(50,40))
+        hbox5.Add(self.t10,1,wx.ALIGN_LEFT|wx.ALL,5)
+        
+        label11 = wx.StaticText(panel, -1, gallery2)
+        hbox5.Add(label11, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        self.t11 = wx.TextCtrl(panel,-1,size=(50,40))
+        hbox5.Add(self.t11,1,wx.ALIGN_LEFT|wx.ALL,5)
+        
+        label12 = wx.StaticText(panel, -1, gallery3)
+        hbox5.Add(label12, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        self.t12 = wx.TextCtrl(panel,-1,size=(50,40))
+        hbox5.Add(self.t12,1,wx.ALIGN_LEFT|wx.ALL,5)
+        
+        label13 = wx.StaticText(panel, -1, gallery4)
+        hbox5.Add(label13, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        self.t13 = wx.TextCtrl(panel,-1,size=(50,40))
+        hbox5.Add(self.t13,1,wx.ALIGN_LEFT|wx.ALL,5)
+        
+        label14 = wx.StaticText(panel, -1, gallery5)
+        hbox5.Add(label14, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        
+        self.t14 = wx.TextCtrl(panel,-1,size=(50,40))
+        hbox5.Add(self.t14,1,wx.ALIGN_LEFT|wx.ALL,5)
+       
+        label6 = wx.StaticText(panel, -1, "Materials used")
+        hbox6.Add(label6, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+    
+        label7 = wx.StaticText(panel, -1, "Description")
+        hbox7.Add(label7, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+    
         self.t6 = wx.TextCtrl(panel,-1,size=(350,80),style = wx.TE_MULTILINE)
         hbox6.Add(self.t6,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
-        
+    
         self.t7 = wx.TextCtrl(panel,-1,size=(350,160),style = wx.TE_MULTILINE)
         hbox7.Add(self.t7,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
+        self.savebtn = wx.Button(panel, label = "save painting data")
+        hboxr2.Add(self.savebtn,1,wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
+        self.savebtn.Bind(wx.EVT_BUTTON, self.onSavePainting)   
+    
         vbox1.Add(hbox1)
         vbox1.Add(hbox1a)
         vbox1.Add(hbox2) 
@@ -286,34 +403,79 @@ class mainMenu(wx.Frame):
         vbox1.Add(hbox5)
         vbox1.Add(hbox6)
         vbox1.Add(hbox7)
+        
+        vbox2.Add(hboxr1)
+        vbox2.Add(hboxr2)
 
         hboxMain.Add(vbox1)
         hboxMain.Add(vbox2)
+        
         vboxBig.Add(hbox0)
         vboxBig.Add(hboxMain)
-        
+    
         panel.SetSizer(vboxBig)
         panel.Center()
         panel.Show()
         panel.Fit()
+        
+        self.labelA.SetLabel(nameOfPaintingfile)
+        self.labelB.SetLabel(nameOfCatagory)
+        self.t1.SetValue(nameOfPainting)
+        #self.t1a.SetValue("something here")
+        self.t2.SetValue(datePainted)
+        self.t3.SetValue(wherePainted)
+        self.t4.SetValue(vertDim)
+        self.t5.SetValue(horizDim)
+        self.t6.SetValue(materialsUsed)
+        self.t7.SetValue(description)
     
     #here are the actions for above code for the menu
     
+    
+        
     #SHOULD BE WORKING
     def OpenFile(self,event):
+        
         global catDir
         global mylibListOfPaintings
-        global mylibOfSubdirectories 
-        global jsonData 
+        global mylibOfSubdirectories
+        global dirOfCatandPaintings
+        global mylibOfSubPaintings
         
-        dirOfCatandPaintings = {}
+        global jsonData 
+        global json1Data
+        
+        global gallery1
+        global gallery2
+        global gallery3
+        global gallery4
+        global gallery5
+        
+        global nameOfPaintingfile 
+        global nameOfCatagory
+        global nameOfPainting
+        global datePainted
+        global wherePainted
+        global vertDim
+        global horizDim
+        global materialsUsed
+        global description
+        
+        global listSubs
+        global currentCat
+        global listPtngs
+        global dispPainting
+        global totalSubs
+        global totalPtngs
         
         self.SetStatusText("Opens the database")
+        
         dialog = wx.DirDialog(None, "Choose a directory to work with: ", style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         if dialog.ShowModal() == wx.ID_OK:
             cfg.workingDir = str(dialog.GetPath())
             os.chdir(str(dialog.GetPath()))
         dialog.Destroy()
+        
         cfg.subDirList = os.listdir(cfg.workingDir)
         cfg.subDirList.remove("info")
         
@@ -331,6 +493,7 @@ class mainMenu(wx.Frame):
                         if theFile.endswith(".json"):
                             with open(theFile, "r") as content:
                                 datastuff = json.load(content)
+                                print(datastuff)
                                 listOfPaintings[eacheins]= datastuff
                     os.chdir("..")
                     os.chdir("..")
@@ -341,36 +504,75 @@ class mainMenu(wx.Frame):
         mylibOfSubdirectories = {"list_of_subdirectories" : cfg.subDirList}
         mylibOfSubPaintings = {"list_of_cat_and_paintings": dirOfCatandPaintings}
         
-        cfg.myData = [cfg.workingDir, mylibOfSubdirectories,mylibOfSubPaintings]
-        cfg.myDataBase =[ mylibOfSubdirectories, mylibOfSubPaintings, catDir]
-        jsonData = json.dumps(cfg.myData, sort_keys=True,  indent=4, separators=(". ", " = "))
-        json1Data = json.dumps(cfg.myDataBase, sort_keys=True,  indent=4, separators=(". ", " = "))
+        #cfg.myData = [cfg.workingDir, mylibOfSubdirectories,mylibOfSubPaintings]
+        #cfg.myDataBase =[ mylibOfSubdirectories, mylibOfSubPaintings, catDir]
+        jsonData = json.dumps(mylibOfSubdirectories, sort_keys=True,  indent=4, separators=(",", ": "))
+        json1Data = json.dumps(mylibOfSubPaintings, sort_keys=True,  indent=4, separators=(",", ": "))
+        json2Data = json.dumps(catDir, sort_keys=True,  indent=4, separators=(",", ": "))
+        json3Data = json.dumps(cfg.workingDir, sort_keys=True,  indent=4, separators=(",", ": "))
+
 
         print("\n")
         print(os.getcwd())
         
         os.chdir(cfg.workingDir + "/" + "info")
-        filename = "myDatajsonfile"
+        filename = "libOfSubdirs.json"
         with open(filename, 'w') as f:
              f.write(jsonData)
-        file2name = "myDataBasejsonfile"
+        file2name = "libOfSubsandPaintngs.json"
         with open(file2name, 'w') as f:
-             f.write(json1Data)
-             
+             f.write(json1Data)  
+        file3name = "alljsondatagrams.json"
+        with open(file3name, 'w') as f:
+             f.write(json2Data)
+        file4name = "fliepathmainfolder.json"
+        with open(file4name, 'w') as f:
+             f.write(json3Data)
              
         #now load correct stuff to screen.
-        self.labelA.SetLabel("blah blah")
-        self.labelB.SetLabel("and more bah")
-        self.t1.SetValue("some text here")
-        self.t1a.SetValue("something here")
-        self.t2.SetValue("something here")
-        self.t3.SetValue("something here")
-        self.t4.SetValue("something here")
-        self.t5.SetValue("something here")
-        self.t6.SetValue("something here")
-        self.t7.SetValue("something here")
+        
+        #load data from datagrams to variables for display
+        
+        listSubs = mylibOfSubdirectories["list_of_subdirectories"]
+        totalSubs = len(listSubs)
+        
+        currentCat = listSubs[1]
+        
+        listPtngs = mylibOfSubPaintings["list_of_cat_and_paintings"][currentCat]
+        totalPtngs = len(listPtngs)
         
         
+        dispPainting = listPtngs[0]
+        
+        ptgName = catDir[currentCat][dispPainting][dispPainting]["pname"]
+        ptgDesc = catDir[currentCat][dispPainting][dispPainting]["desc"]
+        ptgDate = catDir[currentCat][dispPainting][dispPainting]["year"]
+        ptgNum = catDir[currentCat][dispPainting][dispPainting]["number"]
+        
+#        print("\n")
+#        
+#        print(listSubs)
+#        print(listPtngs)
+#        print(currentCat)
+#        #print(dispPainting)
+#        #print(ptgName)
+#        #print(ptgDesc)
+#        #print(ptgDate)
+#        #print(ptgNum)
+#        print(totalSubs)
+#        print(totalPtngs)
+        
+        self.labelA.SetLabel(dispPainting)
+        self.labelB.SetLabel(currentCat)
+        self.t1.SetValue(ptgName)
+        #self.t1a.SetValue("something here")
+        self.t2.SetValue(str(ptgDate))
+        self.t3.SetValue(wherePainted)
+        self.t4.SetValue(vertDim)
+        self.t5.SetValue(horizDim)
+        self.t6.SetValue(materialsUsed)
+        self.t7.SetValue(ptgDesc)
+            
     def CloseFile(self,event):
         self.SetStatusText("Closes the database")
         wx.MessageBox("This closes the file ",
@@ -427,6 +629,11 @@ class mainMenu(wx.Frame):
                     os.chdir(cfg.workingDir + "/" + each + "/" + each1)
                     os.mkdir(response)  
 
+    def onSavePainting(self,event):
+        self.SetStatusText("saving painting data to json file")
+        
+        pass
+
     #SHOULD BE WORKING        
     def MakeListAllWorks(self, event):
         self.SetStatusText("Make a list of all works")
@@ -474,22 +681,126 @@ class mainMenu(wx.Frame):
         pass
     
     def PrevPainting(self,event):
-        global jsonData
-        print(jsonData)
-        print("\n")
-        print(os.getcwd())
+        global listSubs
+        global currentCat
+        global listPtngs
+        global dispPainting 
+        global catIndex
+        global ptngIndex
+        global totalSubs
+        global totalPtngs
         self.SetStatusText("back one painting")
         pass
         
     def NextPainting(self,event):
+        global listSubs
+        global currentCat
+        global listPtngs
+        global dispPainting 
+        global catIndex
+        global ptngIndex
+        global totalSubs
+        global totalPtngs
+        
+        global mylibOfSubPaintings
+        
         self.SetStatusText("forward one painting")
         pass
         
     def PrevCat(self,event):
-        pass
+        global listSubs
+        global currentCat
+        global listPtngs
+        global dispPainting 
+        global catIndex
+        global ptngIndex
+        global totalSubs
+        global totalPtngs
+        
+        global mylibOfSubPaintings
+        catIndex -= 1
+        print("##----#")
+        print(catIndex)
+        print(totalSubs)
+        print("!!!!!")
+        if catIndex < 0:
+            catIndex = totalSubs-1
+            
+        currentCat = listSubs[catIndex]
+        print(listSubs)
+        print(currentCat)
+        
+        #reload data
+       
+        listPtngs = mylibOfSubPaintings["list_of_cat_and_paintings"][currentCat]
+        totalPtngs = len(listPtngs)
+        
+        dispPainting = listPtngs[0]
+        
+        ptgName = catDir[currentCat][dispPainting][dispPainting]["pname"]
+        ptgDesc = catDir[currentCat][dispPainting][dispPainting]["desc"]
+        ptgDate = catDir[currentCat][dispPainting][dispPainting]["year"]
+        ptgNum = catDir[currentCat][dispPainting][dispPainting]["number"]
+
+        self.labelA.SetLabel(dispPainting)
+        self.labelB.SetLabel(currentCat)
+        self.t1.SetValue(ptgName)
+        #self.t1a.SetValue("something here")
+        self.t2.SetValue(str(ptgDate))
+        self.t3.SetValue(wherePainted)
+        self.t4.SetValue(vertDim)
+        self.t5.SetValue(horizDim)
+        self.t6.SetValue(materialsUsed)
+        self.t7.SetValue(ptgDesc)
+
         
     def NextCat(self, event):
-        pass
+        global listSubs
+        global currentCat
+        global listPtngs
+        global dispPainting 
+        global catIndex
+        global ptngIndex
+        global totalSubs
+        global totalPtngs
+        
+        global mylibOfSubPaintings
+        global catDir
+        
+        catIndex = catIndex + 1
+#        print("##++++#")
+#        print(catIndex)
+#        print(totalSubs)
+#        print("!!!!!")
+        if catIndex > (totalSubs-1):
+            catIndex = 0
+            
+        currentCat = listSubs[catIndex]
+#        print(listSubs)
+#        print(currentCat)
+        
+        #reload data
+        
+        listPtngs = mylibOfSubPaintings["list_of_cat_and_paintings"][currentCat]
+        totalPtngs = len(listPtngs)
+        
+        dispPainting = listPtngs[0]
+        
+        ptgName = catDir[currentCat][dispPainting][dispPainting]["pname"]
+        ptgDesc = catDir[currentCat][dispPainting][dispPainting]["desc"]
+        ptgDate = catDir[currentCat][dispPainting][dispPainting]["year"]
+        ptgNum = catDir[currentCat][dispPainting][dispPainting]["number"]
+
+        self.labelA.SetLabel(dispPainting)
+        self.labelB.SetLabel(currentCat)
+        self.t1.SetValue(ptgName)
+        #self.t1a.SetValue("something here")
+        self.t2.SetValue(str(ptgDate))
+        self.t3.SetValue(wherePainted)
+        self.t4.SetValue(vertDim)
+        self.t5.SetValue(horizDim)
+        self.t6.SetValue(materialsUsed)
+        self.t7.SetValue(ptgDesc)
 ##################################################################################
     
 class App(wx.App):
@@ -506,5 +817,6 @@ if __name__ == '__main__':
 	
     app = App()
     app.MainLoop()
+
     print("Ending program.")       
 ##################################################################################
