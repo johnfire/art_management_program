@@ -17,7 +17,7 @@ import shutil
 import json
 import artmanagementcfg as cfg
 
-catDir = {}
+#cfg.catDir = {}
 mylibListOfPaintings = {}
 mylibOfSubdirectories = {}
 dirOfCatandPaintings = {}
@@ -391,37 +391,37 @@ class mainMenu(wx.Frame):
 #++++++++++++++++++++++++++++++++++++++++++++++++    
     def dispData(self):
         
-        global catdir
+        #global cfg.catDir
         global currentCat
         global dispPainting
         print("in dispData function")
-        ptgName = catDir[currentCat][dispPainting][dispPainting]["pname"]
-        ptgDesc = catDir[currentCat][dispPainting][dispPainting]["desc"]
-        ptgDate = catDir[currentCat][dispPainting][dispPainting]["year"]
-        ptgNum = catDir[currentCat][dispPainting][dispPainting]["number"]
-        saatchi= catDir[currentCat][dispPainting][dispPainting]["saatchi"]
-        s6 = catDir[currentCat][dispPainting][dispPainting]["soc6"]
+        ptgName = cfg.catDir[currentCat][dispPainting][dispPainting]["pname"]
+        ptgDesc = cfg.catDir[currentCat][dispPainting][dispPainting]["desc"]
+        ptgDate = cfg.catDir[currentCat][dispPainting][dispPainting]["year"]
+        ptgNum = cfg.catDir[currentCat][dispPainting][dispPainting]["number"]
+        saatchi= cfg.catDir[currentCat][dispPainting][dispPainting]["saatchi"]
+        s6 = cfg.catDir[currentCat][dispPainting][dispPainting]["soc6"]
         try : 
-            mysite = catDir[currentCat][dispPainting][dispPainting]["mysite"]
+            mysite = cfg.catDir[currentCat][dispPainting][dispPainting]["mysite"]
         except:
             mysite = 0
             pass
         try : 
-            secid = catDir[currentCat][dispPainting][dispPainting]["secid"]
+            secid = cfg.catDir[currentCat][dispPainting][dispPainting]["secid"]
         except:
             secid = 0
             pass
-        #displate = catDir[currentCat][dispPainting][dispPainting]["displate"]
-        dev = catDir[currentCat][dispPainting][dispPainting]["deviant"]
-        buzz= catDir[currentCat][dispPainting][dispPainting]["buzz"]
-        dims= catDir[currentCat][dispPainting][dispPainting]["dims"]
+        #displate = cfg.catDir[currentCat][dispPainting][dispPainting]["displate"]
+        dev = cfg.catDir[currentCat][dispPainting][dispPainting]["deviant"]
+        buzz= cfg.catDir[currentCat][dispPainting][dispPainting]["buzz"]
+        dims= cfg.catDir[currentCat][dispPainting][dispPainting]["dims"]
         try:
-            hdims = catDir[currentCat][dispPainting][dispPainting]["hdims"]
+            hdims = cfg.catDir[currentCat][dispPainting][dispPainting]["hdims"]
         except:
             hdims = "none"
             pass
         try:
-            materialsUsed = catDir[currentCat][dispPainting][dispPainting]["materialsUsed"]
+            materialsUsed = cfg.catDir[currentCat][dispPainting][dispPainting]["materialsUsed"]
         except:
             materialsUsed = "none"
             pass
@@ -449,7 +449,7 @@ class mainMenu(wx.Frame):
     # WORKING
     def OpenFile(self,event,opt = ""):
         
-        global catDir
+        #global cfg.catDir
         global mylibListOfPaintings
         global mylibOfSubdirectories
         global dirOfCatandPaintings
@@ -514,7 +514,7 @@ class mainMenu(wx.Frame):
                     os.chdir("..")
                     os.chdir("..")
 
-                catDir[each] =listOfPaintings
+                cfg.catDir[each] =listOfPaintings
 
         mylibListOfPaintings = {"list_of_paintings" : cfg.paintingList }
         mylibOfSubdirectories = {"list_of_subdirectories" : cfg.subDirList}
@@ -522,7 +522,7 @@ class mainMenu(wx.Frame):
         
         jsonData = json.dumps(mylibOfSubdirectories, sort_keys=True,  indent=4, separators=(",", ": "))
         json1Data = json.dumps(mylibOfSubPaintings, sort_keys=True,  indent=4, separators=(",", ": "))
-        json2Data = json.dumps(catDir, sort_keys=True,  indent=4, separators=(",", ": "))
+        json2Data = json.dumps(cfg.catDir, sort_keys=True,  indent=4, separators=(",", ": "))
         json3Data = json.dumps(cfg.workingDir, sort_keys=True,  indent=4, separators=(",", ": "))
 
         print("\n")
@@ -585,7 +585,7 @@ class mainMenu(wx.Frame):
     def NewPainting(self, event):
         global currentCat
         global dispPainting
-        global catDir
+        #global cfg.catDir
         global totalPtngs
         global listPtngs
         
@@ -745,7 +745,7 @@ class mainMenu(wx.Frame):
         global totalPtngs
         
         global mylibOfSubPaintings
-        global catDir
+        #global cfg.catDir
         
         ptngIndex -= 1
         if ptngIndex < 0:
@@ -770,7 +770,7 @@ class mainMenu(wx.Frame):
         global totalPtngs
         
         global mylibOfSubPaintings
-        global catDir
+        #global cfg.catDir
         
         ptngIndex += 1
         if ptngIndex > (totalPtngs-1):
@@ -796,7 +796,7 @@ class mainMenu(wx.Frame):
         global totalPtngs
         
         global mylibOfSubPaintings
-        global catDir
+        #global cfg.catDir
         
         catIndex -= 1
         
@@ -824,7 +824,7 @@ class mainMenu(wx.Frame):
         global totalPtngs
         
         global mylibOfSubPaintings
-        global catDir
+        #global cfg.catDir
         
         catIndex = catIndex + 1
 
