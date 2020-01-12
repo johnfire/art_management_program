@@ -439,15 +439,15 @@ class mainMenu(wx.Frame):
         
         self.t6.SetValue(materialsUsed)
         self.t7.SetValue(ptgDesc)
-        self.t10.SetValue(saatchi)
-        self.t11.SetValue(dev)
-        self.t12.SetValue(s6)
-        self.t13.SetValue(buzz)
+        self.t10.SetValue(str(saatchi))
+        self.t11.SetValue(str(dev))
+        self.t12.SetValue(str(s6))
+        self.t13.SetValue(str(buzz))
         self.t14.SetValue(str(mysite))
 
 #++++++++++++++++++++++++++++++++++++++++++++++++    
     # WORKING
-    def OpenFile(self,event):
+    def OpenFile(self,event,opt = ""):
         
         global catDir
         global mylibListOfPaintings
@@ -482,13 +482,15 @@ class mainMenu(wx.Frame):
         global totalPtngs
         
         self.SetStatusText("Opens the database")
-        
-        dialog = wx.DirDialog(None, "Choose a directory to work with: ", style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
-        if dialog.ShowModal() == wx.ID_OK:
-            cfg.workingDir = str(dialog.GetPath())
-            cfg.myworkingFolder = str(dialog.GetPath())
-            os.chdir(str(dialog.GetPath()))
-        dialog.Destroy()
+        if opt == "":
+            dialog = wx.DirDialog(None, "Choose a directory to work with: ", style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+            if dialog.ShowModal() == wx.ID_OK:
+                cfg.workingDir = str(dialog.GetPath())
+                cfg.myworkingFolder = str(dialog.GetPath())
+                os.chdir(str(dialog.GetPath()))
+            dialog.Destroy()
+        else:
+            cfg.workingDir = cfg.myworkingFolder
         
         cfg.subDirList = os.listdir(cfg.workingDir)
         cfg.subDirList.remove("info")
@@ -593,6 +595,7 @@ class mainMenu(wx.Frame):
             print(dialog.GetPath())
             os.chdir(str(dialog.GetPath()))
             currentCat=os.getcwd()
+            tmpcat = currentCat
         dialog.Destroy()
         dlg = wx.TextEntryDialog(None, "What is the new painting named",'Name of new painting', 'new painting')
         if dlg.ShowModal() == wx.ID_OK:
@@ -603,6 +606,7 @@ class mainMenu(wx.Frame):
                 os.mkdir("./" + each) 
             os.chdir("info")
             dispPainting = response
+            tempPainting = dispPainting
 
             ptgname = ""
             ptgDate =""
@@ -626,25 +630,27 @@ class mainMenu(wx.Frame):
             with open(filename, 'w') as f:
                  f.write(jsonData)
                  
-            wx.MessageBox("please restart program to update all data with the new catagory",
-                      "restart required", wx.OK | wx.ICON_INFORMATION, self)         
-
+            self.OpenFile(event = "none",opt = cfg.myworkingFolder)
+            
+            currentCat = tmpcat
+            dispPainting =tempPainting
+            
+            #recompute here
+            
+            self.dispData()
+            
 #++++++++++++++++++++++++++++++++++++++++++++++++    #WORKING
     def AddNewSubFolder(self, event):
         self.SetStatusText("Add a new catagory to database")
         dlg = wx.TextEntryDialog(None, "What is the new catagory named",'Name of new folder', 'new folder')
         if dlg.ShowModal() == wx.ID_OK:
             response = dlg.GetValue()
-            os.chdir(cfg.workingDir)
-            for each in os.getcwd():
-                os.chdir(cfg.workingDir + "/" + each)
-                for each1 in os.getcwd():
-                    os.chdir(cfg.workingDir + "/" + each + "/" + each1)
-                    os.mkdir(response)
-                    
-        wx.MessageBox("please restart program to update all data with the new catagory",
-                      "restart required", wx.OK | wx.ICON_INFORMATION, self)    
-
+            os.chdir(cfg.myworkingFolder)
+            os.mkdir(response)
+        dlg.Destroy()
+        
+        self.OpenFile(event = "none",opt = cfg.myworkingFolder)
+    
 #++++++++++++++++++++++++++++++++++++++++++++++++        
     #should be working watch for bugs
     def onSavePainting(self,event):
