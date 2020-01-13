@@ -298,7 +298,13 @@ class mainMenu(wx.Frame):
         
         self.savebtn = wx.Button(panel, label = "save painting data")
         hboxr2.Add(self.savebtn,1,wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
-        self.savebtn.Bind(wx.EVT_BUTTON, self.onSavePainting)   
+        self.savebtn.Bind(wx.EVT_BUTTON, self.onSavePainting)
+        
+        self.printbtn = wx.Button(panel, label = "print .md and pdf")
+        hboxr2.Add(self.printbtn,1,wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
+        self.printbtn.Bind(wx.EVT_BUTTON, self.MakeMd)
+        
+        
     
         vbox1.Add(hbox1)
         vbox1.Add(hbox1a)
@@ -625,6 +631,27 @@ class mainMenu(wx.Frame):
     def SetPreferences(self, event):
         self.SetStatusText("Set up preferences")
         pass
+#++++++++++++++++++++++++++++++++++++++++++++++++
+    def MakeMd(self, event):
+        print("in makeMd")
+        filename = cfg.dispPainting + ".md"
+        
+        ptgname =self.t1.GetValue()
+        ptgDate =self.t2.GetValue()
+        wherePainted = self.t3.GetValue()
+        vertDim = self.t4.GetValue()
+        horizDim = self.t5.GetValue()
+        materialsUsed = self.t6.GetValue()
+        ptgDesc = self.t7.GetValue()
+       
+        data = ["\n","\n","\n","\n","\n",ptgname,"\n",ptgDate,"\n",wherePainted,"\n",vertDim, "  *  ",horizDim,"\n",materialsUsed, "\n\n", ptgDesc]
+        
+        
+        print(os.getcwd())
+        with open(filename, 'w+') as f:
+            for each in data:
+                f.write(each)
+     
 #++++++++++++++++++++++++++++++++++++++++++++++++       
     #WORKING
     def PrevPainting(self,event):
