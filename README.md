@@ -33,7 +33,10 @@ possibly in the future:
    
    right now, 12 jan 2020 I am using the program and debuging it, I hope to release it as a python PyPl program by feb 1 2020, so that others can use it as well.
    
-   if anyone would like to help, im planning on releasing this to the pypl repository in a few weeks when i get some more functionality in , as a shareware/ freeware software tool for artists. im looking for people to help with writing the program, documentation, and suggesting new features etc. you can contact me here if you are interested. 
+   if anyone would like to help, im planning on releasing this to the pypl repository in a few weeks when i get some more functionality in , as a shareware/ freeware software tool for artists. im looking for people to help with writing the program, documentation, and suggesting new features etc. you can contact me here if you are interested.
+   
+   
+   you can contact me at jfs@tandkcybernetics.christopherrehm.de for more info.
    
    
    
