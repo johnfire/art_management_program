@@ -16,6 +16,9 @@ import wx
 import shutil
 import json
 import artmanagementcfg as cfg
+from markdown import markdown
+import pdfkit
+
 
 ##################################################################################   
 def makeList():
@@ -635,7 +638,7 @@ class mainMenu(wx.Frame):
     def MakeMd(self, event):
         print("in makeMd")
         filename = cfg.dispPainting + ".md"
-        
+        output_filename =cfg.dispPainting + ".pdf"
         ptgname =self.t1.GetValue()
         ptgDate =self.t2.GetValue()
         wherePainted = self.t3.GetValue()
@@ -646,12 +649,16 @@ class mainMenu(wx.Frame):
        
         data = ["\n","\n","\n","\n","\n",ptgname,"\n",ptgDate,"\n",wherePainted,"\n",vertDim, "  *  ",horizDim,"\n",materialsUsed, "\n\n", ptgDesc]
         
-        
         print(os.getcwd())
         with open(filename, 'w+') as f:
             for each in data:
                 f.write(each)
-     
+                
+        with open(filename, 'r') as f:
+            html_text = markdown(f.read(), output_format='html5')
+
+        pdfkit.from_string(html_text, output_filename)
+        f.close()  
 #++++++++++++++++++++++++++++++++++++++++++++++++       
     #WORKING
     def PrevPainting(self,event):
