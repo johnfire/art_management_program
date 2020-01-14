@@ -1,11 +1,11 @@
 #!/home/christopher/anaconda3/bin/python3
 # -*- coding: utf-8 -*-
 """
-Created on Sun Aug 25 11:24:43 2019
+begun on Sun Aug 25 11:24:43 2019
 
 this is the main foto management proram.
 @author: christopher rehm
-note this program uses the wxPython and wxWidgets for GUI development,
+note this program uses the wxPython4.0 and wxWidgets for GUI development,
 both must be installed
 plase use wxPython 4.0 or higher 
 
@@ -19,22 +19,17 @@ import artmanagementcfg as cfg
 from markdown import markdown
 import pdfkit
 
-
 ##################################################################################   
 def makeList():
     #this function makes a list of all paintings in the file of works
     os.chdir(cfg.myworkingFolder)
     print(os.getcwd())
     os.chdir("./info") #enter info dir, where we keep all info files
-    
-    
     fh = open("./finishedPaintings.txt", "w")
-    
     mylist ={}
     mylist["all"] = searchLevel(cfg.myworkingFolder)
     for k, v in mylist.items():
         fh.write(str(k) + '\n')
-        #print(k)
         for k1, v1 in v.items():
             fh.write("" + str(k1) + '\n')
             try:
@@ -46,13 +41,10 @@ def makeList():
     os.chdir("..")   
 ##################################################################################
 def createAllSubfolders():
-    
     os.chdir(cfg.workingDir)
-   # print(os.getcwd()) 
     mylist= os.listdir()
     for each in mylist:
         chkdir = cfg.workingDir + "/" + str(each)
-        #print(str(each))
         if os.path.isdir(each) is True:
             os.chdir(chkdir)
             mylist1= os.listdir()
@@ -60,18 +52,12 @@ def createAllSubfolders():
                 chkdir1 = chkdir + "/" + str(each1)
                 if os.path.isdir(each1) is True:
                     os.chdir(chkdir1)
-                    #print(str(os.getcwd()+"\n"))
                     for every in cfg.dirlist:   
                         newdir = chkdir + "/" + str(each1) + "/" + str(every)
-                        #print(newdir)
-                        #q = input("does it look right")
                         if os.path.isdir(newdir) is False:
                             os.mkdir(newdir)
-                        #print(str(os.getcwd()+ "\n"))
                     os.chdir("..")
-                    #print(str(os.getcwd()+ "\n"))
             os.chdir("..")
-            #print(str(os.getcwd()+ "\n"))  
 ##################################################################################  
 def moveAllPhotos():
    for each in cfg.paintingPaths:
@@ -135,7 +121,8 @@ class mainMenu(wx.Frame):
        
         vbox2 = wx.BoxSizer(wx.VERTICAL)
         
-        hboxr1 =wx.BoxSizer(wx.HORIZONTAL)
+        hboxr1 = wx.BoxSizer(wx.HORIZONTAL)
+        hboxr1a = wx.BoxSizer(wx.HORIZONTAL)
         hboxr2 = wx.BoxSizer(wx.HORIZONTAL)
  
         menuBar = wx.MenuBar()
@@ -307,8 +294,22 @@ class mainMenu(wx.Frame):
         hboxr2.Add(self.printbtn,1,wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
         self.printbtn.Bind(wx.EVT_BUTTON, self.MakeMd)
         
+        image_size=(500,500)
         
-    
+        self.max_size = 400
+
+        img = wx.Image(*image_size)
+        self.image_ctrl = wx.StaticBitmap(panel, bitmap=wx.Bitmap(img))
+
+        self.browse_btn = wx.Button(panel, label='Browse')
+        
+        #browse_btn.Bind(wx.EVT_BUTTON, self.on_browse)
+
+        #self.photo_txt = wx.TextCtrl(self, size=(200, -1))
+        
+
+        
+        
         vbox1.Add(hbox1)
         vbox1.Add(hbox1a)
         vbox1.Add(hbox2) 
@@ -318,7 +319,10 @@ class mainMenu(wx.Frame):
         vbox1.Add(hbox6)
         vbox1.Add(hbox7)
         
+        hboxr1.Add(self.image_ctrl, 1, wx.ALIGN_CENTER|wx.ALL, 5)
+        hboxr1a.Add(self.browse_btn, 1, wx.ALIGN_CENTER|wx.ALL, 5)
         vbox2.Add(hboxr1)
+        vbox2.Add(hboxr1a)
         vbox2.Add(hboxr2)
 
         hboxMain.Add(vbox1)
@@ -402,6 +406,8 @@ class mainMenu(wx.Frame):
         self.t12.SetValue(str(s6))
         self.t13.SetValue(str(buzz))
         self.t14.SetValue(str(mysite))
+        
+        
 #++++++++++++++++++++++++++++++++++++++++++++++++    
     # WORKING
     def OpenFile(self,event,opt = ""):
@@ -416,17 +422,14 @@ class mainMenu(wx.Frame):
             dialog.Destroy()
         else:
             cfg.workingDir = cfg.myworkingFolder
-        
         cfg.subDirList = os.listdir(cfg.workingDir)
         cfg.subDirList.remove("info")
-        
         for each in cfg.subDirList:
             listOfPaintings = {}
             if True == os.path.isdir(cfg.workingDir + "/" + each):
                 cfg.subDirPaths.append(cfg.workingDir + "/" + each)
                 os.chdir(cfg.workingDir + "/" + each)
                 thePaintings = os.listdir(os.getcwd())
-                #print(thePaintings)
                 cfg.dirOfCatandPaintings[each] = thePaintings
                 for eacheins in thePaintings:
                     os.chdir(cfg.workingDir + "/" + each + "/" + eacheins + "/info")
@@ -439,7 +442,7 @@ class mainMenu(wx.Frame):
                     os.chdir("..")
                     os.chdir("..")
 
-                cfg.catDir[each] =listOfPaintings
+                cfg.catDir[each] = listOfPaintings
 
         cfg.mylibListOfPaintings = {"list_of_paintings" : cfg.paintingList }
         cfg.mylibOfSubdirectories = {"list_of_subdirectories" : cfg.subDirList}
@@ -471,23 +474,20 @@ class mainMenu(wx.Frame):
         
         cfg.listSubs = cfg.mylibOfSubdirectories["list_of_subdirectories"]
         cfg.totalSubs = len(cfg.listSubs)
-        
         cfg.currentCat = cfg.listSubs[1]
-        
         cfg.listPtngs = cfg.mylibOfSubPaintings["list_of_cat_and_paintings"][cfg.currentCat]
-        cfg.totalPtngs = len(cfg.listPtngs)
-              
+        cfg.totalPtngs = len(cfg.listPtngs)     
         cfg.dispPainting = cfg.listPtngs[0]
         
-        #this is the data load after set up
-        
         self.dispData()
-#++++++++++++++++++++++++++++++++++++++++++++++++            
+#++++++++++++++++++++++++++++++++++++++++++++++++ 
+    #WORKING       
     def CloseFile(self,event):
         self.SetStatusText("Closes the database")
         wx.MessageBox("This closes the file ",
                       "fileloader", wx.OK | wx.ICON_INFORMATION, self)
-#++++++++++++++++++++++++++++++++++++++++++++++++       
+#++++++++++++++++++++++++++++++++++++++++++++++++   
+    #WORKING
     def OnAbout(self, event):
         self.SetStatusText("About me")
         wx.MessageBox("This program manages data and files for an artist.\n See the user manual for more info.\n if you use regularly a 10 € contribution to my paypal account is suggested.",
@@ -543,15 +543,10 @@ class mainMenu(wx.Frame):
             print(os.getcwd())
             filename = cfg.dispPainting + ".json"
             with open(filename, 'w') as f:
-                 f.write(jsonData)
-                 
+                 f.write(jsonData)     
             self.OpenFile(event = "none",opt = cfg.myworkingFolder)
-            
             cfg.currentCat = tmpcat
             cfg.dispPainting =tempPainting
-            
-            #recompute here
-            
             self.dispData()         
 #++++++++++++++++++++++++++++++++++++++++++++++++    #WORKING
     def AddNewSubFolder(self, event):
@@ -562,14 +557,12 @@ class mainMenu(wx.Frame):
             os.chdir(cfg.myworkingFolder)
             os.mkdir(response)
         dlg.Destroy()
-        
         self.OpenFile(event = "none",opt = cfg.myworkingFolder) 
 #++++++++++++++++++++++++++++++++++++++++++++++++        
     #should be working watch for bugs
     def onSavePainting(self,event):
         
         self.SetStatusText("saving painting data to json file")
-        
         ptgname =self.t1.GetValue()
         ptgDate =self.t2.GetValue()
         numb = self.t2a.GetValue()
@@ -637,7 +630,7 @@ class mainMenu(wx.Frame):
 #++++++++++++++++++++++++++++++++++++++++++++++++
     def MakeMd(self, event):
         print("in makeMd")
-        filename = cfg.dispPainting + ".md"
+        filename = cfg.dispPainting + ".html"
         output_filename =cfg.dispPainting + ".pdf"
         ptgname =self.t1.GetValue()
         ptgDate =self.t2.GetValue()
@@ -647,7 +640,7 @@ class mainMenu(wx.Frame):
         materialsUsed = self.t6.GetValue()
         ptgDesc = self.t7.GetValue()
        
-        data = ["\n","\n","\n","\n","\n",ptgname,"\n",ptgDate,"\n",wherePainted,"\n",vertDim, "  *  ",horizDim,"\n",materialsUsed, "\n\n", ptgDesc]
+        data = ["\n\n\n\n\n\n\n\n\n\n",ptgname + "\n\n",ptgDate + "\n\n",wherePainted + "\n\n",vertDim + "  *  " + horizDim + "\n\n",materialsUsed + "\n\n", ptgDesc]
         
         print(os.getcwd())
         with open(filename, 'w+') as f:
@@ -655,76 +648,54 @@ class mainMenu(wx.Frame):
                 f.write(each)
                 
         with open(filename, 'r') as f:
-            html_text = markdown(f.read(), output_format='html5')
+            test.html = markdown(f.read(), output_format='html')
 
-        pdfkit.from_string(html_text, output_filename)
+        pdfkit.from_file(test.html, output_filename)
         f.close()  
 #++++++++++++++++++++++++++++++++++++++++++++++++       
     #WORKING
     def PrevPainting(self,event):
-        
         cfg.ptngIndex -= 1
         if cfg.ptngIndex < 0:
             cfg.ptngIndex = (cfg.totalPtngs-1)
         #load new painting
-        
         cfg.dispPainting = cfg.listPtngs[cfg.ptngIndex]
         self.dispData()
-
         self.SetStatusText("back one painting")    
 #++++++++++++++++++++++++++++++++++++++++++++++
     #WORKING    
     def NextPainting(self,event):
-        
         cfg.ptngIndex += 1
         if cfg.ptngIndex > (cfg.totalPtngs-1):
             cfg.ptngIndex =0
         #load new painting
-        
         cfg.dispPainting = cfg.listPtngs[cfg.ptngIndex]
-        
         self.dispData()
-        
         self.SetStatusText("forward one painting")    
 #+++++++++++++++++++++++++++++++++++++++++++++++++++
     #WORKING    
     def PrevCat(self,event):
-        
         cfg.catIndex -= 1
-        
         if cfg.catIndex < 0:
             cfg.catIndex = cfg.totalSubs-1
         cfg.currentCat = cfg.listSubs[cfg.catIndex]
-        
-        #reload data
-       
         cfg.listPtngs = cfg.mylibOfSubPaintings["list_of_cat_and_paintings"][cfg.currentCat]
         cfg.totalPtngs = len(cfg.listPtngs)
-        
         cfg.dispPainting = cfg.listPtngs[0]
         self.dispData()
 ####++++++++++++++++++++++++++++++++++++++++++++++++
     #WORKING    
     def NextCat(self, event):
-        
         cfg.catIndex = cfg.catIndex + 1
-
         if cfg.catIndex > (cfg.totalSubs-1):
-            cfg.catIndex = 0
-            
+            cfg.catIndex = 0   
         cfg.currentCat = cfg.listSubs[cfg.catIndex]
-
-        #reload data
-        
         cfg.listPtngs = cfg.mylibOfSubPaintings["list_of_cat_and_paintings"][cfg.currentCat]
         cfg.totalPtngs = len(cfg.listPtngs)
-        
         cfg.dispPainting = cfg.listPtngs[0]
-        
         self.dispData()
 ##################################################################################
 class App(wx.App):
-    
     def OnInit(self):
          self.frame = mainMenu(parent=None, id = -1)
          self.frame.Center()
@@ -734,7 +705,6 @@ class App(wx.App):
          return True
 ##################################################################################
 if __name__ == '__main__':
-	
     app = App()
     app.MainLoop()
 
