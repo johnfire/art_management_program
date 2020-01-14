@@ -75,7 +75,6 @@ def moveAllPhotos():
 ##################################################################################
 def renameFotos():
     pass
-
 ##################################################################################
 #### recursion search function #####
 def searchLevel(myLevel):
@@ -104,9 +103,7 @@ class mainMenu(wx.Frame):
         panel.SetBackgroundColour("blue")
         
         hboxMain =wx.BoxSizer(wx.HORIZONTAL)
-        
         vboxBig = wx.BoxSizer(wx.VERTICAL)
-        
         vbox1 = wx.BoxSizer(wx.VERTICAL)
        
         hbox0 = wx.BoxSizer(wx.HORIZONTAL)
@@ -122,6 +119,7 @@ class mainMenu(wx.Frame):
         vbox2 = wx.BoxSizer(wx.VERTICAL)
         
         hboxr1 = wx.BoxSizer(wx.HORIZONTAL)
+        hboxr1aa = wx.BoxSizer(wx.HORIZONTAL)
         hboxr1a = wx.BoxSizer(wx.HORIZONTAL)
         hboxr2 = wx.BoxSizer(wx.HORIZONTAL)
  
@@ -303,12 +301,10 @@ class mainMenu(wx.Frame):
 
         self.browse_btn = wx.Button(panel, label='Browse')
         
-        #browse_btn.Bind(wx.EVT_BUTTON, self.on_browse)
+        self.browse_btn.Bind(wx.EVT_BUTTON, self.on_browse)
 
-        #self.photo_txt = wx.TextCtrl(self, size=(200, -1))
-        
-
-        
+        self.photo_txt = wx.StaticText(panel, -1 , "this is the file")
+        hboxr1aa.Add(self.photo_txt,wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
         
         vbox1.Add(hbox1)
         vbox1.Add(hbox1a)
@@ -322,6 +318,7 @@ class mainMenu(wx.Frame):
         hboxr1.Add(self.image_ctrl, 1, wx.ALIGN_CENTER|wx.ALL, 5)
         hboxr1a.Add(self.browse_btn, 1, wx.ALIGN_CENTER|wx.ALL, 5)
         vbox2.Add(hboxr1)
+        vbox2.Add(hboxr1aa)
         vbox2.Add(hboxr1a)
         vbox2.Add(hboxr2)
 
@@ -398,16 +395,13 @@ class mainMenu(wx.Frame):
         self.t3.SetValue(cfg.wherePainted)
         self.t4.SetValue(dims)
         self.t5.SetValue(cfg.hDims)
-        
         self.t6.SetValue(cfg.materialsUsed)
         self.t7.SetValue(ptgDesc)
         self.t10.SetValue(str(saatchi))
         self.t11.SetValue(str(dev))
         self.t12.SetValue(str(s6))
         self.t13.SetValue(str(buzz))
-        self.t14.SetValue(str(mysite))
-        
-        
+        self.t14.SetValue(str(mysite))  
 #++++++++++++++++++++++++++++++++++++++++++++++++    
     # WORKING
     def OpenFile(self,event,opt = ""):
@@ -500,6 +494,42 @@ class mainMenu(wx.Frame):
     #WORKING
     def OnQuit(self, event):
         self.Close()  
+#++++++++++++++++++++++++++++++++++++++++++++++++
+    #working
+    def on_browse(self, event):
+        """
+        Browse for an image file
+        @param event: The event object
+        """
+        wildcard = "JPEG files (*.jpg)|*.jpg"
+        with wx.FileDialog(None, "Choose a file",
+                           wildcard=wildcard,
+                           style=wx.ID_OPEN) as dialog:
+            if dialog.ShowModal() == wx.ID_OK:
+                self.photo_txt.SetLabel(dialog.GetPath())
+                self.load_image()
+#++++++++++++++++++++++++++++++++++++++++++++++++
+    #working
+    def load_image(self):
+        """
+        Load the image and display it to the user
+        """
+        filepath = self.photo_txt.GetLabel()
+        img = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
+        
+        # scale the image, preserving the aspect ratio
+        W = img.GetWidth()
+        H = img.GetHeight()
+        if W > H:
+            NewW = self.max_size
+            NewH = self.max_size * H / W
+        else:
+            NewH = self.max_size
+            NewW = self.max_size * W / H
+        img = img.Scale(NewW,NewH)
+        
+        self.image_ctrl.SetBitmap(wx.Bitmap(img))
+        self.Refresh()    
 #++++++++++++++++++++++++++++++++++++++++++++++++    
     #WORKING
     def NewPainting(self, event):
