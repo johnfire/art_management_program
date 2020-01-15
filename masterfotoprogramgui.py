@@ -394,13 +394,16 @@ class mainMenu(wx.Frame):
             hDims = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["hDims"]
         except:
             hDims = "none"
-            pass
+
         try:
             materialsUsed = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["materialsUsed"]
         except:
             materialsUsed = "none"
+        try:
+            wherePainted = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["wherePainted"]
+        except:
+            wherePainted = "none"
 
-            pass
         
         self.labelA.SetLabel(cfg.dispPainting)
         self.labelB.SetLabel(cfg.currentCat)
@@ -419,8 +422,8 @@ class mainMenu(wx.Frame):
         self.t12.SetValue(str(s6))
         self.t13.SetValue(str(buzz))
         self.t14.SetValue(str(mysite))  
-        self.photo_txt(picLR)
-        self.photo_HRtxt(picHR)
+        self.photo_txt.SetLabel(picLR)
+        self.photo_HRtxt.SetLabel(picHR)
 #++++++++++++++++++++++++++++++++++++++++++++++++    
     # WORKING
     def OpenFile(self,event,opt = ""):
@@ -590,7 +593,7 @@ class mainMenu(wx.Frame):
             picLR = "no pic LR"
             picHR = "no Pic HR"
                    
-            mydata = {cfg.dispPainting:{"pname": ptgname,"wherePainted": wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed, "locLRfoto" : fotoLR,"locHRfoto" : fotoHR}}
+            mydata = {cfg.dispPainting:{"pname": ptgname,"wherePainted": wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed, "locLRfoto" : picLR,"locHRfoto" : picHR}}
             jsonData = json.dumps(mydata, sort_keys=True,  indent=4, separators=(",", ": "))
             print(os.getcwd())
             filename = cfg.dispPainting + ".json"
@@ -629,10 +632,10 @@ class mainMenu(wx.Frame):
         gal3 =self.t12.GetValue()
         gal4 =self.t13.GetValue()
         gal5 =self.t14.GetValue()
-        #fotoLR = self.x.Getalue()
-        #fotoHR = self.xx.GetValue()
+        picLR = self.photo_txt.GetLabel()
+        picHR = self.photo_HRtxt.GetLabel()
                
-        mydata = {cfg.dispPainting:{"pname": ptgname,"wherePainted":wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed}}
+        mydata = {cfg.dispPainting:{"pname": ptgname,"wherePainted":wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed, "locLRfoto" : picLR, "locHRfoto" : picHR}}
         jsonData = json.dumps(mydata, sort_keys=True,  indent=4, separators=(",", ": "))
         os.chdir(cfg.workingDir + "/" + cfg.currentCat + "/"+ cfg.dispPainting +  "/info") 
         filename = cfg.dispPainting + ".json"
@@ -702,9 +705,10 @@ class mainMenu(wx.Frame):
                 f.write(each)
                 
         with open(filename, 'r') as f:
-            test.html = markdown(f.read(), output_format='html')
+            #could be a problem here, not sure. 
+            testfile = markdown(f.read(), output_format='html')
 
-        pdfkit.from_file(test.html, output_filename)
+        pdfkit.from_file(testfile , output_filename)
         f.close()  
 #++++++++++++++++++++++++++++++++++++++++++++++++       
     #WORKING
