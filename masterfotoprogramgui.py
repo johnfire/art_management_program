@@ -382,14 +382,14 @@ class mainMenu(wx.Frame):
         buzz= cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["buzz"]
         dims= cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["dims"]
         try:
-            cfg.hDims = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["cfg.hDims"]
+            hDims = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["hDims"]
         except:
-            cfg.hDims = "none"
+            hDims = "none"
             pass
         try:
-            cfg.materialsUsed = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["cfg.materialsUsed"]
+            materialsUsed = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["materialsUsed"]
         except:
-            cfg.materialsUsed = "none"
+            materialsUsed = "none"
             pass
         
         self.labelA.SetLabel(cfg.dispPainting)
@@ -399,10 +399,10 @@ class mainMenu(wx.Frame):
         self.t2.SetValue(ptgDate)
         self.t2a.SetValue(ptgNum)
         self.t2b.SetValue(secid)
-        self.t3.SetValue(cfg.wherePainted)
+        self.t3.SetValue(wherePainted)
         self.t4.SetValue(dims)
-        self.t5.SetValue(cfg.hDims)
-        self.t6.SetValue(cfg.materialsUsed)
+        self.t5.SetValue(hDims)
+        self.t6.SetValue(materialsUsed)
         self.t7.SetValue(ptgDesc)
         self.t10.SetValue(str(saatchi))
         self.t11.SetValue(str(dev))
