@@ -8,7 +8,6 @@ this is the main foto management proram.
 note this program uses the wxPython4.0 and wxWidgets for GUI development,
 both must be installed
 plase use wxPython 4.0 or higher 
-
 """
 import os
 import wx 
@@ -17,7 +16,6 @@ import json
 import artmanagementcfg as cfg
 from markdown import markdown
 import pdfkit
-
 ##################################################################################   
 def makeList():
     #this function makes a list of all paintings in the file of works
@@ -171,25 +169,25 @@ class mainMenu(wx.Frame):
         self.Bind(wx.EVT_MENU, self.SetPreferences, menuItemPref)
         self.Bind(wx.EVT_MENU, self.OnAbout, menuItemAbout)
     
-        workName ="Name of work"
+        workName ="Name of Work"
         catName = "Current Catagory"
     
-        self.b1 = wx.Button(panel, label = 'previous work') 
+        self.b1 = wx.Button(panel, label = 'Previous work') 
         hbox0.Add(self.b1, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
     
         self.labelA = wx.StaticText(panel, -1, workName , style = wx.TE_CENTER)
         hbox0.Add(self.labelA, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
     
-        self.b2 = wx.Button(panel, label = 'next work') 
+        self.b2 = wx.Button(panel, label = 'Next work') 
         hbox0.Add(self.b2, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
     
-        self.b3 = wx.Button(panel, label = 'previous catagory') 
+        self.b3 = wx.Button(panel, label = 'Previous catagory') 
         hbox0.Add(self.b3, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
     
         self.labelB = wx.StaticText(panel, -1, catName ,style = wx.TE_CENTER)
         hbox0.Add(self.labelB, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
     
-        self.b4 = wx.Button(panel, label = 'next catagory') 
+        self.b4 = wx.Button(panel, label = 'Next catagory') 
         hbox0.Add(self.b4, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
          
         self.b1.Bind(wx.EVT_BUTTON, self.PrevPainting)
@@ -209,13 +207,13 @@ class mainMenu(wx.Frame):
         self.t2 = wx.TextCtrl(panel,-1,size=(100,40))
         hbox2.Add(self.t2,1,wx.ALIGN_LEFT|wx.ALL,5)
         
-        label2a = wx.StaticText(panel, -1, "id number")
+        label2a = wx.StaticText(panel, -1, "ID number")
         hbox2.Add(label2a, 1, wx.ALIGN_LEFT|wx.ALL,5)
     
         self.t2a = wx.TextCtrl(panel,-1,size=(50,40))
         hbox2.Add(self.t2a,1,wx.ALIGN_LEFT|wx.ALL,5)
         
-        label2b = wx.StaticText(panel, -1, "count/year")
+        label2b = wx.StaticText(panel, -1, "Count/Year")
         hbox2.Add(label2b, 1, wx.ALIGN_LEFT|wx.ALL,5)
     
         self.t2b = wx.TextCtrl(panel,-1,size=(50,40))
@@ -272,7 +270,7 @@ class mainMenu(wx.Frame):
         label6 = wx.StaticText(panel, -1, "Materials used")
         hbox6.Add(label6, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
     
-        label7 = wx.StaticText(panel, -1, "cfg.description")
+        label7 = wx.StaticText(panel, -1, "Description")
         hbox7.Add(label7, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
     
         self.t6 = wx.TextCtrl(panel,-1,size=(350,80),style = wx.TE_MULTILINE)
@@ -281,11 +279,11 @@ class mainMenu(wx.Frame):
         self.t7 = wx.TextCtrl(panel,-1,size=(350,160),style = wx.TE_MULTILINE)
         hbox7.Add(self.t7,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.savebtn = wx.Button(panel, label = "save painting data")
+        self.savebtn = wx.Button(panel, label = "Save painting data")
         hboxr2.Add(self.savebtn,1,wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
         self.savebtn.Bind(wx.EVT_BUTTON, self.onSavePainting)
         
-        self.printbtn = wx.Button(panel, label = "print .md and pdf")
+        self.printbtn = wx.Button(panel, label = "Print .md and pdf")
         hboxr2.Add(self.printbtn,1,wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
         self.printbtn.Bind(wx.EVT_BUTTON, self.MakeMd)
         
@@ -304,7 +302,7 @@ class mainMenu(wx.Frame):
         
         self.browse_btn.Bind(wx.EVT_BUTTON, self.on_browse)
 
-        self.photo_txt = wx.StaticText(panel, -1 , "this is the file")
+        self.photo_txt = wx.StaticText(panel, -1 , "This is the file")
         hboxr1aa.Add(self.photo_txt,wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
         
         vbox1.Add(hbox1)
@@ -358,38 +356,44 @@ class mainMenu(wx.Frame):
         ptgName = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["pname"]
         ptgDesc = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["desc"]
         ptgDate = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["year"]
-        if isinstance(ptgDate, int)
+        if isinstance(ptgDate, int) == True:
             ptgDate =str(ptgDate)
         ptgNum = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["number"]
         saatchi= cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["saatchi"]
         s6 = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["soc6"]
         try : 
             mysite = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["mysite"]
-            if isinstance(mysite, int)
+            if isinstance(mysite, int) == True:
                 mysite = str(mysite)
         except:
             mysite = "0"
-            pass
         try : 
             secid = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["secid"]
-            if isinstance(secid, int)
+            if isinstance(secid, int)  == True:
                 secid = str(secid)
         except:
             secid = "0"
-            pass
+        try:
+            picLR = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["locLRfoto"]
+        except:
+            picLR = "No Pic"
+        try:
+            picHR = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["locHRfoto"]
+        except:
+            picHR = "No Pic"
         #displate = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["displate"]
         dev = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["deviant"]
         buzz= cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["buzz"]
         dims= cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["dims"]
         try:
-            cfg.hDims = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["cfg.hDims"]
+            cfg.hDims = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["hDims"]
         except:
-            cfg.hDims = "none"
+            cfg.hDims = "None"
             pass
         try:
-            cfg.materialsUsed = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["cfg.materialsUsed"]
+            cfg.materialsUsed = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["materialsUsed"]
         except:
-            cfg.materialsUsed = "none"
+            cfg.materialsUsed = "None"
             pass
         
         self.labelA.SetLabel(cfg.dispPainting)
@@ -399,10 +403,10 @@ class mainMenu(wx.Frame):
         self.t2.SetValue(ptgDate)
         self.t2a.SetValue(ptgNum)
         self.t2b.SetValue(secid)
-        self.t3.SetValue(cfg.wherePainted)
+        self.t3.SetValue(wherePainted)
         self.t4.SetValue(dims)
-        self.t5.SetValue(cfg.hDims)
-        self.t6.SetValue(cfg.materialsUsed)
+        self.t5.SetValue(hDims)
+        self.t6.SetValue(materialsUsed)
         self.t7.SetValue(ptgDesc)
         self.t10.SetValue(str(saatchi))
         self.t11.SetValue(str(dev))
@@ -413,7 +417,7 @@ class mainMenu(wx.Frame):
     # WORKING
     def OpenFile(self,event,opt = ""):
         
-        self.SetStatusText("Opens the database")
+        self.SetStatusText("Opens the Database")
         if opt == "":
             dialog = wx.DirDialog(None, "Choose a directory to work with: ", style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
             if dialog.ShowModal() == wx.ID_OK:
@@ -491,7 +495,7 @@ class mainMenu(wx.Frame):
 #++++++++++++++++++++++++++++++++++++++++++++++++   
     #WORKING
     def OnAbout(self, event):
-        self.SetStatusText("About me")
+        self.SetStatusText("About this Program")
         wx.MessageBox("This program manages data and files for an artist.\n See the user manual for more info.\n if you use regularly a 10 € contribution to my paypal account is suggested.",
                       "About Art Biz Manager", wx.OK | wx.ICON_INFORMATION, self)   
 #++++++++++++++++++++++++++++++++++++++++++++++++    
@@ -550,7 +554,7 @@ class mainMenu(wx.Frame):
             cfg.currentCat=os.getcwd()
             tmpcat = cfg.currentCat
         dialog.Destroy()
-        dlg = wx.TextEntryDialog(None, "What is the new painting named",'Name of new painting', 'new painting')
+        dlg = wx.TextEntryDialog(None, "What is the new painting named",'Name of new painting', 'new_painting')
         if dlg.ShowModal() == wx.ID_OK:
             response = dlg.GetValue()
             os.mkdir("./" + response)
@@ -576,20 +580,20 @@ class mainMenu(wx.Frame):
             gal4 = "0"
             gal5 = "0"
                    
-            mydata = {cfg.dispPainting:{"pname": ptgname,"cfg.wherePainted":wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "cfg.hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed}}
+            mydata = {cfg.dispPainting:{"pname": ptgname,"wherePainted":wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed}}
             jsonData = json.dumps(mydata, sort_keys=True,  indent=4, separators=(",", ": "))
             print(os.getcwd())
             filename = cfg.dispPainting + ".json"
             with open(filename, 'w') as f:
                  f.write(jsonData)     
-            self.OpenFile(event = "none",opt = cfg.myworkingFolder)
+            #self.OpenFile(event = "none",opt = cfg.myworkingFolder)
             cfg.currentCat = tmpcat
             cfg.dispPainting =tempPainting
             self.dispData()         
 #++++++++++++++++++++++++++++++++++++++++++++++++    #WORKING
     def AddNewSubFolder(self, event):
         self.SetStatusText("Add a new catagory to database")
-        dlg = wx.TextEntryDialog(None, "What is the new catagory named",'Name of new folder', 'new folder')
+        dlg = wx.TextEntryDialog(None, "What is the new catagory named",'Name of new folder', 'new_folder')
         if dlg.ShowModal() == wx.ID_OK:
             response = dlg.GetValue()
             os.chdir(cfg.myworkingFolder)
@@ -600,7 +604,7 @@ class mainMenu(wx.Frame):
     #should be working watch for bugs
     def onSavePainting(self,event):
         
-        self.SetStatusText("saving painting data to json file")
+        self.SetStatusText("Saving painting data to json file")
         ptgname =self.t1.GetValue()
         ptgDate =self.t2.GetValue()
         numb = self.t2a.GetValue()
@@ -616,7 +620,7 @@ class mainMenu(wx.Frame):
         gal4 =self.t13.GetValue()
         gal5 =self.t14.GetValue()
                
-        mydata = {cfg.dispPainting:{"pname": ptgname,"cfg.wherePainted":wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "cfg.hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed}}
+        mydata = {cfg.dispPainting:{"pname": ptgname,"wherePainted":wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed}}
         jsonData = json.dumps(mydata, sort_keys=True,  indent=4, separators=(",", ": "))
         os.chdir(cfg.workingDir + "/" + cfg.currentCat + "/"+ cfg.dispPainting +  "/info") 
         filename = cfg.dispPainting + ".json"
@@ -634,7 +638,7 @@ class mainMenu(wx.Frame):
 #++++++++++++++++++++++++++++++++++++++++++++++++       
     #Should be working not tested yet
     def MoveFotosToFolders(self, event):
-        self.SetStatusText("Move fotos to correct picture folders")
+        self.SetStatusText("Move all fotos in a picture folder to correct picture folders")
         moveAllPhotos()
 #++++++++++++++++++++++++++++++++++++++++++++++++        
     #WORKING
@@ -699,7 +703,7 @@ class mainMenu(wx.Frame):
         #load new painting
         cfg.dispPainting = cfg.listPtngs[cfg.ptngIndex]
         self.dispData()
-        self.SetStatusText("back one painting")    
+        self.SetStatusText("Back one painting")    
 #++++++++++++++++++++++++++++++++++++++++++++++
     #WORKING    
     def NextPainting(self,event):
@@ -709,7 +713,7 @@ class mainMenu(wx.Frame):
         #load new painting
         cfg.dispPainting = cfg.listPtngs[cfg.ptngIndex]
         self.dispData()
-        self.SetStatusText("forward one painting")    
+        self.SetStatusText("Forward one painting")    
 #+++++++++++++++++++++++++++++++++++++++++++++++++++
     #WORKING    
     def PrevCat(self,event):
