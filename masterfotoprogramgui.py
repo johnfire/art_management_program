@@ -119,6 +119,7 @@ class mainMenu(wx.Frame):
         
         hboxr1 = wx.BoxSizer(wx.HORIZONTAL)
         hboxr1aa = wx.BoxSizer(wx.HORIZONTAL)
+        hboxr1aaa = wx.BoxSizer(wx.HORIZONTAL)
         hboxr1a = wx.BoxSizer(wx.HORIZONTAL)
         hboxr2 = wx.BoxSizer(wx.HORIZONTAL)
  
@@ -172,23 +173,23 @@ class mainMenu(wx.Frame):
         workName ="Name of Work"
         catName = "Current Catagory"
     
-        self.b1 = wx.Button(panel, label = 'Previous work') 
-        hbox0.Add(self.b1, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
+        self.b1 = wx.Button(panel, label = 'Previous Work') 
+        hbox0.Add(self.b1, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 5)
     
         self.labelA = wx.StaticText(panel, -1, workName , style = wx.TE_CENTER)
-        hbox0.Add(self.labelA, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
+        hbox0.Add(self.labelA, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 5)
     
-        self.b2 = wx.Button(panel, label = 'Next work') 
-        hbox0.Add(self.b2, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
+        self.b2 = wx.Button(panel, label = 'Next Work') 
+        hbox0.Add(self.b2, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 5)
     
-        self.b3 = wx.Button(panel, label = 'Previous catagory') 
-        hbox0.Add(self.b3, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
+        self.b3 = wx.Button(panel, label = 'Previous Catagory') 
+        hbox0.Add(self.b3, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 5)
     
         self.labelB = wx.StaticText(panel, -1, catName ,style = wx.TE_CENTER)
-        hbox0.Add(self.labelB, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
+        hbox0.Add(self.labelB, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 5)
     
-        self.b4 = wx.Button(panel, label = 'Next catagory') 
-        hbox0.Add(self.b4, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
+        self.b4 = wx.Button(panel, label = 'Next Catagory') 
+        hbox0.Add(self.b4, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 5)
          
         self.b1.Bind(wx.EVT_BUTTON, self.PrevPainting)
         self.b2.Bind(wx.EVT_BUTTON, self.NextPainting)
@@ -288,12 +289,12 @@ class mainMenu(wx.Frame):
         self.printbtn.Bind(wx.EVT_BUTTON, self.MakeMd)
         
         self.b5 = wx.Button(panel, label = 'EXIT PROGRAM') 
-        hboxr2.Add(self.b5, 1, wx.ALIGN_RIGHT|wx.ALL,5)
+        hboxr2.Add(self.b5, 1, wx.ALIGN_RIGHT|wx.ALL, 5)
         self.b5.Bind(wx.EVT_BUTTON, self.OnQuit) 
         
-        image_size=(500,500)
+        image_size=(460,460)
         
-        self.max_size = 500
+        self.max_size = 460
 
         img = wx.Image(*image_size)
         self.image_ctrl = wx.StaticBitmap(panel, bitmap=wx.Bitmap(img))
@@ -302,30 +303,33 @@ class mainMenu(wx.Frame):
         
         self.browse_btn.Bind(wx.EVT_BUTTON, self.on_browse)
 
-        self.photo_txt = wx.StaticText(panel, -1 , "This is the file")
-        hboxr1aa.Add(self.photo_txt,wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
+        self.photo_txt = wx.StaticText(panel, -1 , "This is the LR file")
+        hboxr1aa.Add(self.photo_txt, wx.EXPAND|wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
+        self.photo_HRtxt = wx.StaticText(panel, -1 , "This is the HR file")
+        hboxr1aaa.Add(self.photo_HRtxt, wx.EXPAND|wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
         
-        vbox1.Add(hbox1)
-        vbox1.Add(hbox1a)
-        vbox1.Add(hbox2) 
-        vbox1.Add(hbox3)
-        vbox1.Add(hbox4)
-        vbox1.Add(hbox5)
-        vbox1.Add(hbox6)
-        vbox1.Add(hbox7)
+        vbox1.Add(hbox1,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox1.Add(hbox1a,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox1.Add(hbox2,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2) 
+        vbox1.Add(hbox3,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox1.Add(hbox4,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox1.Add(hbox5,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox1.Add(hbox6,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox1.Add(hbox7,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
         
-        hboxr1.Add(self.image_ctrl, 1, wx.ALIGN_CENTER|wx.ALL, 5)
-        hboxr1a.Add(self.browse_btn, 1, wx.ALIGN_CENTER|wx.ALL, 5)
-        vbox2.Add(hboxr1)
-        vbox2.Add(hboxr1aa)
-        vbox2.Add(hboxr1a)
-        vbox2.Add(hboxr2)
+        hboxr1.Add(self.image_ctrl, 1, wx.ALIGN_CENTER|wx.ALL, 2)
+        hboxr1a.Add(self.browse_btn, 1, wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox2.Add(hboxr1,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox2.Add(hboxr1aa,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox2.Add(hboxr1aaa,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox2.Add(hboxr1a,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox2.Add(hboxr2,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
 
-        hboxMain.Add(vbox1)
-        hboxMain.Add(vbox2)
+        hboxMain.Add(vbox1,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        hboxMain.Add(vbox2,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
         
-        vboxBig.Add(hbox0)
-        vboxBig.Add(hboxMain)
+        vboxBig.Add(hbox0,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vboxBig.Add(hboxMain,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
     
         panel.SetSizer(vboxBig)
         panel.Center()
@@ -415,6 +419,8 @@ class mainMenu(wx.Frame):
         self.t12.SetValue(str(s6))
         self.t13.SetValue(str(buzz))
         self.t14.SetValue(str(mysite))  
+        self.photo_txt(picLR)
+        self.photo_HRtxt(picHR)
 #++++++++++++++++++++++++++++++++++++++++++++++++    
     # WORKING
     def OpenFile(self,event,opt = ""):
@@ -584,7 +590,7 @@ class mainMenu(wx.Frame):
             picLR = "no pic LR"
             picHR = "no Pic HR"
                    
-            mydata = {cfg.dispPainting:{"pname": ptgname,"wherePainted":wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed, }}
+            mydata = {cfg.dispPainting:{"pname": ptgname,"wherePainted": wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed, "locLRfoto" : fotoLR,"locHRfoto" : fotoHR}}
             jsonData = json.dumps(mydata, sort_keys=True,  indent=4, separators=(",", ": "))
             print(os.getcwd())
             filename = cfg.dispPainting + ".json"
@@ -623,6 +629,8 @@ class mainMenu(wx.Frame):
         gal3 =self.t12.GetValue()
         gal4 =self.t13.GetValue()
         gal5 =self.t14.GetValue()
+        #fotoLR = self.x.Getalue()
+        #fotoHR = self.xx.GetValue()
                
         mydata = {cfg.dispPainting:{"pname": ptgname,"wherePainted":wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed}}
         jsonData = json.dumps(mydata, sort_keys=True,  indent=4, separators=(",", ": "))
