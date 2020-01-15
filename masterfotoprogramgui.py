@@ -10,7 +10,6 @@ both must be installed
 plase use wxPython 4.0 or higher 
 
 """
-#import sys
 import os
 import wx 
 import shutil
@@ -102,11 +101,13 @@ class mainMenu(wx.Frame):
         panel = wx.Panel(self, wx.ID_ANY)
         panel.SetBackgroundColour("blue")
         
-        hboxMain =wx.BoxSizer(wx.HORIZONTAL)
         vboxBig = wx.BoxSizer(wx.VERTICAL)
+        
+        hbox0 = wx.BoxSizer(wx.HORIZONTAL)
+        hboxMain =wx.BoxSizer(wx.HORIZONTAL)
+        
         vbox1 = wx.BoxSizer(wx.VERTICAL)
        
-        hbox0 = wx.BoxSizer(wx.HORIZONTAL)
         hbox1 = wx.BoxSizer(wx.HORIZONTAL)
         hbox1a = wx.BoxSizer(wx.HORIZONTAL)
         hbox2 = wx.BoxSizer(wx.HORIZONTAL)
@@ -174,27 +175,23 @@ class mainMenu(wx.Frame):
         catName = "Current Catagory"
     
         self.b1 = wx.Button(panel, label = 'previous work') 
-        hbox0.Add(self.b1, 1, wx.ALIGN_LEFT|wx.ALL,5)
+        hbox0.Add(self.b1, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
     
         self.labelA = wx.StaticText(panel, -1, workName , style = wx.TE_CENTER)
         hbox0.Add(self.labelA, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
     
         self.b2 = wx.Button(panel, label = 'next work') 
-        hbox0.Add(self.b2, 1, wx.ALIGN_LEFT|wx.ALL,5)
+        hbox0.Add(self.b2, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
     
         self.b3 = wx.Button(panel, label = 'previous catagory') 
-        hbox0.Add(self.b3, 1, wx.ALIGN_LEFT|wx.ALL,5)
+        hbox0.Add(self.b3, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
     
         self.labelB = wx.StaticText(panel, -1, catName ,style = wx.TE_CENTER)
         hbox0.Add(self.labelB, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
     
         self.b4 = wx.Button(panel, label = 'next catagory') 
-        hbox0.Add(self.b4, 1, wx.ALIGN_LEFT|wx.ALL,5)
-    
-        self.b5 = wx.Button(panel, label = 'EXIT PROGRAM') 
-        hbox0.Add(self.b5, 1, wx.ALIGN_RIGHT|wx.ALL,5)
-    
-        self.b5.Bind(wx.EVT_BUTTON, self.OnQuit)  
+        hbox0.Add(self.b4, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL,5)
+         
         self.b1.Bind(wx.EVT_BUTTON, self.PrevPainting)
         self.b2.Bind(wx.EVT_BUTTON, self.NextPainting)
         self.b3.Bind(wx.EVT_BUTTON, self.PrevCat)
@@ -292,9 +289,13 @@ class mainMenu(wx.Frame):
         hboxr2.Add(self.printbtn,1,wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
         self.printbtn.Bind(wx.EVT_BUTTON, self.MakeMd)
         
+        self.b5 = wx.Button(panel, label = 'EXIT PROGRAM') 
+        hboxr2.Add(self.b5, 1, wx.ALIGN_RIGHT|wx.ALL,5)
+        self.b5.Bind(wx.EVT_BUTTON, self.OnQuit) 
+        
         image_size=(500,500)
         
-        self.max_size = 400
+        self.max_size = 500
 
         img = wx.Image(*image_size)
         self.image_ctrl = wx.StaticBitmap(panel, bitmap=wx.Bitmap(img))
@@ -357,18 +358,24 @@ class mainMenu(wx.Frame):
         ptgName = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["pname"]
         ptgDesc = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["desc"]
         ptgDate = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["year"]
+        if isinstance(ptgDate, int)
+            ptgDate =str(ptgDate)
         ptgNum = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["number"]
         saatchi= cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["saatchi"]
         s6 = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["soc6"]
         try : 
             mysite = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["mysite"]
+            if isinstance(mysite, int)
+                mysite = str(mysite)
         except:
-            mysite = 0
+            mysite = "0"
             pass
         try : 
             secid = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["secid"]
+            if isinstance(secid, int)
+                secid = str(secid)
         except:
-            secid = 0
+            secid = "0"
             pass
         #displate = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["displate"]
         dev = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["deviant"]
@@ -389,9 +396,9 @@ class mainMenu(wx.Frame):
         self.labelB.SetLabel(cfg.currentCat)
         
         self.t1.SetValue(ptgName)
-        self.t2.SetValue(str(ptgDate))
-        self.t2a.SetValue(str(ptgNum))
-        self.t2b.SetValue(str(secid))
+        self.t2.SetValue(ptgDate)
+        self.t2a.SetValue(ptgNum)
+        self.t2b.SetValue(secid)
         self.t3.SetValue(cfg.wherePainted)
         self.t4.SetValue(dims)
         self.t5.SetValue(cfg.hDims)
@@ -414,8 +421,9 @@ class mainMenu(wx.Frame):
                 cfg.myworkingFolder = str(dialog.GetPath())
                 os.chdir(str(dialog.GetPath()))
             dialog.Destroy()
-        else:
+        else:#not sure if this will be useful in future or not. leaving here for now
             cfg.workingDir = cfg.myworkingFolder
+            
         cfg.subDirList = os.listdir(cfg.workingDir)
         cfg.subDirList.remove("info")
         for each in cfg.subDirList:
@@ -555,20 +563,20 @@ class mainMenu(wx.Frame):
 
             ptgname = ""
             ptgDate =""
-            numb = 0
-            secid =0
-            cfg.wherePainted = ""
+            numb = "0"
+            secid ="0"
+            wherePainted = ""
             vertDim = ""
             horizDim = ""
-            cfg.materialsUsed = ""
+            materialsUsed = ""
             ptgDesc = ""
-            gal1 = 0
-            gal2 = 0
-            gal3 = 0
-            gal4 = 0
-            gal5 = 0
+            gal1 = "0"
+            gal2 = "0"
+            gal3 = "0"
+            gal4 = "0"
+            gal5 = "0"
                    
-            mydata = {cfg.dispPainting:{"pname": ptgname,"cfg.wherePainted":cfg.wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "cfg.hDims": horizDim, "desc" : ptgDesc, "materials": cfg.materialsUsed}}
+            mydata = {cfg.dispPainting:{"pname": ptgname,"cfg.wherePainted":wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "cfg.hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed}}
             jsonData = json.dumps(mydata, sort_keys=True,  indent=4, separators=(",", ": "))
             print(os.getcwd())
             filename = cfg.dispPainting + ".json"
@@ -597,10 +605,10 @@ class mainMenu(wx.Frame):
         ptgDate =self.t2.GetValue()
         numb = self.t2a.GetValue()
         secid =self.t2b.GetValue()
-        cfg.wherePainted = self.t3.GetValue()
+        wherePainted = self.t3.GetValue()
         vertDim = self.t4.GetValue()
         horizDim = self.t5.GetValue()
-        cfg.materialsUsed = self.t6.GetValue()
+        materialsUsed = self.t6.GetValue()
         ptgDesc = self.t7.GetValue()
         gal1 = self.t10.GetValue()
         gal2 =self.t11.GetValue()
@@ -608,7 +616,7 @@ class mainMenu(wx.Frame):
         gal4 =self.t13.GetValue()
         gal5 =self.t14.GetValue()
                
-        mydata = {cfg.dispPainting:{"pname": ptgname,"cfg.wherePainted":cfg.wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "cfg.hDims": horizDim, "desc" : ptgDesc, "materials": cfg.materialsUsed}}
+        mydata = {cfg.dispPainting:{"pname": ptgname,"cfg.wherePainted":wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "cfg.hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed}}
         jsonData = json.dumps(mydata, sort_keys=True,  indent=4, separators=(",", ": "))
         os.chdir(cfg.workingDir + "/" + cfg.currentCat + "/"+ cfg.dispPainting +  "/info") 
         filename = cfg.dispPainting + ".json"
