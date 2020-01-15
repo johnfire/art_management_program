@@ -386,14 +386,16 @@ class mainMenu(wx.Frame):
         buzz= cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["buzz"]
         dims= cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["dims"]
         try:
-            cfg.hDims = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["hDims"]
+
+            hDims = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["hDims"]
         except:
-            cfg.hDims = "None"
+            hDims = "none"
             pass
         try:
-            cfg.materialsUsed = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["materialsUsed"]
+            materialsUsed = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["materialsUsed"]
         except:
-            cfg.materialsUsed = "None"
+            materialsUsed = "none"
+
             pass
         
         self.labelA.SetLabel(cfg.dispPainting)
@@ -579,8 +581,10 @@ class mainMenu(wx.Frame):
             gal3 = "0"
             gal4 = "0"
             gal5 = "0"
+            picLR = "no pic LR"
+            picHR = "no Pic HR"
                    
-            mydata = {cfg.dispPainting:{"pname": ptgname,"wherePainted":wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed}}
+            mydata = {cfg.dispPainting:{"pname": ptgname,"wherePainted":wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed, }}
             jsonData = json.dumps(mydata, sort_keys=True,  indent=4, separators=(",", ": "))
             print(os.getcwd())
             filename = cfg.dispPainting + ".json"
