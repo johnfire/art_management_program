@@ -21,17 +21,17 @@ as of 11 January 2020 this program has basic functionality. you can
    
 still to do:
    
-   set the system up to display a foto of your painting with the data
+   set the system up to display a foto of your painting with the data 65% done
    
-   create odt text documents from the data at the press of a button (info sheet on each painting)
+   create odt text documents from the data at the press of a button (info sheet on each painting) 80% done bug here
    
-   create pdfs from the odt sheet
+   create pdfs from the odt sheet 80% done bug here
    
 possibly in the future:
    
    system that automatically prodces catalogs of work as set up by the artist for shows, fairs advertising etc.
    
-   right now, 12 jan 2020 I am using the program and debuging it, I hope to release it as a python PyPl program by feb 1 2020, so that others can use it as well.
+   right now, 15 jan 2020 I am using the program and debuging it, I hope to release it as a python PyPl program by feb 1 2020, so that others can use it as well.
    
    if anyone would like to help, im planning on releasing this to the pypl repository in a few weeks when i get some more functionality in , as a shareware/ freeware software tool for artists. im looking for people to help with writing the program, documentation, and suggesting new features etc. you can contact me here if you are interested.
    
