@@ -199,73 +199,73 @@ class mainMenu(wx.Frame):
         label1 = wx.StaticText(panel, -1, "Name of work")
         hbox1.Add(label1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
         
-        self.t1 = wx.TextCtrl(panel,-1, size=(350,40))
+        self.t1 = wx.TextCtrl(panel,-1, size = (350,40))
         hbox1.Add(self.t1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
     
         label2 = wx.StaticText(panel, -1, "Date painted")
         hbox2.Add(label2, 1, wx.ALIGN_LEFT|wx.ALL, 5)
     
-        self.t2 = wx.TextCtrl(panel,-1, size=(100,40))
+        self.t2 = wx.TextCtrl(panel,-1, size = (100,40))
         hbox2.Add(self.t2, 1, wx.ALIGN_LEFT|wx.ALL, 5)
         
         label2a = wx.StaticText(panel, -1, "ID number")
         hbox2.Add(label2a, 1, wx.ALIGN_LEFT|wx.ALL,5)
     
-        self.t2a = wx.TextCtrl(panel,-1, size=(50,40))
+        self.t2a = wx.TextCtrl(panel,-1, size = (50,40))
         hbox2.Add(self.t2a, 1, wx.ALIGN_LEFT|wx.ALL, 5)
         
         label2b = wx.StaticText(panel, -1, "Count/Year")
         hbox2.Add(label2b, 1, wx.ALIGN_LEFT|wx.ALL,5)
     
-        self.t2b = wx.TextCtrl(panel,-1, size=(50,40))
+        self.t2b = wx.TextCtrl(panel,-1, size = (50,40))
         hbox2.Add(self.t2b, 1, wx.ALIGN_LEFT|wx.ALL, 5)
     
         label3 = wx.StaticText(panel, -1, "Where painted")
         hbox3.Add(label3, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t3 = wx.TextCtrl(panel,-1, size=(350,40))
+        self.t3 = wx.TextCtrl(panel,-1, size = (350,40))
         hbox3.Add(self.t3, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
     
         label4 = wx.StaticText(panel, -1, "Vertical dim")
         hbox4.Add(label4, 1, wx.ALIGN_LEFT|wx.ALL, 5)
         
-        self.t4 = wx.TextCtrl(panel,-1,size=(50,40))
+        self.t4 = wx.TextCtrl(panel,-1,size = (50,40))
         hbox4.Add(self.t4,1,wx.ALIGN_LEFT|wx.ALL,5)
         
         label5 = wx.StaticText(panel, -1, "Horizontal dim")
         hbox4.Add(label5, 1, wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t5 = wx.TextCtrl(panel,-1, size=(50,40))
+        self.t5 = wx.TextCtrl(panel,-1, size = (50,40))
         hbox4.Add(self.t5,1,wx.ALIGN_LEFT|wx.ALL,5)
     
         label10 = wx.StaticText(panel, -1, cfg.gallery1)
         hbox5.Add(label10, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t10 = wx.TextCtrl(panel,-1, size=(50,40))
+        self.t10 = wx.TextCtrl(panel,-1, size = (50,40))
         hbox5.Add(self.t10, 1, wx.ALIGN_LEFT|wx.ALL, 5)
         
         label11 = wx.StaticText(panel, -1, cfg.gallery2)
         hbox5.Add(label11, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
         
-        self.t11 = wx.TextCtrl(panel,-1,size=(50,40))
+        self.t11 = wx.TextCtrl(panel,-1, size = (50,40))
         hbox5.Add(self.t11, 1, wx.ALIGN_LEFT|wx.ALL, 5)
         
         label12 = wx.StaticText(panel, -1, cfg.gallery3)
         hbox5.Add(label12, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t12 = wx.TextCtrl(panel,-1,size=(50,40))
+        self.t12 = wx.TextCtrl(panel,-1, size = (50,40))
         hbox5.Add(self.t12, 1, wx.ALIGN_LEFT|wx.ALL, 5)
         
         label13 = wx.StaticText(panel, -1, cfg.gallery4)
         hbox5.Add(label13, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
         
-        self.t13 = wx.TextCtrl(panel,-1,size=(50,40))
+        self.t13 = wx.TextCtrl(panel,-1,size = (50,40))
         hbox5.Add(self.t13, 1, wx.ALIGN_LEFT|wx.ALL, 5)
         
         label14 = wx.StaticText(panel, -1, cfg.gallery5)
         hbox5.Add(label14, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
         
-        self.t14 = wx.TextCtrl(panel,-1,size=(50,40))
+        self.t14 = wx.TextCtrl(panel,-1, size = (50,40))
         hbox5.Add(self.t14, 1, wx.ALIGN_LEFT|wx.ALL, 5)
        
         label6 = wx.StaticText(panel, -1, "Materials used")
@@ -274,10 +274,10 @@ class mainMenu(wx.Frame):
         label7 = wx.StaticText(panel, -1, "Description")
         hbox7.Add(label7, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
     
-        self.t6 = wx.TextCtrl(panel,-1,size=(350,80),style = wx.TE_MULTILINE)
+        self.t6 = wx.TextCtrl(panel, -1, size = (350,80), style = wx.TE_MULTILINE)
         hbox6.Add(self.t6, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
     
-        self.t7 = wx.TextCtrl(panel,-1,size=(350,160),style = wx.TE_MULTILINE)
+        self.t7 = wx.TextCtrl(panel, -1, size = (350,160), style = wx.TE_MULTILINE)
         hbox7.Add(self.t7, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
         
         self.savebtn = wx.Button(panel, label = "Save painting data")
@@ -532,8 +532,8 @@ class mainMenu(wx.Frame):
         """
         wildcard = "JPEG files (*.jpg)|*.jpg"
         with wx.FileDialog(None, "Choose a file",
-                           wildcard=wildcard,
-                           style=wx.ID_OPEN) as dialog:
+                           wildcard = wildcard,
+                           style = wx.ID_OPEN) as dialog:
             if dialog.ShowModal() == wx.ID_OK:
                 self.photo_txt.SetLabel(dialog.GetPath())
                 self.load_image()
@@ -583,7 +583,7 @@ class mainMenu(wx.Frame):
             tempPainting = cfg.dispPainting
 
             ptgname = ""
-            ptgDate =""
+            ptgDate = ""
             numb = "0"
             secid ="0"
             wherePainted = ""
@@ -607,7 +607,7 @@ class mainMenu(wx.Frame):
                  f.write(jsonData)     
             #self.OpenFile(event = "none",opt = cfg.myworkingFolder)
             cfg.currentCat = tmpcat
-            cfg.dispPainting =tempPainting
+            cfg.dispPainting = tempPainting
             self.dispData()         
 #++++++++++++++++++++++++++++++++++++++++++++++++    #WORKING
     def AddNewSubFolder(self, event):
@@ -624,25 +624,25 @@ class mainMenu(wx.Frame):
     def onSavePainting(self,event):
         
         self.SetStatusText("Saving painting data to json file")
-        ptgname =self.t1.GetValue()
-        ptgDate =self.t2.GetValue()
+        ptgname = self.t1.GetValue()
+        ptgDate = self.t2.GetValue()
         numb = self.t2a.GetValue()
-        secid =self.t2b.GetValue()
+        secid = self.t2b.GetValue()
         wherePainted = self.t3.GetValue()
         vertDim = self.t4.GetValue()
         horizDim = self.t5.GetValue()
         materialsUsed = self.t6.GetValue()
         ptgDesc = self.t7.GetValue()
         gal1 = self.t10.GetValue()
-        gal2 =self.t11.GetValue()
-        gal3 =self.t12.GetValue()
-        gal4 =self.t13.GetValue()
-        gal5 =self.t14.GetValue()
+        gal2 = self.t11.GetValue()
+        gal3 = self.t12.GetValue()
+        gal4 = self.t13.GetValue()
+        gal5 = self.t14.GetValue()
         picLR = self.photo_txt.GetLabel()
         picHR = self.photo_HRtxt.GetLabel()
                
         mydata = {cfg.dispPainting:{"pname": ptgname,"wherePainted":wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed, "locLRfoto" : picLR, "locHRfoto" : picHR}}
-        jsonData = json.dumps(mydata, sort_keys=True,  indent=4, separators=(",", ": "))
+        jsonData = json.dumps(mydata, sort_keys = True,  indent = 4, separators = (",", ": "))
         os.chdir(cfg.workingDir + "/" + cfg.currentCat + "/"+ cfg.dispPainting +  "/info") 
         filename = cfg.dispPainting + ".json"
         with open(filename, 'w') as f:
@@ -694,9 +694,9 @@ class mainMenu(wx.Frame):
     def MakeMd(self, event):
         print("in makeMd")
         filename = cfg.dispPainting + ".html"
-        output_filename =cfg.dispPainting + ".pdf"
-        ptgname =self.t1.GetValue()
-        ptgDate =self.t2.GetValue()
+        output_filename = cfg.dispPainting + ".pdf"
+        ptgname = self.t1.GetValue()
+        ptgDate = self.t2.GetValue()
         wherePainted = self.t3.GetValue()
         vertDim = self.t4.GetValue()
         horizDim = self.t5.GetValue()
@@ -731,7 +731,7 @@ class mainMenu(wx.Frame):
     def NextPainting(self,event):
         cfg.ptngIndex += 1
         if cfg.ptngIndex > (cfg.totalPtngs-1):
-            cfg.ptngIndex =0
+            cfg.ptngIndex = 0
         #load new painting
         cfg.dispPainting = cfg.listPtngs[cfg.ptngIndex]
         self.dispData()
