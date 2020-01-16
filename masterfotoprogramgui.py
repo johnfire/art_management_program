@@ -31,7 +31,7 @@ def makeList():
             fh.write("" + str(k1) + '\n')
             try:
                 for k2, v2 in v1.items():
-                    fh.write("" + str(k2) +'\n')
+                    fh.write("" + str(k2) + '\n')
             except:
                 fh.write("\n")
     fh.close()
@@ -39,12 +39,12 @@ def makeList():
 ##################################################################################
 def createAllSubfolders():
     os.chdir(cfg.workingDir)
-    mylist= os.listdir()
+    mylist = os.listdir()
     for each in mylist:
         chkdir = cfg.workingDir + "/" + str(each)
         if os.path.isdir(each) is True:
             os.chdir(chkdir)
-            mylist1= os.listdir()
+            mylist1 = os.listdir()
             for each1 in mylist1:
                 chkdir1 = chkdir + "/" + str(each1)
                 if os.path.isdir(each1) is True:
@@ -62,11 +62,11 @@ def moveAllPhotos():
        listOfFilesToMove = os.listdir(".")
        for each in listOfFilesToMove:
            if each.endswith(".CR2"):
-               shutil.move("./"+each, "./cr2type/"+ each)
+               shutil.move("./" + each, "./cr2type/" + each)
            elif each.endswith(".JPG"):
-               shutil.move("./"+each, "./jpgtype/"+ each)
+               shutil.move("./" + each, "./jpgtype/" + each)
            elif each.endswith(".jpg"):
-               shutil.move("./"+each, "./oldCamerPics/"+ each)
+               shutil.move("./" + each, "./oldCamerPics/" + each)
            else:
                pass  
 ##################################################################################
@@ -75,16 +75,16 @@ def renameFotos():
 ##################################################################################
 #### recursion search function #####
 def searchLevel(myLevel):
-    tableofitems ={}
+    tableofitems = {}
     thisdirlist = os.listdir(myLevel)
     countoffiles = 1
     for each in thisdirlist:
-        if os.path.isdir(myLevel +"/" + each) is True:
-            mynewlevel = myLevel +"/" + each 
+        if os.path.isdir(myLevel + "/" + each) is True:
+            mynewlevel = myLevel + "/" + each 
             tableofitems[each] = searchLevel(mynewlevel)
         else:
             tableofitems[countoffiles] = each
-            countoffiles +=1
+            countoffiles += 1
     return tableofitems
 ##################################################################################
 
@@ -102,7 +102,7 @@ class mainMenu(wx.Frame):
         vboxBig = wx.BoxSizer(wx.VERTICAL)
         
         hbox0 = wx.BoxSizer(wx.HORIZONTAL)
-        hboxMain =wx.BoxSizer(wx.HORIZONTAL)
+        hboxMain = wx.BoxSizer(wx.HORIZONTAL)
         
         vbox1 = wx.BoxSizer(wx.VERTICAL)
        
@@ -136,7 +136,7 @@ class mainMenu(wx.Frame):
         menuItemNewSubfolder = menu2.Append(-1,"Create New Subfolder")
     
         menuItemMakeListAll = menu3.Append(-1, "List all works")
-        menuItemCreateAllSubfolders = menu3.Append(-1,"Make All Subfolders")
+        menuItemCreateAllSubfolders = menu3.Append(-1, "Make All Subfolders")
         menuItemMoveFotosToFolders = menu3.Append(-1, "Move Fotos to Subfolders")
         menuItemColate = menu3.Append(-1, "Collate all Info Sheets")
         menuItemRenameAll = menu3.Append(-1, "Rename All Fotos")
@@ -197,37 +197,37 @@ class mainMenu(wx.Frame):
         self.b4.Bind(wx.EVT_BUTTON, self.NextCat)
     
         label1 = wx.StaticText(panel, -1, "Name of work")
-        hbox1.Add(label1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        hbox1.Add(label1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
         
-        self.t1 = wx.TextCtrl(panel,-1,size=(350,40))
-        hbox1.Add(self.t1,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.t1 = wx.TextCtrl(panel,-1, size=(350,40))
+        hbox1.Add(self.t1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
     
         label2 = wx.StaticText(panel, -1, "Date painted")
-        hbox2.Add(label2, 1, wx.ALIGN_LEFT|wx.ALL,5)
+        hbox2.Add(label2, 1, wx.ALIGN_LEFT|wx.ALL, 5)
     
-        self.t2 = wx.TextCtrl(panel,-1,size=(100,40))
-        hbox2.Add(self.t2,1,wx.ALIGN_LEFT|wx.ALL,5)
+        self.t2 = wx.TextCtrl(panel,-1, size=(100,40))
+        hbox2.Add(self.t2, 1, wx.ALIGN_LEFT|wx.ALL, 5)
         
         label2a = wx.StaticText(panel, -1, "ID number")
         hbox2.Add(label2a, 1, wx.ALIGN_LEFT|wx.ALL,5)
     
-        self.t2a = wx.TextCtrl(panel,-1,size=(50,40))
-        hbox2.Add(self.t2a,1,wx.ALIGN_LEFT|wx.ALL,5)
+        self.t2a = wx.TextCtrl(panel,-1, size=(50,40))
+        hbox2.Add(self.t2a, 1, wx.ALIGN_LEFT|wx.ALL, 5)
         
         label2b = wx.StaticText(panel, -1, "Count/Year")
         hbox2.Add(label2b, 1, wx.ALIGN_LEFT|wx.ALL,5)
     
-        self.t2b = wx.TextCtrl(panel,-1,size=(50,40))
-        hbox2.Add(self.t2b,1,wx.ALIGN_LEFT|wx.ALL,5)
+        self.t2b = wx.TextCtrl(panel,-1, size=(50,40))
+        hbox2.Add(self.t2b, 1, wx.ALIGN_LEFT|wx.ALL, 5)
     
         label3 = wx.StaticText(panel, -1, "Where painted")
         hbox3.Add(label3, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t3 = wx.TextCtrl(panel,-1,size=(350,40))
-        hbox3.Add(self.t3,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        self.t3 = wx.TextCtrl(panel,-1, size=(350,40))
+        hbox3.Add(self.t3, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
     
         label4 = wx.StaticText(panel, -1, "Vertical dim")
-        hbox4.Add(label4, 1, wx.ALIGN_LEFT|wx.ALL,5)
+        hbox4.Add(label4, 1, wx.ALIGN_LEFT|wx.ALL, 5)
         
         self.t4 = wx.TextCtrl(panel,-1,size=(50,40))
         hbox4.Add(self.t4,1,wx.ALIGN_LEFT|wx.ALL,5)
@@ -235,64 +235,64 @@ class mainMenu(wx.Frame):
         label5 = wx.StaticText(panel, -1, "Horizontal dim")
         hbox4.Add(label5, 1, wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t5 = wx.TextCtrl(panel,-1,size=(50,40))
+        self.t5 = wx.TextCtrl(panel,-1, size=(50,40))
         hbox4.Add(self.t5,1,wx.ALIGN_LEFT|wx.ALL,5)
     
         label10 = wx.StaticText(panel, -1, cfg.gallery1)
         hbox5.Add(label10, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
-        self.t10 = wx.TextCtrl(panel,-1,size=(50,40))
-        hbox5.Add(self.t10,1,wx.ALIGN_LEFT|wx.ALL,5)
+        self.t10 = wx.TextCtrl(panel,-1, size=(50,40))
+        hbox5.Add(self.t10, 1, wx.ALIGN_LEFT|wx.ALL, 5)
         
         label11 = wx.StaticText(panel, -1, cfg.gallery2)
-        hbox5.Add(label11, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        hbox5.Add(label11, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
         
         self.t11 = wx.TextCtrl(panel,-1,size=(50,40))
-        hbox5.Add(self.t11,1,wx.ALIGN_LEFT|wx.ALL,5)
+        hbox5.Add(self.t11, 1, wx.ALIGN_LEFT|wx.ALL, 5)
         
         label12 = wx.StaticText(panel, -1, cfg.gallery3)
         hbox5.Add(label12, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
         
         self.t12 = wx.TextCtrl(panel,-1,size=(50,40))
-        hbox5.Add(self.t12,1,wx.ALIGN_LEFT|wx.ALL,5)
+        hbox5.Add(self.t12, 1, wx.ALIGN_LEFT|wx.ALL, 5)
         
         label13 = wx.StaticText(panel, -1, cfg.gallery4)
-        hbox5.Add(label13, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        hbox5.Add(label13, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
         
         self.t13 = wx.TextCtrl(panel,-1,size=(50,40))
-        hbox5.Add(self.t13,1,wx.ALIGN_LEFT|wx.ALL,5)
+        hbox5.Add(self.t13, 1, wx.ALIGN_LEFT|wx.ALL, 5)
         
         label14 = wx.StaticText(panel, -1, cfg.gallery5)
-        hbox5.Add(label14, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        hbox5.Add(label14, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
         
         self.t14 = wx.TextCtrl(panel,-1,size=(50,40))
-        hbox5.Add(self.t14,1,wx.ALIGN_LEFT|wx.ALL,5)
+        hbox5.Add(self.t14, 1, wx.ALIGN_LEFT|wx.ALL, 5)
        
         label6 = wx.StaticText(panel, -1, "Materials used")
-        hbox6.Add(label6, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        hbox6.Add(label6, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
     
         label7 = wx.StaticText(panel, -1, "Description")
-        hbox7.Add(label7, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        hbox7.Add(label7, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
     
         self.t6 = wx.TextCtrl(panel,-1,size=(350,80),style = wx.TE_MULTILINE)
-        hbox6.Add(self.t6,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        hbox6.Add(self.t6, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
     
         self.t7 = wx.TextCtrl(panel,-1,size=(350,160),style = wx.TE_MULTILINE)
-        hbox7.Add(self.t7,1,wx.EXPAND|wx.ALIGN_LEFT|wx.ALL,5)
+        hbox7.Add(self.t7, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
         
         self.savebtn = wx.Button(panel, label = "Save painting data")
-        hboxr2.Add(self.savebtn,1,wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
+        hboxr2.Add(self.savebtn, 1, wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
         self.savebtn.Bind(wx.EVT_BUTTON, self.onSavePainting)
         
         self.printbtn = wx.Button(panel, label = "Print .md and pdf")
-        hboxr2.Add(self.printbtn,1,wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
+        hboxr2.Add(self.printbtn, 1, wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
         self.printbtn.Bind(wx.EVT_BUTTON, self.MakeMd)
         
         self.b5 = wx.Button(panel, label = 'EXIT PROGRAM') 
         hboxr2.Add(self.b5, 1, wx.ALIGN_RIGHT|wx.ALL, 5)
         self.b5.Bind(wx.EVT_BUTTON, self.OnQuit) 
         
-        image_size=(460,460)
+        image_size = (460,460)
         
         self.max_size = 460
 
@@ -312,30 +312,30 @@ class mainMenu(wx.Frame):
         self.photo_HRtxt = wx.StaticText(panel, -1 , "This is the HR file")
         hboxr1aaa.Add(self.photo_HRtxt, wx.EXPAND|wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
         
-        vbox1.Add(hbox1,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox1.Add(hbox1a,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox1.Add(hbox2,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2) 
-        vbox1.Add(hbox3,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox1.Add(hbox4,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox1.Add(hbox5,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox1.Add(hbox6,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox1.Add(hbox7,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox1.Add(hbox1, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox1.Add(hbox1a, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox1.Add(hbox2, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2) 
+        vbox1.Add(hbox3, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox1.Add(hbox4, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox1.Add(hbox5, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox1.Add(hbox6, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox1.Add(hbox7, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
         
         hboxr1.Add(self.image_ctrl, 1, wx.ALIGN_CENTER|wx.ALL, 2)
         hboxr1a.Add(self.browse_btn, 1, wx.ALIGN_CENTER|wx.ALL, 2)
         hboxr1a.Add(self.browseHR_btn, 1, wx.ALIGN_CENTER|wx.ALL, 2)
         #hboxr1a.Add(self.SecScreen_btn, 1, wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox2.Add(hboxr1,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox2.Add(hboxr1aa,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox2.Add(hboxr1aaa,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox2.Add(hboxr1a,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox2.Add(hboxr2,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox2.Add(hboxr1, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox2.Add(hboxr1aa, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox2.Add(hboxr1aaa, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox2.Add(hboxr1a, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vbox2.Add(hboxr2, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
 
-        hboxMain.Add(vbox1,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        hboxMain.Add(vbox2,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        hboxMain.Add(vbox1, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        hboxMain.Add(vbox2, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
         
-        vboxBig.Add(hbox0,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vboxBig.Add(hboxMain,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vboxBig.Add(hbox0, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        vboxBig.Add(hboxMain, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
     
         panel.SetSizer(vboxBig)
         panel.Center()
@@ -367,9 +367,9 @@ class mainMenu(wx.Frame):
         ptgDesc = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["desc"]
         ptgDate = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["year"]
         if isinstance(ptgDate, int) == True:
-            ptgDate =str(ptgDate)
+            ptgDate = str(ptgDate)
         ptgNum = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["number"]
-        saatchi= cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["saatchi"]
+        saatchi = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["saatchi"]
         s6 = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["soc6"]
         try : 
             mysite = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["mysite"]
@@ -393,8 +393,8 @@ class mainMenu(wx.Frame):
             picHR = "No Pic"
         #displate = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["displate"]
         dev = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["deviant"]
-        buzz= cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["buzz"]
-        dims= cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["dims"]
+        buzz = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["buzz"]
+        dims = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["dims"]
         try:
 
             hDims = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["hDims"]
@@ -461,7 +461,7 @@ class mainMenu(wx.Frame):
                             with open(theFile, "r") as content:
                                 datastuff = json.load(content)
                                 print(datastuff)
-                                listOfPaintings[eacheins]= datastuff
+                                listOfPaintings[eacheins] = datastuff
                     os.chdir("..")
                     os.chdir("..")
 
@@ -471,10 +471,10 @@ class mainMenu(wx.Frame):
         cfg.mylibOfSubdirectories = {"list_of_subdirectories" : cfg.subDirList}
         cfg.mylibOfSubPaintings = {"list_of_cat_and_paintings": cfg.dirOfCatandPaintings}
         
-        jsonData = json.dumps(cfg.mylibOfSubdirectories, sort_keys=True,  indent=4, separators=(",", ": "))
-        json1Data = json.dumps(cfg.mylibOfSubPaintings, sort_keys=True,  indent=4, separators=(",", ": "))
-        json2Data = json.dumps(cfg.catDir, sort_keys=True,  indent=4, separators=(",", ": "))
-        json3Data = json.dumps(cfg.workingDir, sort_keys=True,  indent=4, separators=(",", ": "))
+        jsonData = json.dumps(cfg.mylibOfSubdirectories, sort_keys = True,  indent = 4, separators = (",", ": "))
+        json1Data = json.dumps(cfg.mylibOfSubPaintings, sort_keys = True,  indent = 4, separators = (",", ": "))
+        json2Data = json.dumps(cfg.catDir, sort_keys = True,  indent = 4, separators = (",", ": "))
+        json3Data = json.dumps(cfg.workingDir, sort_keys = True,  indent = 4, separators = (",", ": "))
 
         print("\n")
         print(os.getcwd())
