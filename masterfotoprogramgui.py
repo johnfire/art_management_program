@@ -301,11 +301,11 @@ class mainMenu(wx.Frame):
 
         self.browse_btn = wx.Button(panel, label = 'LR Browse')
         self.browseHR_btn = wx.Button(panel, label = 'HR Browse')
-        self.SecScreen_btn = wx.button(panel, label = 'Second Screen')
+        #self.SecScreen_btn = wx.Button(panel, label = 'Second Screen')
         
         self.browse_btn.Bind(wx.EVT_BUTTON, self.on_browse)
-        #self.browseHR_btn.Bind(wx.EVT_BUTTON, self.on_HRbrowse)
-        #self.SecScreen_btn.Bind(wx.EVT_BUTTON, self.on_browse)
+        self.browseHR_btn.Bind(wx.EVT_BUTTON, self.on_HRbrowse)
+        #self.SecScreen_btn.Bind(wx.EVT_BUTTON, self.on_SecScreen)
         
         self.photo_txt = wx.StaticText(panel, -1 , "This is the LR file")
         hboxr1aa.Add(self.photo_txt, wx.EXPAND|wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
@@ -358,7 +358,12 @@ class mainMenu(wx.Frame):
         self.t11.SetValue(str(cfg.gallery2Val))
         self.t12.SetValue(str(cfg.gallery3Val))
         self.t13.SetValue(str(cfg.gallery4Val))
-        self.t14.SetValue(str(cfg.gallery5Val))      
+        self.t14.SetValue(str(cfg.gallery5Val)) 
+        
+        #load working dir from json file?????
+        print(cfg.workingDir)
+        self.OpenFile(event = "none", opt = cfg.workingDir)
+            
 #++++++++++++++++++++++++++++++++++++++++++++++++    
     def dispData(self):
         
@@ -409,6 +414,8 @@ class mainMenu(wx.Frame):
             wherePainted = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["wherePainted"]
         except:
             wherePainted = "none"
+        #try:
+        #    aFoto = fg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["wherePainted"]
 
         
         self.labelA.SetLabel(cfg.dispPainting)
@@ -416,7 +423,7 @@ class mainMenu(wx.Frame):
         
         self.t1.SetValue(ptgName)
         self.t2.SetValue(ptgDate)
-        self.t2a.SetValue(ptgNum)
+        self.t2a.SetValue(str(ptgNum))
         self.t2b.SetValue(secid)
         self.t3.SetValue(wherePainted)
         self.t4.SetValue(dims)
@@ -430,10 +437,12 @@ class mainMenu(wx.Frame):
         self.t14.SetValue(str(mysite))  
         self.photo_txt.SetLabel(picLR)
         self.photo_HRtxt.SetLabel(picHR)
+        if picLR != "No Pic":
+            self.load_image()
 #++++++++++++++++++++++++++++++++++++++++++++++++    
     # WORKING
-    def OpenFile(self,event,opt = ""):
-        
+    def OpenFile(self,event, opt = ""):
+        print(cfg.workingDir)
         self.SetStatusText("Opens the Database")
         if opt == "":
             dialog = wx.DirDialog(None, "Choose a directory to work with: ", style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
@@ -442,9 +451,10 @@ class mainMenu(wx.Frame):
                 cfg.myworkingFolder = str(dialog.GetPath())
                 os.chdir(str(dialog.GetPath()))
             dialog.Destroy()
-        else:#not sure if this will be useful in future or not. leaving here for now
-            cfg.workingDir = cfg.myworkingFolder
-            
+        else:
+            pass  
+        if opt != "": 
+            os.chdir(cfg.workingDir)    
         cfg.subDirList = os.listdir(cfg.workingDir)
         cfg.subDirList.remove("info")
         for each in cfg.subDirList:
@@ -537,6 +547,20 @@ class mainMenu(wx.Frame):
             if dialog.ShowModal() == wx.ID_OK:
                 self.photo_txt.SetLabel(dialog.GetPath())
                 self.load_image()
+#++++++++++++++++++++++++++++++++++++++++++++++++
+     
+    def on_HRbrowse(self, event):
+        """
+        Browse for an image file
+        @param event: The event object
+        """
+        wildcard = "JPEG files (*.jpg)|*.jpg"
+        with wx.FileDialog(None, "Choose a file",
+                           wildcard = wildcard,
+                           style = wx.ID_OPEN) as dialog:
+            if dialog.ShowModal() == wx.ID_OK:
+                self.photo_HRtxt.SetLabel(dialog.GetPath())                       
+           
 #++++++++++++++++++++++++++++++++++++++++++++++++
     #working
     def load_image(self):
