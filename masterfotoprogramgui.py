@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 begun on Sun Aug 25 11:24:43 2019
-
+ver alpha 16 jan 2020
 this is the main foto management proram.
 @author: christopher rehm
 note this program uses the wxPython4.0 and wxWidgets for GUI development,
@@ -280,37 +280,44 @@ class mainMenu(wx.Frame):
         self.t7 = wx.TextCtrl(panel, -1, size = (350,160), style = wx.TE_MULTILINE)
         hbox7.Add(self.t7, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
         
+        #------------------------#
+        
         self.savebtn = wx.Button(panel, label = "Save painting data")
-        hboxr2.Add(self.savebtn, 1, wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
+        hboxr2.Add(self.savebtn, 1, wx.FIXED_MINSIZE|wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 2)
         self.savebtn.Bind(wx.EVT_BUTTON, self.onSavePainting)
         
         self.printbtn = wx.Button(panel, label = "Print .md and pdf")
-        hboxr2.Add(self.printbtn, 1, wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
+        hboxr2.Add(self.printbtn, 1, wx.FIXED_MINSIZE|wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 2)
         self.printbtn.Bind(wx.EVT_BUTTON, self.MakeMd)
         
         self.b5 = wx.Button(panel, label = 'EXIT PROGRAM') 
-        hboxr2.Add(self.b5, 1, wx.ALIGN_RIGHT|wx.ALL, 5)
+        hboxr2.Add(self.b5, 1, wx.FIXED_MINSIZE|wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 2)
         self.b5.Bind(wx.EVT_BUTTON, self.OnQuit) 
         
-        image_size = (460,460)
+        image_size = (480,480)
         
-        self.max_size = 460
+        self.max_size = 480
 
         img = wx.Image(*image_size)
+        
         self.image_ctrl = wx.StaticBitmap(panel, bitmap=wx.Bitmap(img))
-
+        hboxr1.Add(self.image_ctrl, 1, wx.ALIGN_TOP, 0)
+        
         self.browse_btn = wx.Button(panel, label = 'LR Browse')
         self.browseHR_btn = wx.Button(panel, label = 'HR Browse')
         #self.SecScreen_btn = wx.Button(panel, label = 'Second Screen')
+        hboxr1a.Add(self.browse_btn, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER|wx.ALL, 1)
+        hboxr1a.Add(self.browseHR_btn, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER|wx.ALL, 1)
+        
         
         self.browse_btn.Bind(wx.EVT_BUTTON, self.on_browse)
         self.browseHR_btn.Bind(wx.EVT_BUTTON, self.on_HRbrowse)
         #self.SecScreen_btn.Bind(wx.EVT_BUTTON, self.on_SecScreen)
         
         self.photo_txt = wx.StaticText(panel, -1 , "This is the LR file")
-        hboxr1aa.Add(self.photo_txt, wx.EXPAND|wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
+        hboxr1aa.Add(self.photo_txt, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_LEFT|wx.ALL, 1)
         self.photo_HRtxt = wx.StaticText(panel, -1 , "This is the HR file")
-        hboxr1aaa.Add(self.photo_HRtxt, wx.EXPAND|wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
+        hboxr1aaa.Add(self.photo_HRtxt, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_LEFT|wx.ALL, 1)
         
         vbox1.Add(hbox1, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
         vbox1.Add(hbox1a, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
@@ -321,15 +328,15 @@ class mainMenu(wx.Frame):
         vbox1.Add(hbox6, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
         vbox1.Add(hbox7, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
         
-        hboxr1.Add(self.image_ctrl, 1, wx.ALIGN_CENTER|wx.ALL, 2)
-        hboxr1a.Add(self.browse_btn, 1, wx.ALIGN_CENTER|wx.ALL, 2)
-        hboxr1a.Add(self.browseHR_btn, 1, wx.ALIGN_CENTER|wx.ALL, 2)
+        
+        
         #hboxr1a.Add(self.SecScreen_btn, 1, wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox2.Add(hboxr1, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox2.Add(hboxr1aa, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox2.Add(hboxr1aaa, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox2.Add(hboxr1a, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        vbox2.Add(hboxr2, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
+        
+        vbox2.Add(hboxr1, 1, wx.EXPAND|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER|wx.ALL, 4)
+        vbox2.Add(hboxr1aa, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_LEFT|wx.ALL, 1)
+        vbox2.Add(hboxr1aaa, 0,wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_LEFT|wx.ALL, 1)
+        vbox2.Add(hboxr1a, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER|wx.ALL, 1)
+        vbox2.Add(hboxr2, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER|wx.ALL, 1)
 
         hboxMain.Add(vbox1, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
         hboxMain.Add(vbox2, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
@@ -726,8 +733,11 @@ class mainMenu(wx.Frame):
         horizDim = self.t5.GetValue()
         materialsUsed = self.t6.GetValue()
         ptgDesc = self.t7.GetValue()
+        thepic = self.photo_txt.GetLabel()
        
-        data = ["\n\n\n\n\n\n\n\n\n\n",ptgname + "\n\n",ptgDate + "\n\n",wherePainted + "\n\n",vertDim + "  *  " + horizDim + "\n\n",materialsUsed + "\n\n", ptgDesc]
+        #data = [ ' ![]( ' + thepic + ")\n\n", ptgname + "\n\n",ptgDate + "\n\n",wherePainted + "\n\n",vertDim + "  *  " + horizDim + "\n\n",materialsUsed + "\n\n", ptgDesc]
+               #data = ["\n\n\n\n", ptgname + "\n\n", ptgDate + "\n\n",wherePainted + "\n\n",vertDim + "  *  " + horizDim + "\n\n",materialsUsed + "\n\n", ptgDesc]
+        data = ["blah"]
         
         print(os.getcwd())
         with open(filename, 'w+') as f:
