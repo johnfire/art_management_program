@@ -299,10 +299,14 @@ class mainMenu(wx.Frame):
         img = wx.Image(*image_size)
         self.image_ctrl = wx.StaticBitmap(panel, bitmap=wx.Bitmap(img))
 
-        self.browse_btn = wx.Button(panel, label='Browse')
+        self.browse_btn = wx.Button(panel, label = 'LR Browse')
+        self.browseHR_btn = wx.Button(panel, label = 'HR Browse')
+        self.SecScreen_btn = wx.button(panel, label = 'Second Screen')
         
         self.browse_btn.Bind(wx.EVT_BUTTON, self.on_browse)
-
+        #self.browseHR_btn.Bind(wx.EVT_BUTTON, self.on_HRbrowse)
+        #self.SecScreen_btn.Bind(wx.EVT_BUTTON, self.on_browse)
+        
         self.photo_txt = wx.StaticText(panel, -1 , "This is the LR file")
         hboxr1aa.Add(self.photo_txt, wx.EXPAND|wx.ALIGN_CENTER|wx.ALIGN_BOTTOM|wx.ALL, 5)
         self.photo_HRtxt = wx.StaticText(panel, -1 , "This is the HR file")
@@ -319,6 +323,8 @@ class mainMenu(wx.Frame):
         
         hboxr1.Add(self.image_ctrl, 1, wx.ALIGN_CENTER|wx.ALL, 2)
         hboxr1a.Add(self.browse_btn, 1, wx.ALIGN_CENTER|wx.ALL, 2)
+        hboxr1a.Add(self.browseHR_btn, 1, wx.ALIGN_CENTER|wx.ALL, 2)
+        #hboxr1a.Add(self.SecScreen_btn, 1, wx.ALIGN_CENTER|wx.ALL, 2)
         vbox2.Add(hboxr1,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
         vbox2.Add(hboxr1aa,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
         vbox2.Add(hboxr1aaa,1 , wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
