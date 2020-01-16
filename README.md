@@ -19,11 +19,9 @@ as of 11 January 2020 this program has basic functionality. you can
    
    organize paintings into sub catagories
    
+   set the system up to display a foto of your painting with the data 
+   
 still to do:
-   
-   set the system up to display a foto of your painting with the data 65% done
-   
-   create odt text documents from the data at the press of a button (info sheet on each painting) 80% done bug here
    
    create pdfs from the odt sheet 80% done bug here
    
