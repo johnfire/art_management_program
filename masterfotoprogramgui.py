@@ -309,7 +309,6 @@ class mainMenu(wx.Frame):
         hboxr1a.Add(self.browse_btn, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER|wx.ALL, 1)
         hboxr1a.Add(self.browseHR_btn, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER|wx.ALL, 1)
         
-        
         self.browse_btn.Bind(wx.EVT_BUTTON, self.on_browse)
         self.browseHR_btn.Bind(wx.EVT_BUTTON, self.on_HRbrowse)
         #self.SecScreen_btn.Bind(wx.EVT_BUTTON, self.on_SecScreen)
@@ -327,9 +326,7 @@ class mainMenu(wx.Frame):
         vbox1.Add(hbox5, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
         vbox1.Add(hbox6, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
         vbox1.Add(hbox7, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-        
-        
-        
+          
         #hboxr1a.Add(self.SecScreen_btn, 1, wx.ALIGN_CENTER|wx.ALL, 2)
         
         vbox2.Add(hboxr1, 1, wx.EXPAND|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER|wx.ALL, 4)
@@ -369,8 +366,7 @@ class mainMenu(wx.Frame):
         
         #load working dir from json file?????
         print(cfg.workingDir)
-        self.OpenFile(event = "none", opt = cfg.workingDir)
-            
+        self.OpenFile(event = "none", opt = cfg.workingDir)      
 #++++++++++++++++++++++++++++++++++++++++++++++++    
     def dispData(self):
         
@@ -414,7 +410,7 @@ class mainMenu(wx.Frame):
             hDims = "none"
 
         try:
-            materialsUsed = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["materialsUsed"]
+            materialsUsed = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["materials"]
         except:
             materialsUsed = "none"
         try:
@@ -424,7 +420,6 @@ class mainMenu(wx.Frame):
         #try:
         #    aFoto = fg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["wherePainted"]
 
-        
         self.labelA.SetLabel(cfg.dispPainting)
         self.labelB.SetLabel(cfg.currentCat)
         
@@ -615,18 +610,18 @@ class mainMenu(wx.Frame):
 
             ptgname = ""
             ptgDate = ""
-            numb = "0"
-            secid ="0"
+            numb = ""
+            secid =""
             wherePainted = ""
             vertDim = ""
             horizDim = ""
             materialsUsed = ""
             ptgDesc = ""
-            gal1 = "0"
-            gal2 = "0"
-            gal3 = "0"
-            gal4 = "0"
-            gal5 = "0"
+            gal1 = ""
+            gal2 = ""
+            gal3 = ""
+            gal4 = ""
+            gal5 = ""
             picLR = "no pic LR"
             picHR = "no Pic HR"
                    
@@ -712,15 +707,12 @@ class mainMenu(wx.Frame):
 #++++++++++++++++++++++++++++++++++++++++++++++++    
     def DisplayWork(self,event):
         self.SetStatusText("Display a work")
-        pass  
 #++++++++++++++++++++++++++++++++++++++++++++++++
     def GetHelp(self, event):
         self.SetStatusText("Help")
-        pass
 #++++++++++++++++++++++++++++++++++++++++++++++++    
     def SetPreferences(self, event):
         self.SetStatusText("Set up preferences")
-        pass
 #++++++++++++++++++++++++++++++++++++++++++++++++
     def MakeMd(self, event):
         print("in makeMd")
@@ -734,7 +726,6 @@ class mainMenu(wx.Frame):
         materialsUsed = self.t6.GetValue()
         ptgDesc = self.t7.GetValue()
         thepic = self.photo_txt.GetLabel()
-       
         #data = [ ' ![]( ' + thepic + ")\n\n", ptgname + "\n\n",ptgDate + "\n\n",wherePainted + "\n\n",vertDim + "  *  " + horizDim + "\n\n",materialsUsed + "\n\n", ptgDesc]
                #data = ["\n\n\n\n", ptgname + "\n\n", ptgDate + "\n\n",wherePainted + "\n\n",vertDim + "  *  " + horizDim + "\n\n",materialsUsed + "\n\n", ptgDesc]
         data = ["blah"]
@@ -747,7 +738,6 @@ class mainMenu(wx.Frame):
         with open(filename, 'r') as f:
             #could be a problem here, not sure. 
             testfile = markdown(f.read(), output_format='html')
-
         pdfkit.from_file(testfile , output_filename)
         f.close()  
 #++++++++++++++++++++++++++++++++++++++++++++++++       
@@ -804,7 +794,5 @@ class App(wx.App):
 ##################################################################################
 if __name__ == '__main__':
     app = App()
-    app.MainLoop()
-
-    print("Ending program.")       
+    app.MainLoop()    
 ##################################################################################
