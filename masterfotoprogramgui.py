@@ -525,7 +525,7 @@ class mainMenu(wx.Frame):
     #WORKING
     def OnAbout(self, event):
         self.SetStatusText("About this Program")
-        wx.MessageBox("This program manages data and files for an artist.\n See the user manual for more info.\n if you use regularly a 10 € contribution to my paypal account is suggested.",
+        wx.MessageBox("This program manages data and files for an artist.\n See the user manual for more info.\n if you use regularly a 10 € contribution to my paypal account would be helpful, to keep this project and others like it going. christopherrehm@web.de",
                       "About Art Biz Manager", wx.OK | wx.ICON_INFORMATION, self)   
 #++++++++++++++++++++++++++++++++++++++++++++++++    
     #WORKING    
@@ -716,8 +716,8 @@ class mainMenu(wx.Frame):
 #++++++++++++++++++++++++++++++++++++++++++++++++
     def MakeMd(self, event):
         print("in makeMd")
-        filename = cfg.dispPainting + ".html"
-        output_filename = cfg.dispPainting + ".pdf"
+        filename = cfg.dispPainting + ".md"
+        output_filename = cfg.dispPainting + "lr.pdf"
         ptgname = self.t1.GetValue()
         ptgDate = self.t2.GetValue()
         wherePainted = self.t3.GetValue()
@@ -726,19 +726,19 @@ class mainMenu(wx.Frame):
         materialsUsed = self.t6.GetValue()
         ptgDesc = self.t7.GetValue()
         thepic = self.photo_txt.GetLabel()
-        #data = [ ' ![]( ' + thepic + ")\n\n", ptgname + "\n\n",ptgDate + "\n\n",wherePainted + "\n\n",vertDim + "  *  " + horizDim + "\n\n",materialsUsed + "\n\n", ptgDesc]
-               #data = ["\n\n\n\n", ptgname + "\n\n", ptgDate + "\n\n",wherePainted + "\n\n",vertDim + "  *  " + horizDim + "\n\n",materialsUsed + "\n\n", ptgDesc]
-        data = ["blah"]
+        data = ("<img src =" + thepic + "width=\"200\" height=\"121\">\n\n"+ ptgname + "\n\n"+ptgDate + "\n\n"+wherePainted + "\n\n"+vertDim + "  *  " + horizDim + "\n\n"+materialsUsed + "\n\n"+ ptgDesc)
+        #data = ["\n\n\n\n"+ ptgname + "\n\n"+ ptgDate + "\n\n"+wherePainted + "\n\n",vertDim + "  *  " + horizDim + "\n\n",materialsUsed + "\n\n", ptgDesc]
+        #data = ["blah"]
         
         print(os.getcwd())
-        with open(filename, 'w+') as f:
-            for each in data:
-                f.write(each)
+        with open(filename, 'w') as f:
+            f.write(data)
+        f.close()
                 
         with open(filename, 'r') as f:
             #could be a problem here, not sure. 
-            testfile = markdown(f.read(), output_format='html')
-        pdfkit.from_file(testfile , output_filename)
+            testfile = markdown(f.read(), output_format='html4')
+        pdfkit.from_string(testfile , output_filename)
         f.close()  
 #++++++++++++++++++++++++++++++++++++++++++++++++       
     #WORKING
