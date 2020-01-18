@@ -5,7 +5,7 @@ this program helps artists and fotographers manage a file system that contains p
 
 every artist needs a file system to manage photographs of their work, data about their works (size, materials, descriptions, dates prices galleries etc) and to create catalogs ( here in pdf format) for distrbution to fans, galleries and interested parties.  this program automates the whole process,savng the artist many hours of tedious work that isnt really art related.
 
-as of 11 January 2020 this program has basic functionality. you can
+as of 18 January 2020 this program has basic functionality. you can
 
    create databases 
    
