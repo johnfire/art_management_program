@@ -16,6 +16,8 @@ import json
 import artmanagementcfg as cfg
 from markdown import markdown
 import pdfkit
+from PIL import Image
+
 ##################################################################################   
 def makeList():
     #this function makes a list of all paintings in the file of works
@@ -726,7 +728,23 @@ class mainMenu(wx.Frame):
         materialsUsed = self.t6.GetValue()
         ptgDesc = self.t7.GetValue()
         thepic = self.photo_txt.GetLabel()
-        data = ("<img src =" + thepic + "width=\"200\" height=\"121\">\n\n"+ ptgname + "\n\n"+ptgDate + "\n\n"+wherePainted + "\n\n"+vertDim + "  *  " + horizDim + "\n\n"+materialsUsed + "\n\n"+ ptgDesc)
+        
+        max_size = 900
+        im = Image.open(thepic)
+        print(im.format, im.size, im.mode)
+        W,H =im.size 
+        if W > H:
+            NewW = max_size
+            NewH = max_size * H / W
+        else:
+            NewH = max_size
+            NewW = max_size * W / H
+        im = im.resize((int(NewW),int(NewH)),Image.LANCZOS)
+        print(im.format, im.size, im.mode)
+        im.save("temppic.jpg","JPEG")
+        thetemp = cfg.workingDir + "/info/temppic.jpg"        
+        
+        data = ("<img src =" + thetemp +" >\n\n" + ptgname + "\n\n" + ptgDate + "\n\n"+ wherePainted + "\n\n"+vertDim + "  *  " + horizDim + "\n\n"+materialsUsed + "\n\n"+ ptgDesc)
         #data = ["\n\n\n\n"+ ptgname + "\n\n"+ ptgDate + "\n\n"+wherePainted + "\n\n",vertDim + "  *  " + horizDim + "\n\n",materialsUsed + "\n\n", ptgDesc]
         #data = ["blah"]
         
