@@ -744,9 +744,11 @@ class mainMenu(wx.Frame):
         im.save("temppic.jpg","JPEG")
         thetemp = cfg.workingDir + "/info/temppic.jpg"        
         
-        data = ("<img src =" + thetemp +" >\n\n" + ptgname + "\n\n" + ptgDate + "\n\n"+ wherePainted + "\n\n"+vertDim + "  *  " + horizDim + "\n\n"+materialsUsed + "\n\n"+ ptgDesc)
+        data = (" <body style=\"background-color: white !important;\"><img src =" + thetemp +" >\n\n" + ptgname + "\n\n" + ptgDate + "\n\n"+ wherePainted + "\n\n"+vertDim + "  *  " + horizDim + "\n\n"+materialsUsed + "\n\n"+ ptgDesc)
         #data = ["\n\n\n\n"+ ptgname + "\n\n"+ ptgDate + "\n\n"+wherePainted + "\n\n",vertDim + "  *  " + horizDim + "\n\n",materialsUsed + "\n\n", ptgDesc]
         #data = ["blah"]
+        
+        #os.chdir()
         
         print(os.getcwd())
         with open(filename, 'w') as f:
