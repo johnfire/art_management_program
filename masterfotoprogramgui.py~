@@ -91,7 +91,7 @@ def searchLevel(myLevel):
 ##################################################################################
 class TSecScr(wx.Frame):
     def __init__(self, title = "my frame", parent = None ):
-        wx.Frame.__init__(self, title = "blah blah", parent = parent, size=(800, 400))
+        wx.Frame.__init__(self, title = "blah blah", parent = parent, size=(800, 600))
         secpanel = wx.Panel(self, wx.ID_ANY)
         secpanel.SetBackgroundColour("blue")
         secpanel.Show()
