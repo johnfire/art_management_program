@@ -89,7 +89,12 @@ def searchLevel(myLevel):
             countoffiles += 1
     return tableofitems
 ##################################################################################
-
+class TSecScr(wx.Frame):
+    def __init__(self, title = "my frame", parent = None ):
+        wx.Frame.__init__(self, title = "blah blah", parent = parent, size=(800, 600))
+        secpanel = wx.Panel(self, wx.ID_ANY)
+        secpanel.SetBackgroundColour("blue")
+        secpanel.Show()
 ##################################################################################
 #GUI APP 
 class mainMenu(wx.Frame):   
@@ -307,13 +312,15 @@ class mainMenu(wx.Frame):
         
         self.browse_btn = wx.Button(panel, label = 'LR Browse')
         self.browseHR_btn = wx.Button(panel, label = 'HR Browse')
-        #self.SecScreen_btn = wx.Button(panel, label = 'Second Screen')
+        #self.openSecScr_btn = wx.Button(panel, label = 'other options')
+        self.SecScreen_btn = wx.Button(panel, label = 'Second Screen')
         hboxr1a.Add(self.browse_btn, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER|wx.ALL, 1)
         hboxr1a.Add(self.browseHR_btn, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER|wx.ALL, 1)
+        hboxr1a.Add(self.SecScreen_btn, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER|wx.ALL, 1)
         
         self.browse_btn.Bind(wx.EVT_BUTTON, self.on_browse)
         self.browseHR_btn.Bind(wx.EVT_BUTTON, self.on_HRbrowse)
-        #self.SecScreen_btn.Bind(wx.EVT_BUTTON, self.on_SecScreen)
+        self.SecScreen_btn.Bind(wx.EVT_BUTTON, self.OpenSecScr)
         
         self.photo_txt = wx.StaticText(panel, -1 , "This is the LR file")
         hboxr1aa.Add(self.photo_txt, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_LEFT|wx.ALL, 1)
@@ -474,7 +481,7 @@ class mainMenu(wx.Frame):
                         if theFile.endswith(".json"):
                             with open(theFile, "r") as content:
                                 datastuff = json.load(content)
-                                print(datastuff)
+                                #print(datastuff)
                                 listOfPaintings[eacheins] = datastuff
                     os.chdir("..")
                     os.chdir("..")
@@ -518,6 +525,12 @@ class mainMenu(wx.Frame):
         
         self.dispData()
 #++++++++++++++++++++++++++++++++++++++++++++++++ 
+#++++++++++++++++++++++++++++++++++++++++++++++++
+    def OpenSecScr(self, event):
+        newFrame = TSecScr()
+        newFrame.Show()
+#++++++++++++++++++++++++++++++++++++++++++++++++
+
     #WORKING       
     def CloseFile(self,event):
         self.SetStatusText("Closes the database")
@@ -552,7 +565,7 @@ class mainMenu(wx.Frame):
                 self.photo_txt.SetLabel(dialog.GetPath())
                 self.load_image()
 #++++++++++++++++++++++++++++++++++++++++++++++++
-     
+    #working 
     def on_HRbrowse(self, event):
         """
         Browse for an image file
@@ -637,7 +650,8 @@ class mainMenu(wx.Frame):
             cfg.currentCat = tmpcat
             cfg.dispPainting = tempPainting
             self.dispData()         
-#++++++++++++++++++++++++++++++++++++++++++++++++    #WORKING
+#++++++++++++++++++++++++++++++++++++++++++++++++
+    #WORKING
     def AddNewSubFolder(self, event):
         self.SetStatusText("Add a new catagory to database")
         dlg = wx.TextEntryDialog(None, "What is the new catagory named",'Name of new folder', 'new_folder')
@@ -716,6 +730,7 @@ class mainMenu(wx.Frame):
     def SetPreferences(self, event):
         self.SetStatusText("Set up preferences")
 #++++++++++++++++++++++++++++++++++++++++++++++++
+    #working
     def MakeMd(self, event):
         print("in makeMd")
         filename = cfg.dispPainting + ".md"
