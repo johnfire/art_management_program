@@ -159,7 +159,6 @@ class mainMenu(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OpenFile, menuItemLoad)
         self.Bind(wx.EVT_MENU, self.CloseFile, menuItemClose)
         self.Bind(wx.EVT_MENU, self.OnCloseMe, menuItemExit)
-    
         self.Bind(wx.EVT_MENU, self.NewPainting, menuItemNewPainting)
         self.Bind(wx.EVT_MENU, self.AddNewSubFolder, menuItemNewSubfolder)
         self.Bind(wx.EVT_MENU, self.MakeListAllWorks, menuItemMakeListAll)
@@ -167,7 +166,6 @@ class mainMenu(wx.Frame):
         self.Bind(wx.EVT_MENU, self.MoveFotosToFolders, menuItemMoveFotosToFolders)
         self.Bind(wx.EVT_MENU, self.ColateAllInfoSheets, menuItemColate)
         self.Bind(wx.EVT_MENU, self.RenameAllFotosPicDateNum, menuItemRenameAll)
-    
         self.Bind(wx.EVT_MENU, self.GetHelp, menuItemHelp)
         self.Bind(wx.EVT_MENU, self.SetPreferences, menuItemPref)
         self.Bind(wx.EVT_MENU, self.OnAbout, menuItemAbout)
@@ -177,19 +175,15 @@ class mainMenu(wx.Frame):
     
         self.b1 = wx.Button(panel, label = 'Previous Work') 
         hbox0.Add(self.b1, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 5)
-    
         self.labelA = wx.StaticText(panel, -1, workName , style = wx.TE_CENTER)
         hbox0.Add(self.labelA, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 5)
-    
         self.b2 = wx.Button(panel, label = 'Next Work') 
         hbox0.Add(self.b2, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 5)
     
         self.b3 = wx.Button(panel, label = 'Previous Catagory') 
         hbox0.Add(self.b3, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 5)
-    
         self.labelB = wx.StaticText(panel, -1, catName ,style = wx.TE_CENTER)
         hbox0.Add(self.labelB, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 5)
-    
         self.b4 = wx.Button(panel, label = 'Next Catagory') 
         hbox0.Add(self.b4, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 5)
          
@@ -200,25 +194,18 @@ class mainMenu(wx.Frame):
     
         label1 = wx.StaticText(panel, -1, "Name of work")
         hbox1.Add(label1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
-        
         self.t1 = wx.TextCtrl(panel,-1, size = (350,40))
         hbox1.Add(self.t1, 1, wx.EXPAND|wx.ALIGN_LEFT|wx.ALL, 5)
-    
         label2 = wx.StaticText(panel, -1, "Date painted")
         hbox2.Add(label2, 1, wx.ALIGN_LEFT|wx.ALL, 5)
-    
         self.t2 = wx.TextCtrl(panel,-1, size = (100,40))
         hbox2.Add(self.t2, 1, wx.ALIGN_LEFT|wx.ALL, 5)
-        
         label2a = wx.StaticText(panel, -1, "ID number")
         hbox2.Add(label2a, 1, wx.ALIGN_LEFT|wx.ALL,5)
-    
         self.t2a = wx.TextCtrl(panel,-1, size = (50,40))
         hbox2.Add(self.t2a, 1, wx.ALIGN_LEFT|wx.ALL, 5)
-        
         label2b = wx.StaticText(panel, -1, "Count/Year")
         hbox2.Add(label2b, 1, wx.ALIGN_LEFT|wx.ALL,5)
-    
         self.t2b = wx.TextCtrl(panel,-1, size = (50,40))
         hbox2.Add(self.t2b, 1, wx.ALIGN_LEFT|wx.ALL, 5)
     
@@ -307,13 +294,11 @@ class mainMenu(wx.Frame):
         
         self.browse_btn = wx.Button(panel, label = 'LR Browse')
         self.browseHR_btn = wx.Button(panel, label = 'HR Browse')
-        #self.SecScreen_btn = wx.Button(panel, label = 'Second Screen')
         hboxr1a.Add(self.browse_btn, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER|wx.ALL, 1)
         hboxr1a.Add(self.browseHR_btn, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER|wx.ALL, 1)
         
         self.browse_btn.Bind(wx.EVT_BUTTON, self.on_browse)
         self.browseHR_btn.Bind(wx.EVT_BUTTON, self.on_HRbrowse)
-        #self.SecScreen_btn.Bind(wx.EVT_BUTTON, self.on_SecScreen)
         
         self.photo_txt = wx.StaticText(panel, -1 , "This is the LR file")
         hboxr1aa.Add(self.photo_txt, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_LEFT|wx.ALL, 1)
@@ -328,8 +313,6 @@ class mainMenu(wx.Frame):
         vbox1.Add(hbox5, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
         vbox1.Add(hbox6, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
         vbox1.Add(hbox7, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL, 2)
-          
-        #hboxr1a.Add(self.SecScreen_btn, 1, wx.ALIGN_CENTER|wx.ALL, 2)
         
         vbox2.Add(hboxr1, 1, wx.EXPAND|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER|wx.ALL, 4)
         vbox2.Add(hboxr1aa, 0, wx.FIXED_MINSIZE|wx.ALIGN_BOTTOM|wx.ALIGN_LEFT|wx.ALL, 1)
@@ -353,18 +336,18 @@ class mainMenu(wx.Frame):
         
         self.t1.SetValue(cfg.nameOfPainting)
         self.t2.SetValue(cfg.datePainted)
-        self.t2a.SetValue(str(cfg.idnum))
-        self.t2b.SetValue(str(cfg.secid))
+        self.t2a.SetValue((cfg.idnum))
+        self.t2b.SetValue((cfg.secid))
         self.t3.SetValue(cfg.wherePainted)
         self.t4.SetValue(cfg.Dims)
         self.t5.SetValue(cfg.hDims)
         self.t6.SetValue(cfg.materialsUsed)
         self.t7.SetValue(cfg.description)
-        self.t10.SetValue(str(cfg.gallery1Val))
-        self.t11.SetValue(str(cfg.gallery2Val))
-        self.t12.SetValue(str(cfg.gallery3Val))
-        self.t13.SetValue(str(cfg.gallery4Val))
-        self.t14.SetValue(str(cfg.gallery5Val)) 
+        self.t10.SetValue((cfg.gallery1Val))
+        self.t11.SetValue((cfg.gallery2Val))
+        self.t12.SetValue((cfg.gallery3Val))
+        self.t13.SetValue((cfg.gallery4Val))
+        self.t14.SetValue((cfg.gallery5Val)) 
         
         #load working dir from json file?????
         print(cfg.workingDir)
@@ -398,18 +381,18 @@ class mainMenu(wx.Frame):
         
         self.t1.SetValue(ptgName)
         self.t2.SetValue(ptgDate)
-        self.t2a.SetValue(str(ptgNum))
+        self.t2a.SetValue((ptgNum))
         self.t2b.SetValue(secid)
         self.t3.SetValue(wherePainted)
         self.t4.SetValue(dims)
         self.t5.SetValue(hDims)
         self.t6.SetValue(materialsUsed)
         self.t7.SetValue(ptgDesc)
-        self.t10.SetValue(str(saatchi))
-        self.t11.SetValue(str(dev))
-        self.t12.SetValue(str(s6))
-        self.t13.SetValue(str(buzz))
-        self.t14.SetValue(str(mysite))  
+        self.t10.SetValue((saatchi))
+        self.t11.SetValue((dev))
+        self.t12.SetValue((s6))
+        self.t13.SetValue((buzz))
+        self.t14.SetValue((mysite))  
         self.photo_txt.SetLabel(picLR)
         self.photo_HRtxt.SetLabel(picHR)
         if picLR != "No Pic":
@@ -427,8 +410,6 @@ class mainMenu(wx.Frame):
                 os.chdir(str(dialog.GetPath()))
             dialog.Destroy()
         else:
-            pass  
-        if opt != "": 
             os.chdir(cfg.workingDir)    
         cfg.subDirList = os.listdir(cfg.workingDir)
         cfg.subDirList.remove("info")
@@ -445,7 +426,6 @@ class mainMenu(wx.Frame):
                         if theFile.endswith(".json"):
                             with open(theFile, "r") as content:
                                 datastuff = json.load(content)
-                                print(datastuff)
                                 listOfPaintings[eacheins] = datastuff
                     os.chdir("..")
                     os.chdir("..")
@@ -688,7 +668,6 @@ class mainMenu(wx.Frame):
         self.SetStatusText("Set up preferences")
 #++++++++++++++++++++++++++++++++++++++++++++++++
     def MakeMd(self, event):
-        print("in makeMd")
         filename = cfg.dispPainting + ".md"
         output_filename = cfg.dispPainting + "lr.pdf"
         ptgname = self.t1.GetValue()
@@ -702,7 +681,6 @@ class mainMenu(wx.Frame):
         
         max_size = 900
         im = Image.open(thepic)
-        print(im.format, im.size, im.mode)
         W,H =im.size 
         if W > H:
             NewW = max_size
@@ -711,15 +689,10 @@ class mainMenu(wx.Frame):
             NewH = max_size
             NewW = max_size * W / H
         im = im.resize((int(NewW),int(NewH)),Image.LANCZOS)
-        print(im.format, im.size, im.mode)
         im.save("temppic.jpg","JPEG")
         thetemp = cfg.workingDir + "/info/temppic.jpg"        
         
         data = (" <body style=\"background-color: white !important;\"><img src =" + thetemp +" >\n\n" + ptgname + "\n\n" + ptgDate + "\n\n"+ wherePainted + "\n\n"+vertDim + "  *  " + horizDim + "\n\n"+materialsUsed + "\n\n"+ ptgDesc)
-        #data = ["\n\n\n\n"+ ptgname + "\n\n"+ ptgDate + "\n\n"+wherePainted + "\n\n",vertDim + "  *  " + horizDim + "\n\n",materialsUsed + "\n\n", ptgDesc]
-        #data = ["blah"]
-        
-        #os.chdir()
         
         print(os.getcwd())
         with open(filename, 'w') as f:
