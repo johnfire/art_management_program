@@ -376,51 +376,22 @@ class mainMenu(wx.Frame):
         ptgName = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["pname"]
         ptgDesc = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["desc"]
         ptgDate = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["year"]
-        if isinstance(ptgDate, int) == True:
-            ptgDate = str(ptgDate)
         ptgNum = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["number"]
         saatchi = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["saatchi"]
         s6 = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["soc6"]
-        try : 
-            mysite = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["mysite"]
-            if isinstance(mysite, int) == True:
-                mysite = str(mysite)
-        except:
-            mysite = "0"
-        try : 
-            secid = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["secid"]
-            if isinstance(secid, int)  == True:
-                secid = str(secid)
-        except:
-            secid = "0"
-        try:
-            picLR = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["locLRfoto"]
-        except:
-            picLR = "No Pic"
-        try:
-            picHR = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["locHRfoto"]
-        except:
-            picHR = "No Pic"
-        #displate = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["displate"]
+         
+        mysite = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["mysite"]
+        secid = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["secid"]
+        picLR = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["locLRfoto"]
+        picHR = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["locHRfoto"]
+
         dev = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["deviant"]
         buzz = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["buzz"]
         dims = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["dims"]
-        try:
 
-            hDims = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["hDims"]
-        except:
-            hDims = "none"
-
-        try:
-            materialsUsed = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["materials"]
-        except:
-            materialsUsed = "none"
-        try:
-            wherePainted = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["wherePainted"]
-        except:
-            wherePainted = "none"
-        #try:
-        #    aFoto = fg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["wherePainted"]
+        hDims = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["hDims"]
+        materialsUsed = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["materials"]
+        wherePainted = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["wherePainted"]
 
         self.labelA.SetLabel(cfg.dispPainting)
         self.labelB.SetLabel(cfg.currentCat)
@@ -624,8 +595,8 @@ class mainMenu(wx.Frame):
             gal3 = ""
             gal4 = ""
             gal5 = ""
-            picLR = "no pic LR"
-            picHR = "no Pic HR"
+            picLR = "no pic"
+            picHR = "no Pic"
                    
             mydata = {cfg.dispPainting:{"pname": ptgname,"wherePainted": wherePainted,"secid":secid, "mysite":gal1,"buzz":gal2,"deviant":gal3,"saatchi":gal4,"soc6":gal5,"number": numb,"secid":secid, "year" : ptgDate, "dims": vertDim, "hDims": horizDim, "desc" : ptgDesc, "materials": materialsUsed, "locLRfoto" : picLR,"locHRfoto" : picHR}}
             jsonData = json.dumps(mydata, sort_keys=True,  indent=4, separators=(",", ": "))
