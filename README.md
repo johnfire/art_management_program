@@ -36,6 +36,8 @@ possibly in the future:
    
    if anyone would like to help, im planning on releasing this to the pypl repository in a few weeks when i get some more functionality in , as a shareware/ freeware software tool for artists. im looking for people to help with writing the program, documentation, and suggesting new features etc. you can contact me here if you are interested.
    
+   please note that i run this using the anaconda python install on my computer and used anaconda to install wxPython. I have problems installing using pip and pip3. any thoughts on this would be welcome. 
+   
    
    you can contact me at jfs@tandkcybernetics.christopherrehm.de for more info.
    
