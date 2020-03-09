@@ -38,6 +38,8 @@ possibly in the future:
    
    please note that i run this using the anaconda python install on my computer and used anaconda to install wxPython. I have problems installing using pip and pip3. any thoughts on this would be welcome. 
    
+   once again i have just tried to install wxpython on my system and it failed, i can only get it to work inside the anaconda virtual envronment any leads or thoughts on how to fix this would be greatly appreciated. i was trying to build a debian package for this but the wx python dependency remains a major problem. 
+   
    
    you can contact me at jfs@tandkcybernetics.christopherrehm.de for more info.
    
