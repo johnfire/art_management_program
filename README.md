@@ -1,4 +1,7 @@
-# art management program
+art management program
+
+NOTE: this is still in development. As an assist to all possible developers, I have included all files that I have created in the debian package.NOTE: this is still in development. As an assist to all possible developers, I have included all files that I have created in the debian package.  
+
 a python GUI program to manage a artists or photographers work / protfolio of work and data that goes with it. 
 
 this program helps artists and fotographers manage a file system that contains pictures of finished works, and data about these works. it uses python 3.5 and wxPython 4.0 to create a gui interface that makes management of the system easy and straightforward.
@@ -26,6 +29,8 @@ as of 18 January 2020 this program has basic functionality. you can
    
 still to do:
    
+   create a method that automatically does file system set up for the user
+    
    change output directory of pdf to painting.info
    
 possibly in the future:
