@@ -22,21 +22,23 @@ from PIL import Image
 ##################################################################################
 def makeList():
     # this function makes a list of all paintings in the file of works
+    count = 1
     os.chdir(cfg.myworkingFolder)
     print(os.getcwd())
     os.chdir("./info")  # enter info dir, where we keep all info files
-    fh = open("./finishedPaintings.txt", "w")
+    if os.path.isfile("./finishedPaintings.txt"):
+        os.rename("./finishedPaintings.txt","./finishedPaintingsOld.txt")
+    fh = open("./finishedPaintings.txt", "w+")
     mylist = {}
-    mylist["all"] = searchLevel(cfg.myworkingFolder)
-    for k, v in mylist.items():
-        fh.write(str(k) + "\n")
-        for k1, v1 in v.items():
-            fh.write("" + str(k1) + "\n")
-            try:
-                for k2, v2 in v1.items():
-                    fh.write("" + str(k2) + "\n")
-            except:
-                fh.write("\n")
+    mylist = searchLevel(cfg.myworkingFolder)
+    for each in mylist:
+        print(each)
+        fh.write(each)
+        fh.write("\n")
+        for eachone in mylist[each]:
+            fh.write("    " + str(count) + " " + eachone)
+            fh.write("\n")
+            count += 1
     fh.close()
     os.chdir("..")
 
@@ -84,18 +86,15 @@ def renameFotos():
 
 
 ##################################################################################
-#### recursion search function #####
 def searchLevel(myLevel):
     tableofitems = {}
     thisdirlist = os.listdir(myLevel)
-    countoffiles = 1
+    thisdirlist.remove('info')
+    #countoffiles = 1
     for each in thisdirlist:
         if os.path.isdir(myLevel + "/" + each) is True:
             mynewlevel = myLevel + "/" + each
-            tableofitems[each] = searchLevel(mynewlevel)
-        else:
-            tableofitems[countoffiles] = each
-            countoffiles += 1
+            tableofitems[each] = os.listdir(mynewlevel)
     return tableofitems
 
 
@@ -406,11 +405,11 @@ class mainMenu(wx.Frame):
     # ++++++++++++++++++++++++++++++++++++++++++++++++
     def dispData(self):
 
-        print("in dispData function")
+        #print("in dispData function")
         ptgName = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["pname"]
-        print(str(cfg.catDir[cfg.currentCat][cfg.dispPainting]))
-        print("painting name is:")
-        print(ptgName)
+        #print(str(cfg.catDir[cfg.currentCat][cfg.dispPainting]))
+        #print("painting name is:")
+        #print(ptgName)
         ptgDesc = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["desc"]
         ptgDate = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["year"]
         ptgNum = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["number"]
@@ -490,6 +489,7 @@ class mainMenu(wx.Frame):
                 cfg.catDir[each] = listOfPaintings
 
         cfg.mylibListOfPaintings = {"list_of_paintings": cfg.paintingList}
+        print("the total number of paintings is ", len(cfg.mylibListOfPaintings))
         cfg.mylibOfSubdirectories = {"list_of_subdirectories": cfg.subDirList}
         cfg.mylibOfSubPaintings = {
             "list_of_cat_and_paintings": cfg.dirOfCatandPaintings
@@ -530,12 +530,12 @@ class mainMenu(wx.Frame):
         cfg.listSubs = cfg.mylibOfSubdirectories["list_of_subdirectories"]
         cfg.totalSubs = len(cfg.listSubs)
         cfg.currentCat = cfg.listSubs[1]
-        print(cfg.currentCat)
+        #print(cfg.currentCat)
         cfg.listPtngs = cfg.mylibOfSubPaintings["list_of_cat_and_paintings"][cfg.currentCat]
         print(cfg.mylibOfSubPaintings["list_of_cat_and_paintings"][cfg.currentCat])
         cfg.totalPtngs = len(cfg.listPtngs)
         print(cfg.totalPtngs)
-        print(cfg.listPtngs[0])
+        #print(cfg.listPtngs[0])
         cfg.dispPainting = cfg.listPtngs[0]
 
         self.dispData()
@@ -657,20 +657,20 @@ class mainMenu(wx.Frame):
             cfg.dispPainting = response
             tempPainting = cfg.dispPainting
 
-            ptgname = ""
+            ptgname = "My New Painting"
             ptgDate = ""
             numb = ""
             secid = ""
-            wherePainted = ""
+            wherePainted = "Klosterlechfeld Bavaria"
             vertDim = ""
             horizDim = ""
             materialsUsed = ""
             ptgDesc = ""
-            gal1 = ""
-            gal2 = ""
-            gal3 = ""
-            gal4 = ""
-            gal5 = ""
+            gal1 = "no"
+            gal2 = "no"
+            gal3 = "no"
+            gal4 = "no"
+            gal5 = "no"
             picLR = "no pic"
             picHR = "no Pic"
 
