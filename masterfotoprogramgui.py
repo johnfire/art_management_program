@@ -18,6 +18,8 @@ import artmanagementcfg as cfg
 from markdown import markdown
 import pdfkit
 from PIL import Image
+from datetime import datetime
+
 
 ##################################################################################
 def makeList():
@@ -454,6 +456,8 @@ class mainMenu(wx.Frame):
         print("opening the working file")
         print(cfg.workingDir)
         self.SetStatusText("Opens the Database")
+        
+        #if there is no working dir do this:
         if opt == "":
             dialog = wx.DirDialog(
                 None,
@@ -465,16 +469,24 @@ class mainMenu(wx.Frame):
                 cfg.myworkingFolder = str(dialog.GetPath())
                 os.chdir(str(dialog.GetPath()))
             dialog.Destroy()
+        #do this is we have a working dir:
         else:
             os.chdir(cfg.workingDir)
+        #now set up the varios lists so that we can display everything 
         cfg.subDirList = os.listdir(cfg.workingDir)
         cfg.subDirList.remove("info")
+        cfg.subDirList.sort()
+        #print(cfg.subDirList)
         for each in cfg.subDirList:
             listOfPaintings = {}
             if True == os.path.isdir(cfg.workingDir + "/" + each):
                 cfg.subDirPaths.append(cfg.workingDir + "/" + each)
                 os.chdir(cfg.workingDir + "/" + each)
                 thePaintings = os.listdir(os.getcwd())
+                #print(thePaintings)
+                thePaintings.sort()
+                #print(thePaintings)
+                cfg.totalPtngs += len(thePaintings)
                 cfg.dirOfCatandPaintings[each] = thePaintings
                 for eacheins in thePaintings:
                     os.chdir(cfg.workingDir + "/" + each + "/" + eacheins + "/info")
@@ -489,12 +501,12 @@ class mainMenu(wx.Frame):
                 cfg.catDir[each] = listOfPaintings
 
         cfg.mylibListOfPaintings = {"list_of_paintings": cfg.paintingList}
-        print("the total number of paintings is ", len(cfg.mylibListOfPaintings))
+        print("the total number of paintings is ", cfg.totalPtngs)
         cfg.mylibOfSubdirectories = {"list_of_subdirectories": cfg.subDirList}
         cfg.mylibOfSubPaintings = {
             "list_of_cat_and_paintings": cfg.dirOfCatandPaintings
         }
-
+        #this is all here because at some point i may use it to export data to other places. right now it does nothing
         jsonData = json.dumps(
             cfg.mylibOfSubdirectories, sort_keys=True, indent=4, separators=(",", ": ")
         )
@@ -524,17 +536,17 @@ class mainMenu(wx.Frame):
         file4name = "fliepathmainfolder.json"
         with open(file4name, "w") as f:
             f.write(json3Data)
-
+        #end of stuff for exporting that is not currently being used.
         # now load correct stuff to screen.
 
         cfg.listSubs = cfg.mylibOfSubdirectories["list_of_subdirectories"]
         cfg.totalSubs = len(cfg.listSubs)
-        cfg.currentCat = cfg.listSubs[1]
+        cfg.currentCat = cfg.listSubs[0]
         #print(cfg.currentCat)
         cfg.listPtngs = cfg.mylibOfSubPaintings["list_of_cat_and_paintings"][cfg.currentCat]
-        print(cfg.mylibOfSubPaintings["list_of_cat_and_paintings"][cfg.currentCat])
-        cfg.totalPtngs = len(cfg.listPtngs)
-        print(cfg.totalPtngs)
+        #print(cfg.mylibOfSubPaintings["list_of_cat_and_paintings"][cfg.currentCat])
+        cfg.totalPtngsinlist = len(cfg.listPtngs)
+        #print("total number of paintings in this list is ",cfg.totalPtngsinlist)
         #print(cfg.listPtngs[0])
         cfg.dispPainting = cfg.listPtngs[0]
 
@@ -628,7 +640,8 @@ class mainMenu(wx.Frame):
     # ++++++++++++++++++++++++++++++++++++++++++++++++
     # WORKING
     def NewPainting(self, event):
-
+        currentMonth = datetime.now().strftime('%B')
+        currentYear = datetime.now().year
         self.SetStatusText("Create a New Painting")
         dialog = wx.DirDialog(
             None,
@@ -653,13 +666,15 @@ class mainMenu(wx.Frame):
             os.chdir("./" + response)
             for each in cfg.dirlist:
                 os.mkdir("./" + each)
+            #place code for creating black pic of painting here
             os.chdir("info")
             cfg.dispPainting = response
             tempPainting = cfg.dispPainting
+            cfg.totalPtngs += 1
 
-            ptgname = "My New Painting"
-            ptgDate = ""
-            numb = ""
+            ptgname = response
+            ptgDate = currentMonth +str(currentYear)
+            numb = str(cfg.totalPtngs)
             secid = ""
             wherePainted = "Klosterlechfeld Bavaria"
             vertDim = ""
@@ -671,8 +686,8 @@ class mainMenu(wx.Frame):
             gal3 = "no"
             gal4 = "no"
             gal5 = "no"
-            picLR = "no pic"
-            picHR = "no Pic"
+            picLR = "/home/christopher/Pictures/myPaintings/finishedWorks-forSale7:30-09-09-19/info/emptypic.jpg"
+            picHR = "/home/christopher/Pictures/myPaintings/finishedWorks-forSale7:30-09-09-19/info/emptypic.jpg"
 
             mydata = {
                 cfg.dispPainting: {
@@ -704,6 +719,7 @@ class mainMenu(wx.Frame):
                 f.write(jsonData)
             # self.OpenFile(event = "none",opt = cfg.myworkingFolder)
             cfg.currentCat = tmpcat
+            ###problem here you must be in the right catorgy to display a new painting... 
             cfg.dispPainting = tempPainting
             self.dispData()
 
@@ -882,7 +898,7 @@ class mainMenu(wx.Frame):
     def PrevPainting(self, event):
         cfg.ptngIndex -= 1
         if cfg.ptngIndex < 0:
-            cfg.ptngIndex = cfg.totalPtngs - 1
+            cfg.ptngIndex = cfg.totalPtngsinlist - 1
         # load new painting
         cfg.dispPainting = cfg.listPtngs[cfg.ptngIndex]
         self.dispData()
@@ -892,7 +908,7 @@ class mainMenu(wx.Frame):
     # WORKING
     def NextPainting(self, event):
         cfg.ptngIndex += 1
-        if cfg.ptngIndex > (cfg.totalPtngs - 1):
+        if cfg.ptngIndex > (cfg.totalPtngsinlist - 1):
             cfg.ptngIndex = 0
         # load new painting
         cfg.dispPainting = cfg.listPtngs[cfg.ptngIndex]
@@ -909,7 +925,7 @@ class mainMenu(wx.Frame):
         cfg.listPtngs = cfg.mylibOfSubPaintings["list_of_cat_and_paintings"][
             cfg.currentCat
         ]
-        cfg.totalPtngs = len(cfg.listPtngs)
+        cfg.totalPtngsinlist = len(cfg.listPtngs)
         cfg.dispPainting = cfg.listPtngs[0]
         self.dispData()
 
@@ -923,7 +939,7 @@ class mainMenu(wx.Frame):
         cfg.listPtngs = cfg.mylibOfSubPaintings["list_of_cat_and_paintings"][
             cfg.currentCat
         ]
-        cfg.totalPtngs = len(cfg.listPtngs)
+        cfg.totalPtngsinlist = len(cfg.listPtngs)
         cfg.dispPainting = cfg.listPtngs[0]
         self.dispData()
 
