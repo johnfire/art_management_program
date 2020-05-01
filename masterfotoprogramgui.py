@@ -5,7 +5,7 @@
 begun on Sun Aug 25 11:24:43 2019
 ver alpha 16 jan 2020
 this is the main foto management proram.
-@author: christopher rehm
+@author: christopher rehm at christopherrehm@web.de
 note this program uses the wxPython4.0 and wxWidgets for GUI development,
 both must be installed
 plase use wxPython 4.0 or higher 
@@ -14,16 +14,19 @@ import os
 import wx
 import shutil
 import json
-import artmanagementcfg as cfg
-from markdown import markdown
-import pdfkit
-from PIL import Image
 from datetime import datetime
+
+import pdfkit
+from markdown import markdown
+from PIL import Image
+
+import artmanagementcfg as cfg
+
 
 
 ##################################################################################
 def makeList():
-    # this function makes a list of all paintings in the file of works
+    # this function makes a list of all paintings in the directory of works
     count = 1
     os.chdir(cfg.myworkingFolder)
     print(os.getcwd())
@@ -101,7 +104,32 @@ def searchLevel(myLevel):
 
 
 ##################################################################################
-
+def initializeVariables():
+    cfg.currentCat = "" # this is always the active catagory
+    cfg.dispPainting = "" # this is always the active painting
+    
+    cfg.totalSubs = 0 #total number of catagories
+    cfg.catIndex = 0  #index used to page thru catagories
+    cfg.totalPtngs = 0 #total number of paintings in data base after loading
+    cfg.ptngIndex = 0 #index used topage thru paintings
+    cfg.totalPtngsinlist = 0  # used to hold temp amount of paintings in a list locally
+    
+    cfg.subDirPaths = []
+    cfg.paintingPaths = []
+    cfg.subDirList = []   #holds list of names of active subdirectories at load database time, only used in openData currently
+    cfg.listSubs = []  # used outside of openData to list catagories
+    cfg.paintingList = []
+    cfg.listPtngs = [] # current list of paintings used to display works in a catagory.
+    
+    cfg.paintingDic = {}
+    #myData = {}
+    cfg.catDir = {} #master dictionary of everything loaded into the program from database. not currently used for anything important
+    
+    cfg.mylibOfSubdirectories = {}
+    cfg.mylibListOfPaintings = {}
+    cfg.dirOfCatandPaintings = {} # dictionary of painting catagories and contents-- the paintings in each catagory
+    cfg.mylibOfSubPaintings = {}
+    # ++++++++++++++++++++++++++++++++++++++++++++++++
 ##################################################################################
 # GUI APP
 class mainMenu(wx.Frame):
@@ -407,11 +435,12 @@ class mainMenu(wx.Frame):
     # ++++++++++++++++++++++++++++++++++++++++++++++++
     def dispData(self):
 
-        #print("in dispData function")
+        print("in dispData function")
+        print(cfg.catDir[cfg.currentCat][cfg.dispPainting])
         ptgName = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["pname"]
-        #print(str(cfg.catDir[cfg.currentCat][cfg.dispPainting]))
-        #print("painting name is:")
-        #print(ptgName)
+        print(str(cfg.catDir[cfg.currentCat][cfg.dispPainting]))
+        print("painting name is:")
+        print(ptgName)
         ptgDesc = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["desc"]
         ptgDate = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["year"]
         ptgNum = cfg.catDir[cfg.currentCat][cfg.dispPainting][cfg.dispPainting]["number"]
@@ -451,8 +480,11 @@ class mainMenu(wx.Frame):
             self.load_image()
 
     # ++++++++++++++++++++++++++++++++++++++++++++++++
+
+    
     # WORKING
     def OpenFile(self, event, opt=""):
+        initializeVariables()
         print("opening the working file")
         print(cfg.workingDir)
         self.SetStatusText("Opens the Database")
@@ -482,7 +514,8 @@ class mainMenu(wx.Frame):
             if True == os.path.isdir(cfg.workingDir + "/" + each):
                 cfg.subDirPaths.append(cfg.workingDir + "/" + each)
                 os.chdir(cfg.workingDir + "/" + each)
-                thePaintings = os.listdir(os.getcwd())
+                thePaintings = os.listdir(os.getcwd()) #local var used to get list of paintings catagories
+                
                 #print(thePaintings)
                 thePaintings.sort()
                 #print(thePaintings)
@@ -500,7 +533,8 @@ class mainMenu(wx.Frame):
 
                 cfg.catDir[each] = listOfPaintings
 
-        cfg.mylibListOfPaintings = {"list_of_paintings": cfg.paintingList}
+        #cfg.mylibListOfPaintings = {"list_of_paintings": cfg.paintingList}
+        #print("list_of_paintings", cfg.paintingList)
         print("the total number of paintings is ", cfg.totalPtngs)
         cfg.mylibOfSubdirectories = {"list_of_subdirectories": cfg.subDirList}
         cfg.mylibOfSubPaintings = {
@@ -521,6 +555,7 @@ class mainMenu(wx.Frame):
         )
 
         print("\n")
+        print("in middle of openDATA")
         print(os.getcwd())
 
         os.chdir(cfg.workingDir + "/" + "info")
@@ -540,6 +575,9 @@ class mainMenu(wx.Frame):
         # now load correct stuff to screen.
 
         cfg.listSubs = cfg.mylibOfSubdirectories["list_of_subdirectories"]
+        print("data comparision check")
+        print(cfg.listSubs)
+        print(cfg.subDirList)
         cfg.totalSubs = len(cfg.listSubs)
         cfg.currentCat = cfg.listSubs[0]
         #print(cfg.currentCat)
@@ -651,7 +689,7 @@ class mainMenu(wx.Frame):
         if dialog.ShowModal() == wx.ID_OK:
             print(dialog.GetPath())
             os.chdir(str(dialog.GetPath()))
-            cfg.currentCat = os.getcwd()
+            cfg.currentCat = os.path.basename(os.getcwd())
             tmpcat = cfg.currentCat
         dialog.Destroy()
         dlg = wx.TextEntryDialog(
@@ -713,14 +751,22 @@ class mainMenu(wx.Frame):
             jsonData = json.dumps(
                 mydata, sort_keys=True, indent=4, separators=(",", ": ")
             )
-            print(os.getcwd())
+            #print(os.getcwd())
             filename = cfg.dispPainting + ".json"
             with open(filename, "w") as f:
                 f.write(jsonData)
-            # self.OpenFile(event = "none",opt = cfg.myworkingFolder)
+            #reinitialize database. less code than adding one new entry. also faster
+            self.OpenFile(event = "none",opt = cfg.myworkingFolder)
             cfg.currentCat = tmpcat
-            ###problem here you must be in the right catorgy to display a new painting... 
-            cfg.dispPainting = tempPainting
+            cfg.catIndex = cfg.listSubs.index(cfg.currentCat)
+            #print(cfg.currentCat)
+            cfg.dispPainting =tempPainting
+            cfg.listPtngs = cfg.mylibOfSubPaintings["list_of_cat_and_paintings"][
+            cfg.currentCat
+            ]
+            cfg.pntgIndex = cfg.listPtngs.index(cfg.dispPainting)
+            #print(cfg.dispPainting)
+            
             self.dispData()
 
     # ++++++++++++++++++++++++++++++++++++++++++++++++    #WORKING
@@ -883,15 +929,18 @@ class mainMenu(wx.Frame):
         )
 
         print(os.getcwd())
+        os.chdir(cfg.workingDir + "/" + cfg.currentCat + "/" + cfg.dispPainting + "/info")
         with open(filename, "w") as f:
             f.write(data)
         f.close()
-
+        print("the markdown file is called",filename)
         with open(filename, "r") as f:
             # could be a problem here, not sure.
             testfile = markdown(f.read(), output_format="html4")
+            #print(testfile)
         pdfkit.from_string(testfile, output_filename)
         f.close()
+        os.chdir(cfg.workingDir + "/info")
 
     # ++++++++++++++++++++++++++++++++++++++++++++++++
     # WORKING
