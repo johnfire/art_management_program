@@ -9,23 +9,34 @@ dirlist = {"displate","mainphoto","society6","xcftype","pngtype","jpgtype","cr2t
 galleryList = ["mysite","buzzart","deviant","saatchi","soc6"]
 
 basicPathDir = "/home/christopher/Pictures/myPaintings"
-workingDir = '/home/christopher/Pictures/myPaintings/finishedWorks-forSale7:30-09-09-19' # this is the path to the active directory
+workingDir = "/home/christopher/Pictures/myPaintings/finishedWorks-forSale7:30-09-09-19" # this is the path to the active directory
+myworkingFolder = "/home/christopher/Pictures/myPaintings/finishedWorks-forSale7:30-09-09-19" #the name of the active painting directorysubDirList = []
 
 #DO NOT CHANGE ANYTHING BELOW HERE FOR YOUR SET UP
 
-myworkingFolder = "" #the name of the active painting directorysubDirList = []
+currentCat = "" # this is always the active catagory
+dispPainting = "" # this is always the active painting
+
+totalSubs = 0 #total number of catagories
+catIndex = 0  #index used to page thru catagories
+totalPtngs = 0 #total number of paintings in data base after loading
+ptngIndex = 0 #index used topage thru paintings
+totalPtngsinlist = 0  # used to hold temp amount of paintings in a list locally
 
 subDirPaths = []
 paintingPaths = []
-
+subDirList = []   #holds list of names of active subdirectories at load database time, only used in openData currently
+listSubs = []  # used outside of openData to list catagories
 paintingList = []
-paintingDic = {}
-myData = {}
+listPtngs = [] # current list of paintings used to display works in a catagory.
 
-catDir = {}
-mylibListOfPaintings = {}
+paintingDic = {}
+#myData = {}
+catDir = {} #master dictionary of everything loaded into the program from database. not currently used for anything important
+
 mylibOfSubdirectories = {}
-dirOfCatandPaintings = {}
+mylibListOfPaintings = {}
+dirOfCatandPaintings = {} # dictionary of painting catagories and contents-- the paintings in each catagory
 mylibOfSubPaintings = {}
 
 gallery1 = galleryList[0]
@@ -33,15 +44,6 @@ gallery2 = galleryList[1]
 gallery3 = galleryList[2]
 gallery4 = galleryList[3]
 gallery5 = galleryList[4]
-
-listSubs = []
-totalSubs = 0
-catIndex = 1
-currentCat = ""
-listPtngs = []
-totalPtngs = 0
-ptngIndex = 0
-dispPainting = ""
 
 nameOfPaintingfile = "none"
 nameOfCatagory = "none"
