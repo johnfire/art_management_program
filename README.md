@@ -35,18 +35,31 @@ still to do:
    
 possibly in the future:
    
-   system that automatically prodces catalogs of work as set up by the artist for shows, fairs advertising etc.
+   system that automatically produces catalogs of work as set up by the artist for shows, fairs advertising etc.
    
    right now, 18 jan 2020 I am using the program and debuging it, I hope to release it as a python PyPl program by feb 1 2020, so that others can use it as well.
    
+UPDATE:
+ 1 may 2020: most of the serious debugging is done. if you alter the json files by hand in painting/info files you are going to have problems if anything is wrong. right now there is no check for correctness of json files. all the other functions are working. also when you create a new painting the program will take you to that painting so you can immediately enter data. 
+
    if anyone would like to help, im planning on releasing this to the pypl repository in a few weeks when i get some more functionality in , as a shareware/ freeware software tool for artists. im looking for people to help with writing the program, documentation, and suggesting new features etc. you can contact me here if you are interested.
    
    please note that i run this using the anaconda python install on my computer and used anaconda to install wxPython. I have problems installing using pip and pip3. any thoughts on this would be welcome. 
    
    once again i have just tried to install wxpython on my system and it failed, i can only get it to work inside the anaconda virtual envronment any leads or thoughts on how to fix this would be greatly appreciated. i was trying to build a debian package for this but the wx python dependency remains a major problem. 
-   
-   
-   you can contact me at jfs@tandkcybernetics.christopherrehm.de for more info.
+
+Known Problems:
+	if you have bad json files for any reason the program will not start up correctly. also if the subfiles in each painting file arent correct you will also have problems. eventually Ill fix this but it is not a priority, as this is a very part time project for me. if you fork and develop/modify/fix etc i would bevery happy, and will add you to the development team and README as a contact.
+
+dependancies:
+	wxpython 4.0 or greater (python 3 compatible)
+	markdown
+	PIL
+	pdfkit
+	
+	wkhmtltopdf.deb (you can use apt to install)
+
+ can contact me at jfs@tandkcybernetics.christopherrehm.de for more info.
    
    
    
