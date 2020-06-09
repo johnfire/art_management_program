@@ -48,15 +48,18 @@ UPDATE:
    
    once again i have just tried to install wxpython on my system and it failed, i can only get it to work inside the anaconda virtual envronment any leads or thoughts on how to fix this would be greatly appreciated. i was trying to build a debian package for this but the wx python dependency remains a major problem. 
 
-8 june 2020 wxPython install problems SOLVED!
+UPDATE 8 june 2020 wxPython install problems SOLVED!
 this is a complex subject, and ill write more later, but go to these 2 webpages for solutions on most linux systems. it should not be a problem on windows or mac.
 
 https://wxpython.org/blog/2017-08-17-builds-for-linux-with-pip/index.html
+
 https://wxpython.org/pages/downloads/
 
 a list of pip wheels that work can be found at
 
 https://extras.wxpython.org/wxPython4/extras/linux/gtk3/
+
+note i have a slightly different version of the program running outside of conda,ill upload that version tomorrow. 
 
 read the above info (first 2 sites) then poke around the last one, if you are running ubuntu, fedora, debian, or centos.
 
