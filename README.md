@@ -63,12 +63,17 @@ INSTALL on Linux Unbuntu or Linux Mint:
 Run the following commands to install the dependencies the program requires:
 
 pip3 install markdown
+
 pip3 install pillow
+
 pip3 install pdfkit
+
 pip3 install wkhtmltopdf
+
 pip3 install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-18.04 wxPython
 
 Note that there are wheels already set up for ubuntu, fedora, debian and centos, at the site below.
+
 https://extras.wxpython.org/wxPython4/extras/linux/gtk3/
 
 Change your pip install as needed to reflect what you are trying to do.
@@ -89,12 +94,17 @@ Known Problems:
 
 Dependencies:
 	wxpython 4.0 or greater (python 3 compatible)
+	
 	markdown
+	
 	pillow (or in some systems PIL)
+	
 	pdfkit
+	
 	wkhtmltopdf
 	
 	or
+	
 	wkhmtltopdf.deb (you can use apt to install)
 
 you can contact me at jfs@tandkcybernetics.christopherrehm.de for more info.
